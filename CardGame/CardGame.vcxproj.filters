@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Ressourcendateien">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Cards">
+      <UniqueIdentifier>{0716ac39-eb69-4846-902d-477f8a623bfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cards\Header">
+      <UniqueIdentifier>{b0d554b0-fb3c-49d1-b840-3e300391960f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cards\Source">
+      <UniqueIdentifier>{7ff49f0b-2969-4240-b795-415260b95aea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO">
+      <UniqueIdentifier>{a95b1a73-a058-4f3d-b966-8e175d325ef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO\Header">
+      <UniqueIdentifier>{f0feb1b7-ed0a-4a4d-9102-9860139dc63b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO\Source">
+      <UniqueIdentifier>{4360e7a1-c899-4837-bac4-d703b289b8f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shuffling">
+      <UniqueIdentifier>{f6e6ff50-a937-4390-a349-c3509b94f90e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shuffling\Header">
+      <UniqueIdentifier>{333c1682-cb54-408f-acb3-f42d321a061f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shuffling\Source">
+      <UniqueIdentifier>{ea0cd932-ed8c-4ef2-be62-80794cf982d3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="FileReader.cpp">
+      <Filter>IO\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="FileWriter.cpp">
+      <Filter>IO\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Card.cpp">
+      <Filter>Cards\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Deck.cpp">
+      <Filter>Cards\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CardGame.cpp">
+      <Filter>Cards\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CutShuffle.cpp">
+      <Filter>Shuffling\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomGenerator.cpp">
+      <Filter>Shuffling\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Shuffler.cpp">
+      <Filter>Shuffling\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CardDecoder.cpp">
+      <Filter>Cards\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CardEncoder.cpp">
+      <Filter>Cards\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="DeckEncoder.cpp">
+      <Filter>Cards\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="DeckDecoder.cpp">
+      <Filter>Cards\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="RiffleShuffle.cpp">
+      <Filter>Shuffling\Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FileReader.h">
+      <Filter>IO\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="FileWriter.h">
+      <Filter>IO\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Card.h">
+      <Filter>Cards\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Deck.h">
+      <Filter>Cards\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CutShuffle.h">
+      <Filter>Shuffling\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomGenerator.h">
+      <Filter>Shuffling\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Shuffler.h">
+      <Filter>Shuffling\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CardDecoder.h">
+      <Filter>Cards\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CardEncoder.h">
+      <Filter>Cards\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="DeckEncoder.h">
+      <Filter>Cards\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="DeckDecoder.h">
+      <Filter>Cards\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="RiffleShuffle.h">
+      <Filter>Shuffling\Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="deck.deckf">
+      <Filter>Ressourcendateien</Filter>
+    </None>
+  </ItemGroup>
+</Project>
