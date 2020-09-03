@@ -16,8 +16,8 @@ FileReader::Read() {
 }
 
 void FileReader::readBlock(byte* blockPtr, size_t blockSize) {
-	fs.seekg(4, std::ios::beg);
-	fs.read(blockPtr, 60);
+	fs.seekg(4, std::ios::beg); //stream has to start reading from 4th byte and up
+	fs.read(blockPtr, blockSize);
 }
 
 size_t FileReader::getBlockSize() {
