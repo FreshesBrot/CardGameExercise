@@ -9,6 +9,10 @@ Deck::Deck() : b_isEmpty(false), remainingCards(52) {
 
 Deck::Deck(std::list<Card> cards) : b_isEmpty(cards.empty()), cards(cards), remainingCards(cards.size()) { }
 
+Deck::Deck(Deck&& deck) : remainingCards(deck.remainingCards), b_isEmpty(deck.b_isEmpty), cards() {
+	cards.splice(cards.begin(), deck.cards);
+}
+
 Card Deck::drawTopCard() {
 	if (b_isEmpty) return Card(Suite(0),0);
 

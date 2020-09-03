@@ -1,7 +1,6 @@
 #include "FileReader.h"
-#include <iostream>
 
-FileReader::FileReader(const wchar_t* fileName) : fs() {
+FileReader::FileReader(FILENAME fileName) : fs() {
 	this->fileName = fileName;
 }
 
@@ -22,7 +21,7 @@ void FileReader::readBlock(byte* blockPtr, size_t blockSize) {
 
 size_t FileReader::getBlockSize() {
 	size_t blockSize;
-	fs.read((char*)(void*)(&blockSize), 4); //first read deck size
+	fs.read((byte*)(void*)(&blockSize), 4); //first read deck size
 	return blockSize;
 }
 

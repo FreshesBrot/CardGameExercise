@@ -1,6 +1,6 @@
 #include "FileWriter.h"
 
-FileWriter::FileWriter(const wchar_t* fileName) {
+FileWriter::FileWriter(FILENAME fileName) {
 	this->fileName = fileName;
 }
 
@@ -13,8 +13,8 @@ void FileWriter::Write() {
 		fs.open(fileName,std::ios::out,std::ios::binary);
 }
 
-void FileWriter::writeData(char* ptr, size_t size) {
-	fs.write((char*)(void*)(&size), 4); //write 4 bytes integer for the file size
+void FileWriter::writeData(byte* ptr, size_t size) {
+	fs.write((byte*)(void*)(&size), 4); //write 4 bytes integer for the file size
 	fs.write(ptr, size); //then write card contents
 }
 

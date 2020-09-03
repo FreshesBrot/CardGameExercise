@@ -160,6 +160,7 @@
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="DeckDecoder.cpp" />
     <ClCompile Include="DeckEncoder.cpp" />
+    <ClCompile Include="DeckLoader.cpp" />
     <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="FileWriter.cpp" />
     <ClCompile Include="RandomGenerator.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Deck.h" />
     <ClInclude Include="DeckDecoder.h" />
     <ClInclude Include="DeckEncoder.h" />
+    <ClInclude Include="DeckLoader.h" />
     <ClInclude Include="FileReader.h" />
     <ClInclude Include="FileWriter.h" />
     <ClInclude Include="RandomGenerator.h" />

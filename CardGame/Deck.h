@@ -9,7 +9,8 @@ public:
 	Deck();
 	//initializes a deck from a custom list of cards
 	Deck(std::list<Card> cards);
-	
+	//move constructor for quick construction of lists
+	Deck(Deck&& deck);
 
 #pragma region DeckOperations
 	//draws the top card. returns invalid card if no cards are remaining.

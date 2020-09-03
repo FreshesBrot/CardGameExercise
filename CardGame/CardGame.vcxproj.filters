@@ -73,6 +73,9 @@
     <ClCompile Include="RiffleShuffle.cpp">
       <Filter>Shuffling\Source</Filter>
     </ClCompile>
+    <ClCompile Include="DeckLoader.cpp">
+      <Filter>IO\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileReader.h">
@@ -110,6 +113,9 @@
     </ClInclude>
     <ClInclude Include="RiffleShuffle.h">
       <Filter>Shuffling\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="DeckLoader.h">
+      <Filter>IO\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

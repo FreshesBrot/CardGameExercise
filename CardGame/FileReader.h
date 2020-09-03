@@ -1,18 +1,17 @@
 #pragma once
 #pragma once
 #include <fstream>
-#include <istream>
-#include <sstream>
-#include <vector>
+#include <iostream>
 #define END_OF_FILE "0"
 
+typedef const char* FILENAME;
 typedef char byte;
 
 //this class represents an object that can read a file
 class FileReader {
 public:
 
-	FileReader(const wchar_t* fileName);
+	FileReader(FILENAME fileName);
 	~FileReader();
 
 	//opens the file stream for reading
@@ -33,6 +32,6 @@ private:
 	std::ifstream fs;
 
 	//name of the file
-	std::wstring fileName;
+	FILENAME fileName;
 	
 };
