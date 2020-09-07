@@ -6,6 +6,7 @@
 #include "Deck.h"
 #include "DeckLoader.h"
 #include "CutShuffle.h"
+#include "RiffleShuffle.h"
 #define CARDCODE(code) printf("0x%02X\n", code)
 #define DECKFILE "deck.deckf"
 #define NL "\n"
@@ -24,21 +25,35 @@ void drawDeck(Deck& deck) {
 	std::cout << "\n";
 }
 
+void peekDeck(Deck& deck) {
+	int count = 12;
+	for (auto&c : deck.getCards()) {
+		std::cout << c.shortString() << " ";
+
+		if (--count < 0) {
+			std::cout << "\n";
+			count = 12;
+		}
+	}
+
+}
+
+bool higher(int a, int b) {
+	return a > b;
+}
 
 int main() {
-	//std::list<Card> cards = {Card(Suite(1),2), Card(Suite(1),3), Card(Suite(1),4), Card(Suite(1),5)};
-	Deck deck;
-	CutShuffle shuffle(25);
-	shuffle.shuffleDeck(deck);
-	
-	DeckLoader save(DECKFILE, DeckLoader::LoaderMode::SAVE);
-	save.saveDeck(deck);
+	DeckLoader dl("deck.deckf", DeckLoader::DeckLoader::LOAD);
 
-	DeckLoader load(DECKFILE, DeckLoader::LoaderMode::LOAD);
-	Deck loadedDeck = load.loadDeck();
+	Deck deck = dl.loadDeck();
 
-	drawDeck(deck);
-	drawDeck(loadedDeck);
+	//Deck deck(std::list<Card>({ Card(Suite(2), 13), Card(Suite(1), 9) }));
+
+	peekDeck(deck);
+
+	deck.sort();
+
+	peekDeck(deck);
 
 	system("pause");
 }

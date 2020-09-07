@@ -1,6 +1,7 @@
 #pragma once
 #include "Shuffler.h"
 
+//this class represents a cut shuffling
 class CutShuffle : public Shuffler {
 public:
 	CutShuffle();

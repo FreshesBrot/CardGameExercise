@@ -32,6 +32,9 @@
     <Filter Include="Shuffling\Source">
       <UniqueIdentifier>{ea0cd932-ed8c-4ef2-be62-80794cf982d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{f6ed62da-cdda-4b04-8b12-51a908d2439c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FileReader.cpp">
@@ -44,9 +47,6 @@
       <Filter>Cards\Source</Filter>
     </ClCompile>
     <ClCompile Include="Deck.cpp">
-      <Filter>Cards\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="CardGame.cpp">
       <Filter>Cards\Source</Filter>
     </ClCompile>
     <ClCompile Include="CutShuffle.cpp">
@@ -75,6 +75,9 @@
     </ClCompile>
     <ClCompile Include="DeckLoader.cpp">
       <Filter>IO\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="CardGame.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
