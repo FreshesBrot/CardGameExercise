@@ -1,6 +1,6 @@
 #include "CutShuffle.h"
 #define CUT_RANGE 5
-#define RAND_INT RandomGenerator::getInstance()->get() * CUT_RANGE + 1
+#define RAND_INT int(RandomGenerator::getInstance()->get() * CUT_RANGE) + 1
 
 CutShuffle::CutShuffle() : Shuffler(10) { }
 CutShuffle::CutShuffle(int cycles) : Shuffler(cycles) { }

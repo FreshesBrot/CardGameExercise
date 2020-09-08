@@ -16,12 +16,16 @@ class Card {
 public:
 	//constructs a new card. number values outside of [2,14] are invalid.
 	Card(Suite suite, unsigned int number);
+	Card() = delete;
+	Card(const Card&) = default;
+	Card(Card&&) = default;
+
 
 	//getters (cards will not change after intialization)
 	
-	Suite getSuite();
-	unsigned int getNumber();
-	bool isValid();
+	Suite getSuite() const;
+	uint32_t getNumber() const;
+	bool isValid() const;
 
 	//represents the card in string format
 	std::string toString();
@@ -30,7 +34,7 @@ public:
 
 #pragma region Comparators
 	//checks if a card is equal to this instance of card. invalid cards always return false.
-	bool equals(const Card& card); 
+	bool equals(const Card& card) const; 
 
 	//checks if card c1 has a higher suite than card c2
 	static bool higherSuite(const Card& c1,const Card& c2);
@@ -45,9 +49,9 @@ public:
 
 private:
 	Suite suite; //suite of the card
-	unsigned int number; //numbers 11-13 are J,Q,K,A, 0 is invalid
+	uint32_t number; //numbers 11-13 are J,Q,K,A, 0 is invalid
 	bool b_isValid; // if the card is valid or not
-	short cardID; //stores the ID of the card. ids are calculated at runtime and depend on the suite ordering. cardID of 0 is invalid
+	uint8_t cardID; //stores the ID of the card. ids are calculated at runtime and depend on the suite ordering. cardID of 0 is invalid
 
 	//arrays containing values to construct string messages
 	static const std::string suites[];

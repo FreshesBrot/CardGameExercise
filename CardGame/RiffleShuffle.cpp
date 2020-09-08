@@ -1,6 +1,6 @@
 #include "RiffleShuffle.h"
 #define CUT_RANGE 4
-#define RAND_INT RandomGenerator::getInstance()->get() * CUT_RANGE + 1
+#define RAND_INT int(RandomGenerator::getInstance()->get() * CUT_RANGE) + 1
 
 
 RiffleShuffle::RiffleShuffle() : Shuffler(5) { }

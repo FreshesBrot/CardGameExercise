@@ -38,8 +38,8 @@ Deck Deck::cut() {
 	return Deck(cutCardList(remainingCards / 2));
 }
 
-Deck Deck::cut(unsigned int amount) {
-	if (amount == 0) return Deck(std::list<Card>());
+Deck Deck::cut(uint32_t amount) {
+	if (!amount) return Deck(std::list<Card>());
 	if (amount >= remainingCards) {
 		remainingCards = 0;
 		b_isEmpty = true;
@@ -55,8 +55,8 @@ Deck Deck::cutBottom() {
 	return Deck(cutCardList(remainingCards / 2, 1));
 }
 
-Deck Deck::cutBottom(unsigned int amount) {
-	if (amount < 1) return Deck(std::list<Card>());
+Deck Deck::cutBottom(uint32_t amount) {
+	if (!amount) return Deck(std::list<Card>());
 	if (amount >= remainingCards) {
 		remainingCards = 0;
 		b_isEmpty = true;
@@ -76,7 +76,7 @@ bool Deck::isEmpty() const {
 	return b_isEmpty;
 }
 
-bool Deck::isValid() {
+bool Deck::isValid() const {
 	bool isValid = true;
 
 	for (auto& c : cards)
@@ -85,7 +85,7 @@ bool Deck::isValid() {
 	return isValid;
 }
 
-int Deck::getDeckSize() const {
+uint32_t Deck::getDeckSize() const {
 	return remainingCards;
 }
 
@@ -106,10 +106,10 @@ void Deck::mergeDecks(Deck& deck) {
 
 }
 
-bool Deck::contains(Card& card) {
+bool Deck::contains(const Card& card) const {
 	if (!card.isValid() || b_isEmpty) return false;
 	
-	for (Card& c : cards)
+	for (const Card& c : cards)
 		if (card.equals(c)) return true;
 	
 	return false;

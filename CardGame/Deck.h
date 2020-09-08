@@ -9,7 +9,11 @@ public:
 	Deck();
 	//initializes a deck from a custom list of cards
 	Deck(std::list<Card> cards);
-	//move constructor for quick construction of lists
+
+	//decks shouldnt be copied
+	Deck(const Deck&) = delete;
+
+	//move constructor for quick construction of lists from returned anonymous decks
 	Deck(Deck&& deck) noexcept;
 
 #pragma region DeckOperations
@@ -23,19 +27,19 @@ public:
 	Deck cut();
 
 	//cuts a specific number of cards from the top of the deck and returns the new deck. will return an empty deck if amount is less than 1 and itself when geq than the deck.
-	Deck cut(unsigned int amount);
+	Deck cut(uint32_t amount);
 
 	//same as cut, but taken from the bottom
 	Deck cutBottom();
 
 	//same as cut, but takem from the bottom
-	Deck cutBottom(unsigned int amount);
+	Deck cutBottom(uint32_t amount);
 
 	//merges two decks by putting the argument deck on top of this instance
 	void mergeDecks(Deck& deck);
 
 	//Checks if the decks contains the card. if card is invalid or deck is empty, returns false. 
-	bool contains(Card& card);
+	bool contains(const Card& card) const;
 
 	//sorts the deck in standard suit order and 2,...,A
 	void sort();
@@ -52,10 +56,10 @@ public:
 	bool isEmpty() const;
 
 	//whether this deck is a valid deck or not. a deck is valid if all its cards are valid.
-	bool isValid();
+	bool isValid() const;
 
 	//return the number of cards in this deck.
-	int getDeckSize() const;
+	uint32_t getDeckSize() const;
 
 	//returns a list of all cards - shouldnt be used if order of cards is supposed to be unknown.
 	std::list<Card> getCards();
@@ -64,7 +68,7 @@ private:
 	bool b_isEmpty; //whether the deck is empty.
 
 	std::list<Card> cards; //all cards in the deck.
-	unsigned int remainingCards; //number of remaining cards in the deck.
+	uint32_t remainingCards; //number of remaining cards in the deck.
 
 	//helper function that returns a list of cards that are cut from this deck. this function alters the deck size. specify wether to take cards from the top or bottom (0 = top, rest = bottom)
 	std::list<Card> cutCardList(int amount, int side = 0);

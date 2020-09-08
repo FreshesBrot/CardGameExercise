@@ -8,15 +8,15 @@ Card::Card(Suite suite, unsigned int number) {
 	this->b_isValid = eval;
 }
 
-Suite Card::getSuite() {
+Suite Card::getSuite() const {
 	return suite;
 }
 
-unsigned int Card::getNumber() {
+uint32_t Card::getNumber() const {
 	return number;
 }
 
-bool Card::isValid() {
+bool Card::isValid() const {
 	return b_isValid;
 }
 
@@ -29,9 +29,9 @@ std::string Card::shortString() {
 	return numbersShort[number] + suitesShort[suite];
 }
 
-bool Card::equals(const Card& card) {
+bool Card::equals(const Card& card) const {
 	if(b_isValid && card.b_isValid)
-	return (number == card.number) && (suite == card.suite);
+		return (number == card.number) && (suite == card.suite);
 
 	return false;
 }

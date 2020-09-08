@@ -5,8 +5,7 @@
 
 #include "Deck.h"
 #include "DeckLoader.h"
-#include "CutShuffle.h"
-#include "RiffleShuffle.h"
+#include "ShuffleEngine.h"
 #define CARDCODE(code) printf("0x%02X\n", code)
 #define DECKFILE "deck.deckf"
 #define NL "\n"
@@ -38,23 +37,17 @@ void peekDeck(Deck& deck) {
 
 }
 
-bool higher(int a, int b) {
-	return a > b;
-}
 
 int main() {
-	DeckLoader dl("deck.deckf", DeckLoader::DeckLoader::LOAD);
+	Deck deck;
 
-	Deck deck = dl.loadDeck();
+	ShuffleEngine engine(4);
 
-	//Deck deck(std::list<Card>({ Card(Suite(2), 13), Card(Suite(1), 9) }));
+	engine.ShuffleDeck(deck);
 
-	peekDeck(deck);
-
-	deck.sort();
-
-	peekDeck(deck);
+	drawDeck(deck);
 
 	system("pause");
+
 }
 
