@@ -82,6 +82,9 @@
     <ClCompile Include="ShuffleEngine.cpp">
       <Filter>Shuffling\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Hand.cpp">
+      <Filter>Cards\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileReader.h">
@@ -125,6 +128,9 @@
     </ClInclude>
     <ClInclude Include="ShuffleEngine.h">
       <Filter>Shuffling\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Hand.h">
+      <Filter>Cards\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

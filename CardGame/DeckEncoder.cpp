@@ -8,7 +8,7 @@ DeckEncoder::~DeckEncoder() {
 	delete[] dataBlock;
 }
 
-void DeckEncoder::encodeDeck() {
+void DeckEncoder::encodeDeck() const {
 	int count = 0;
 	for (auto& c : deck.getCards())
 		dataBlock[count++] = CardEncoder::Encode(c);

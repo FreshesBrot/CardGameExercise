@@ -15,9 +15,9 @@ Deck::Deck(Deck&& deck) noexcept : remainingCards(deck.remainingCards), b_isEmpt
 }
 
 Card Deck::drawTopCard() {
-	if (b_isEmpty) return Card(Suite(0),0);
+	if (b_isEmpty) return Card::Invalid();
 
-	Card draw = cards.back();
+	Card draw = std::move(cards.back());
 	cards.pop_back();
 	b_isEmpty = !(--remainingCards);
 	
@@ -68,10 +68,6 @@ Deck Deck::cutBottom(uint32_t amount) {
 	return Deck(cutCardList(amount, 1));
 }
 
-Deck Deck::emptyDeck() {
-	return Deck(std::list<Card>());
-}
-
 bool Deck::isEmpty() const {
 	return b_isEmpty;
 }
@@ -89,7 +85,7 @@ uint32_t Deck::getDeckSize() const {
 	return remainingCards;
 }
 
-std::list<Card> Deck::getCards() {
+std::list<Card>& Deck::getCards() {
 	return cards;
 }
 

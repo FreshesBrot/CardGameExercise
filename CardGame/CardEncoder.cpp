@@ -21,6 +21,6 @@ byte CardEncoder::Encode(Card& card) {
 			return 0x00;
 	}
 
-	code += (char)card.getNumber();
+	code += (uint8_t)card.getNumber();
 	return code;
 }

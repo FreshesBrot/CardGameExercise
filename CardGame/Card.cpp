@@ -1,12 +1,14 @@
 #include "Card.h"
 
 Card::Card(Suite suite, unsigned int number) {
-	bool eval = !(number < 2 || number > 14 || suite == 0);
+	bool eval = !(number < 2 || number > 14 || suite < 1 || suite > 4);
 	this->suite = Suite(suite * eval);
 	this->number = number * eval;
 	this->cardID = order[this->suite] * 13 + this->number;
 	this->b_isValid = eval;
 }
+
+Card::Card() : suite(Suite(1)), number(2), b_isValid(1), cardID(order[this->suite] * 13 + this->number) { }
 
 Suite Card::getSuite() const {
 	return suite;
@@ -20,12 +22,12 @@ bool Card::isValid() const {
 	return b_isValid;
 }
 
-std::string Card::toString() {
+std::string Card::toString() const {
 	return numbers[number] + " OF " + suites[suite];
 
 }
 
-std::string Card::shortString() {
+std::string Card::shortString() const {
 	return numbersShort[number] + suitesShort[suite];
 }
 

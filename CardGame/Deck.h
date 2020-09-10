@@ -50,7 +50,7 @@ public:
 #pragma endregion
 
 	//creates an empty Deck
-	static Deck emptyDeck();
+	inline static Deck emptyDeck() { return Deck(std::list<Card>()); };
 
 	//returns false if the deck still remains cards, and true if there are no more cards.
 	bool isEmpty() const;
@@ -61,8 +61,8 @@ public:
 	//return the number of cards in this deck.
 	uint32_t getDeckSize() const;
 
-	//returns a list of all cards - shouldnt be used if order of cards is supposed to be unknown.
-	std::list<Card> getCards();
+	//returns a ref to the list of all cards - shouldnt be used if order of cards is supposed to be unknown, should not be modified.
+	std::list<Card>& getCards();
 
 private:
 	bool b_isEmpty; //whether the deck is empty.

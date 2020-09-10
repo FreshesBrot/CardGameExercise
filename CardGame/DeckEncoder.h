@@ -8,7 +8,7 @@ public:
 	DeckEncoder(Deck& deck);
 	~DeckEncoder();
 
-	void encodeDeck();
+	void encodeDeck() const;
 
 	byte* getData();
 	size_t getBlockSize();

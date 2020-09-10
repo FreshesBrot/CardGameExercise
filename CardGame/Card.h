@@ -16,10 +16,14 @@ class Card {
 public:
 	//constructs a new card. number values outside of [2,14] are invalid.
 	Card(Suite suite, unsigned int number);
-	Card() = delete;
+	//will construct a 2 of hearts
+	Card();
+	//cards cannot be copied
 	Card(const Card&) = default;
 	Card(Card&&) = default;
 
+	//constructs an invalid card
+	inline static Card Invalid() { return Card(Suite(0), 0); };
 
 	//getters (cards will not change after intialization)
 	
@@ -28,9 +32,9 @@ public:
 	bool isValid() const;
 
 	//represents the card in string format
-	std::string toString();
+	std::string toString() const;
 	//represents the card as a shorter string
-	std::string shortString(); 
+	std::string shortString() const; 
 
 #pragma region Comparators
 	//checks if a card is equal to this instance of card. invalid cards always return false.
@@ -46,6 +50,8 @@ public:
 	static bool higherCard(const Card& c1, const Card& c2);
 	
 #pragma endregion
+
+	Card& operator=(const Card&) = default;
 
 private:
 	Suite suite; //suite of the card
