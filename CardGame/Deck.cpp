@@ -106,7 +106,7 @@ bool Deck::contains(const Card& card) const {
 	if (!card.isValid() || b_isEmpty) return false;
 	
 	for (const Card& c : cards)
-		if (card.equals(c)) return true;
+		if (card == c) return true;
 	
 	return false;
 }

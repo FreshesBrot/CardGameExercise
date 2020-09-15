@@ -37,8 +37,9 @@ public:
 	std::string shortString() const; 
 
 #pragma region Comparators
-	//checks if a card is equal to this instance of card. invalid cards always return false.
-	bool equals(const Card& card) const; 
+	bool operator==(const Card& card) const;
+
+	bool operator!=(const Card& card) const;
 
 	//checks if card c1 has a higher suite than card c2
 	static bool higherSuite(const Card& c1,const Card& c2);

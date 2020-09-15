@@ -164,6 +164,8 @@
     <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="FileWriter.cpp" />
     <ClCompile Include="Hand.cpp" />
+    <ClCompile Include="IOParser.cpp" />
+    <ClCompile Include="IOReader.cpp" />
     <ClCompile Include="RandomGenerator.cpp" />
     <ClCompile Include="RiffleShuffle.cpp" />
     <ClCompile Include="ShuffleEngine.cpp" />
@@ -181,6 +183,8 @@
     <ClInclude Include="FileReader.h" />
     <ClInclude Include="FileWriter.h" />
     <ClInclude Include="Hand.h" />
+    <ClInclude Include="IOParser.h" />
+    <ClInclude Include="IOReader.h" />
     <ClInclude Include="RandomGenerator.h" />
     <ClInclude Include="RiffleShuffle.h" />
     <ClInclude Include="ShuffleEngine.h" />

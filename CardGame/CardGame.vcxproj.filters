@@ -85,6 +85,12 @@
     <ClCompile Include="Hand.cpp">
       <Filter>Cards\Source</Filter>
     </ClCompile>
+    <ClCompile Include="IOReader.cpp">
+      <Filter>IO\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="IOParser.cpp">
+      <Filter>IO\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileReader.h">
@@ -131,6 +137,12 @@
     </ClInclude>
     <ClInclude Include="Hand.h">
       <Filter>Cards\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="IOReader.h">
+      <Filter>IO\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="IOParser.h">
+      <Filter>IO\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

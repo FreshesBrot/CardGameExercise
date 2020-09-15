@@ -2,9 +2,12 @@
 #include "Card.h"
 #include <list>
 
+//TODO: make a deck iterator, watch some videos on how to do that. this will eliminate the need for the function getCards
+
 //this class represents a deck of 52 cards
 class Deck {
 public:
+	
 	//initializes a full and unshuffled deck
 	Deck();
 	//initializes a deck from a custom list of cards

@@ -31,11 +31,12 @@ std::string Card::shortString() const {
 	return numbersShort[number] + suitesShort[suite];
 }
 
-bool Card::equals(const Card& card) const {
-	if(b_isValid && card.b_isValid)
-		return (number == card.number) && (suite == card.suite);
+bool Card::operator==(const Card& card) const {
+	return card.cardID == cardID;
+}
 
-	return false;
+bool Card::operator!=(const Card& card) const {
+	return !(*this == card);
 }
 
 bool Card::higherSuite(const Card& c1, const Card& c2) {
