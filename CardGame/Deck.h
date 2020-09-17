@@ -4,10 +4,47 @@
 
 //TODO: make a deck iterator, watch some videos on how to do that. this will eliminate the need for the function getCards
 
+#pragma region DeckIterator
+//iterator that iterates through the card elements
+class DeckIterator {
+	typedef std::list<Card>::const_iterator __DeckIterator;
+public:
+	DeckIterator(__DeckIterator iter) : cur(iter) { };
+
+	__DeckIterator operator++() {
+		return ++cur;
+	}
+
+	__DeckIterator operator++(int) {
+		__DeckIterator tmp = cur;
+		cur++;
+		return tmp;
+	}
+
+	bool operator==(const DeckIterator& it) const {
+		return cur == it.cur;
+	}
+
+	bool operator!=(const DeckIterator& it) const {
+		return !(*this == it);
+	}
+
+	const Card& operator*() {
+		return *cur;
+	}
+
+	const Card* operator->() {
+		return &(*cur);
+	}
+
+private:
+	__DeckIterator cur;
+};
+#pragma endregion
+
 //this class represents a deck of 52 cards
 class Deck {
 public:
-	
 	//initializes a full and unshuffled deck
 	Deck();
 	//initializes a deck from a custom list of cards
@@ -64,8 +101,9 @@ public:
 	//return the number of cards in this deck.
 	uint32_t getDeckSize() const;
 
-	//returns a ref to the list of all cards - shouldnt be used if order of cards is supposed to be unknown, should not be modified.
-	std::list<Card>& getCards();
+	DeckIterator begin();
+
+	DeckIterator end();
 
 private:
 	bool b_isEmpty; //whether the deck is empty.

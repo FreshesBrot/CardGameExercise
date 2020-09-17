@@ -85,8 +85,12 @@ uint32_t Deck::getDeckSize() const {
 	return remainingCards;
 }
 
-std::list<Card>& Deck::getCards() {
-	return cards;
+DeckIterator Deck::begin() {
+	return DeckIterator(cards.begin());
+}
+
+DeckIterator Deck::end() {
+	return DeckIterator(cards.end());
 }
 
 void Deck::mergeDecks(Deck& deck) {

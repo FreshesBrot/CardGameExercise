@@ -157,6 +157,7 @@
     <ClCompile Include="CardDecoder.cpp" />
     <ClCompile Include="CardEncoder.cpp" />
     <ClCompile Include="CardGame.cpp" />
+    <ClCompile Include="Command.cpp" />
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="DeckDecoder.cpp" />
     <ClCompile Include="DeckEncoder.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="Card.h" />
     <ClInclude Include="CardDecoder.h" />
     <ClInclude Include="CardEncoder.h" />
+    <ClInclude Include="Command.h" />
     <ClInclude Include="Deck.h" />
     <ClInclude Include="DeckDecoder.h" />
     <ClInclude Include="DeckEncoder.h" />

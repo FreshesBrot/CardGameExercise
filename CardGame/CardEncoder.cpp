@@ -1,6 +1,6 @@
 #include "CardEncoder.h"
 
-byte CardEncoder::Encode(Card& card) {
+byte CardEncoder::Encode(const Card& card) {
 	//first 4 bits hold card number, last 4 bits hold suite
 	byte code = 0x00;
 

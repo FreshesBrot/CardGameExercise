@@ -7,7 +7,7 @@ typedef char byte;
 class CardEncoder {
 public:
 	//encodes the given card into a byte
-	static byte Encode(Card& card);
+	static byte Encode(const Card& card);
 	
 private:
 	
