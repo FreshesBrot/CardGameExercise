@@ -30,11 +30,13 @@ public:
 	//shuts down IO reading
 	void shutdown();
 
+	//returns the identifier for this io stream
+	std::string getIdentifier();
+
+private:
 	//the reading loop that waits for input
 	void readingLoop();
 
-
-private:
 	bool b_running; //ioreader should be running
 	bool b_read; //ioreader should be awaiting input
 	bool b_reading; //ioreader is waiting for input

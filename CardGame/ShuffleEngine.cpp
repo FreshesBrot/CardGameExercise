@@ -13,4 +13,4 @@ void ShuffleEngine::ShuffleDeck(Deck& deck) {
 		ptr->shuffleDeck(deck);
 }
 
-const std::vector<Shuffler*> ShuffleEngine::allShufflers = {new CutShuffle(), new RiffleShuffle()};
+//const std::vector<Shuffler*> ShuffleEngine::allShufflers = {new CutShuffle(), new RiffleShuffle()};

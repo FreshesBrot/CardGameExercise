@@ -40,7 +40,7 @@ void IOReader::readingLoop() {
         if(!b_read) continue;
         
         b_read = false;
-        std::cout << "waiting for input on " << identifier << "\r\n";
+        //std::cout << "waiting for input on " << identifier << "\r\n";
 
 //two ways to read input
 #ifdef getl
@@ -49,8 +49,12 @@ void IOReader::readingLoop() {
         std::cin >> buffer;
 #endif
        
-        std::cout << "input received\n";
+        //std::cout << "input received\n";
 
     b_reading = false;
     }
+}
+
+std::string IOReader::getIdentifier() {
+    return identifier;
 }

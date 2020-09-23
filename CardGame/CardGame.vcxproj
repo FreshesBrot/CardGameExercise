@@ -164,7 +164,9 @@
     <ClCompile Include="DeckLoader.cpp" />
     <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="FileWriter.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Hand.cpp" />
+    <ClCompile Include="HigherGame.cpp" />
     <ClCompile Include="IOParser.cpp" />
     <ClCompile Include="IOReader.cpp" />
     <ClCompile Include="RandomGenerator.cpp" />
@@ -184,7 +186,9 @@
     <ClInclude Include="DeckLoader.h" />
     <ClInclude Include="FileReader.h" />
     <ClInclude Include="FileWriter.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Hand.h" />
+    <ClInclude Include="HigherGame.h" />
     <ClInclude Include="IOParser.h" />
     <ClInclude Include="IOReader.h" />
     <ClInclude Include="RandomGenerator.h" />

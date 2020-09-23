@@ -35,6 +35,12 @@
     <Filter Include="IO\Source">
       <UniqueIdentifier>{dab988a6-b1a6-4e0a-9509-2ccda2414ef7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Header">
+      <UniqueIdentifier>{cafe9e1c-be53-4124-8331-6a0498937f9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Source">
+      <UniqueIdentifier>{89f5a752-d908-4330-ae68-5d4c9cc30899}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Card.cpp">
@@ -94,6 +100,12 @@
     <ClCompile Include="FileWriter.cpp">
       <Filter>IO\Source</Filter>
     </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Game\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="HigherGame.cpp">
+      <Filter>Game\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Card.h">
@@ -149,6 +161,12 @@
     </ClInclude>
     <ClInclude Include="FileWriter.h">
       <Filter>IO\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Game\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="HigherGame.h">
+      <Filter>Game\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

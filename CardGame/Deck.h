@@ -61,7 +61,7 @@ public:
 	Card drawTopCard(); 
 
 	//adds a card to the top of the deck. returns 0 if insert was successfull, and 1 if not.
-	int addCard(Card card);
+	void addCard(Card card);
 
 	//cuts this deck in half and returns the other top half as a new Deck
 	Deck cut();

@@ -4,12 +4,25 @@
 IOParser::IOParser(std::string identifier) :
                                                         reader(identifier), b_hasCommand(0), b_isCommand(0),
                                                         b_hasParamaters(0), paramCount(0), b_hasOptions(0),
-                                                        optCount(0), tokens(0), command(), capturedOptions(0)
+                                                        optCount(0), tokens(0), command(), capturedOptions(0),
+                                                        commands()
 {    
     reader.start();
 }
 
+IOParser::IOParser() : reader("undef") { }
+
 IOParser::~IOParser() { }
+
+IOParser::IOParser(IOParser&& ioparser) noexcept : 
+                                                    reader(ioparser.reader.getIdentifier()), b_hasCommand(0), b_isCommand(0),
+                                                    b_hasParamaters(0), paramCount(0), b_hasOptions(0),
+                                                    optCount(0), tokens(0), command(), 
+                                                    capturedOptions(0), commands(std::move(ioparser.commands))
+{
+    ioparser.reader.~IOReader(); //wait for previous IOthread to shutdown
+    reader.start(); //then start this instances io reader thread
+}
 
 void IOParser::askInput() {
     reader.read();
@@ -61,8 +74,18 @@ bool IOParser::containsOption(const Command::Options& vect, const Token& opt) {
         return false;
 }
 
-bool IOParser::constainsOption(const Command::Options& vect, const Option& opt) {
+bool IOParser::containsOption(const Command::Options& vect, const Option& opt) {
     return containsOption(vect, opt.name);
+}
+
+std::string IOParser::HelperPrinter(IOParser& parser) {
+    std::ostringstream oss;
+    oss << "Known Commands are:\n\n";
+    for (auto& c : parser) {
+        oss << Command::description(c);
+    }
+
+    return oss.str();
 }
 
 void IOParser::trim(std::string& command) {
@@ -74,7 +97,7 @@ void IOParser::trim(std::string& command) {
 void IOParser::tokenize(std::string& command) {
     Token buffer;
     tokens.clear();
-
+    if (!command.size()) return;
     trim(command);
 
     for (auto it = command.begin(); it != command.end(); it++) {

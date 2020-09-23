@@ -24,14 +24,11 @@ Card Deck::drawTopCard() {
 	return draw;
 }
 
-int Deck::addCard(Card card) {
-	bool isValid = card.isValid();
-	remainingCards += isValid;
-	
-	if (isValid)
-		cards.push_back(card);
-	
-	return isValid^0x1;
+void Deck::addCard(Card card) {
+	if (!card.isValid()) return;
+	cards.push_back(card);
+	remainingCards++;
+	b_isEmpty = false;
 }
 
 Deck Deck::cut() {

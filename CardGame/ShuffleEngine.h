@@ -19,6 +19,6 @@ private:
 	const int shuffles; // number of different shuffles that will happen
 	std::vector<Shuffler*> shuffleCycle; //contains all shuffler objects
 
-	static const std::vector<Shuffler*> allShufflers; //contains all possible shufflers
+	static inline std::vector<Shuffler*> allShufflers = { new CutShuffle(), new RiffleShuffle() }; //contains all possible shufflers
 };
 
