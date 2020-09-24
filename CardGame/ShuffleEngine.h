@@ -13,7 +13,7 @@ public:
 	ShuffleEngine(ShuffleEngine&&) = delete;
 
 	//function that takes a reference to a deck that will be shuffled in random ways
-	void ShuffleDeck(Deck& deck);
+	void ShuffleDeck(Deck& deck, uint32_t times = 1);
 
 private:
 	const int shuffles; // number of different shuffles that will happen

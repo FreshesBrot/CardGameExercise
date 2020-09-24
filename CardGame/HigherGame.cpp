@@ -9,7 +9,7 @@ HigherGame::HigherGame(Deck& deck) :
 	setup();
 }
 
-HigherGame::~HigherGame() { Game::~Game(); }
+HigherGame::~HigherGame() { end(); Game::~Game(); }
 
 void HigherGame::start() {
 	b_isRunning = true;
@@ -25,50 +25,50 @@ void HigherGame::gameLoop() {
 	
 	
 	while (b_isRunning) {
-		switch (curState) {
-		//menu procedure
-		case GameState::MENU: {
+		try {
+			switch (curState) {
+				//menu procedure
+				case GameState::MENU: {
 
-			if (b_greeting) {
-				std::cout << "Welcome to the HigherGame! Type \"start\" to play the game.\n";
-				b_greeting = false;
-			}
-			
-			IOParser& menuParser = commandParser[0];
-			menuParser.askInput();
-			if (!menuParser.isCommand()) {
-					std::cout << "Unknown command or wrong syntax.\n";
-					std::cout << helperMessages[0];
-					continue;
-			}
-			
-			Command curCmd = menuParser.getCommand();
-			
-			//this is the macro variant to ask for a command
-			IF_CMD("start",
-				if (curCmd.optCount) {
-					numLives = std::stoi(curCmd.getOption("-lives").parameters[0]);
-				}
-				else numLives = defaultLives;
-				std::cout << "Lets play! Number of lives: " << numLives << ".\n";
-				numOfCards = 0;
-				Game::shuffleEngine.ShuffleDeck(playingDeck); //shuffle twice for fun lolo
-				Game::shuffleEngine.ShuffleDeck(playingDeck);
-				curState = GameState::DRAWING;
-			)
+					if (b_greeting) {
+						std::cout << "Welcome to the HigherGame! Type \"start\" to play the game.\n";
+						b_greeting = false;
+					}
+					
+					IOParser& menuParser = commandParser[0];
+					menuParser.askInput();
 
-			IF_CMD("quit",
-				std::cout << "Goodbye!\n";
-				b_isRunning = false;
-				return;
-			);
+					Command curCmd = menuParser.getCommand();
+					
+					
+					if (curCmd == "start") {
+						try {
+							if (curCmd.optCount) {
+								numLives = std::stoi(curCmd.getOption("-lives").parameters[0]);
+							} else numLives = defaultLives;
+						} catch (Exception& e) {
+							std::cout << e.what() << "\n";
+							std::cout << "Option parameter for \"-lives\" expected an Integer, but got \"" << curCmd.getOption("-lives").parameters[0];
+						}
+						std::cout << "Lets play! Number of lives: " << numLives << ".\n";
+						numOfCards = 0;
+						Game::shuffleEngine.ShuffleDeck(playingDeck, 2);
+						curState = GameState::DRAWING;
+					}
 
-			IF_CMD("help", std::cout << "im helping\n";);
+					if (curCmd == "quit") {
+						std::cout << "Goodbye!\n";
+						b_isRunning = false;
+						return;
+					}
 
-			break;
-			}
-		//drawing procedure
-		case GameState::DRAWING: {
+					if (curCmd == "help")
+						std::cout << helperMessages[0] << "\n";
+
+					break;
+					}
+				//drawing procedure
+				case GameState::DRAWING: {
 
 			if (numOfCards++ == 0) {
 				curCard = playingDeck.drawTopCard();
@@ -82,97 +82,106 @@ void HigherGame::gameLoop() {
 			std::cout << "Will the next card be higher or lower?\n";
 			break;
 		}
-		//guessing procedure
-		case GameState::GUESSING: {
-			if (playingDeck.isEmpty()) {
-					std::cout << "Oh! The deck is empty. Lets just return to the menu!\n";
-					curState = GameState::MENU;
-					playingDeck.mergeDecks(discardPile);
-					continue;
-			}
+				//guessing procedure
+				case GameState::GUESSING: {
+					IOParser& gameParser = commandParser[1];
 
-			IOParser& gameParser = commandParser[1];
-			
-
-			gameParser.askInput();
-			if (!gameParser.isCommand()) {
-				if (!gameParser.isCommand()) {
-					std::cout << "Unknown command or wrong syntax.\n";
-					std::cout << helperMessages[1];
-					continue;
-				}
-			}
-			
-			Command curCmd = gameParser.getCommand();
-				
-			if (curCmd == "guess") {
-				Token& guess = curCmd.parameters[0];
-				
-				
-				if (guess != "higher" && guess != "lower") {
-					std::cout << guess << " is not a valid answer! Type \"higher\" or \"lower\" to guess!\n";
-					continue;
-				}
-
-				bool isHigher = guess == "higher"; //will be 0 in other case
+					gameParser.askInput();
 					
-				Card nextCard = playingDeck.drawTopCard();
-				std::cout << "The next card is " << nextCard.shortString() << "...";
-				
-				bool higherCard = Card::higherNumber(nextCard, curCard); //will be 0 if next card is not higher
-
-				if (isHigher == higherCard) {
-					std::cout << "Correct guess!\n";
-				} else {
-					std::cout << "Wrong guess.." << --numLives << " lives remaining..\n";
-					if (!numLives) {
-						std::cout << "Game Over! Maybe next time!\n Total number of cards: " << numOfCards << "\n";
+					Command curCmd = gameParser.getCommand();
 						
-						discardPile.addCard(curCard);
-						discardPile.addCard(nextCard);
-						playingDeck.mergeDecks(discardPile);
-						curState = GameState::MENU;
+					if (curCmd == "guess") {
+						Token& guess = curCmd.parameters[0];
 						
-						b_greeting = true;
-						std::cout << "Press Enter to go back to the main menu.";
-						std::cin.get();
+						
+						if (guess != "higher" && guess != "lower") {
+							std::cout << guess << " is not a valid answer! Type \"higher\" or \"lower\" to guess!\n";
+							continue;
+						}
 
+						bool isHigher = guess == "higher"; //will be 0 in other case
+						
+						//make sure to catch an empty deck
+						try {
+							Card nextCard = playingDeck.drawTopCard();
+							std::cout << "The next card is " << nextCard.shortString() << "...";
+						
+							bool higherCard = Card::higherNumber(nextCard, curCard); //will be 0 if next card is not higher
+
+							if (isHigher == higherCard) {
+								std::cout << "Correct guess!\n";
+							} else {
+								std::cout << "Wrong guess.." << --numLives << " lives remaining..\n";
+								if (!numLives) {
+									std::cout << "Game Over! Maybe next time!\n Total number of cards: " << numOfCards << "\n";
+									
+									discardPile.addCard(curCard);
+									discardPile.addCard(nextCard);
+									playingDeck.mergeDecks(discardPile);
+									curState = GameState::MENU;
+									
+									b_greeting = true;
+									std::cout << "Press Enter to go back to the main menu.";
+									std::cin.get();
+
+									continue;
+								}
+							}
+							
+							discardPile.addCard(curCard);
+							curCard = nextCard;
+							curState = GameState::DRAWING;
+							continue;
+
+						} catch (DeckException& e) {
+							std::cout << e.what() << " Time to shuffle the deck and keep going!\n";
+							playingDeck.mergeDecks(discardPile);
+							shuffleEngine.ShuffleDeck(playingDeck);
+							continue;
+						}
+
+					}
+
+					if (curCmd == "shuffle") {
+						try {
+							int shuffles = std::stoi(curCmd.parameters[0]);
+							if (!shuffles) 
+								std::cout << "Shuffling 0 times doesnt make sense! Guess higher or lower or shuffle at least once!\n";
+							else {
+								std::cout << "Shuffling deck " << curCmd.parameters[0] << " times before drawing!...\n";
+								shuffleEngine.ShuffleDeck(playingDeck, shuffles);
+							
+								std::cout << "Deck is nice and shuffled!\n";
+							}
+
+						} catch (Exception& e) {
+							std::cout << e.what() << "\n";
+						}
 						continue;
 					}
+
+					if (curCmd == "giveup") {
+						discardPile.addCard(curCard);
+						playingDeck.mergeDecks(discardPile);
+						std::cout << "Lets restart then...\n";
+						curState = GameState::MENU;
+						b_greeting = true;
+						continue;
+					}
+
+					if (curCmd == "help")
+						std::cout << helperMessages[1] << "\n";
+
+					break;
 				}
-				
-				discardPile.addCard(curCard);
-				curCard = nextCard;
-				curState = GameState::DRAWING;
-				continue;
 			}
 
-			if (curCmd == "shuffle") {
-				int shuffles = std::stoi(curCmd.parameters[0]);
-				if (!shuffles) 
-					std::cout << "Shuffling 0 times doesnt make sense! Guess higher or lower or shuffle at least once!\n";
-				else {
-					std::cout << "Shuffling deck " << curCmd.parameters[0] << " times before drawing!...\n";
-					for (int i = 0; i < shuffles; i++)
-						shuffleEngine.ShuffleDeck(playingDeck);
-				
-					std::cout << "Deck is nice and shuffled!\n";
-				}
-
-				continue;
-			}
-
-			if (curCmd == "giveup") {
-				discardPile.addCard(curCard);
-				playingDeck.mergeDecks(discardPile);
-				std::cout << "Lets restart then...\n";
-				curState = GameState::MENU;
-				b_greeting = true;
-				continue;
-			}
-
-			break;
-			}
+		} catch (CommandException& e) {
+			std::cout << "Unknown command or bad syntax.\n" << e.what() << "\n";
+			continue;
+		}
+		catch (Exception& e) {
+			std::cout << "Something went wrong!\n" << e.what() << "\n";
 		}
 	}
 }

@@ -184,10 +184,13 @@
     <ClInclude Include="DeckDecoder.h" />
     <ClInclude Include="DeckEncoder.h" />
     <ClInclude Include="DeckLoader.h" />
+    <ClInclude Include="DeckException.h" />
+    <ClInclude Include="BaseException.h" />
     <ClInclude Include="FileReader.h" />
     <ClInclude Include="FileWriter.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Hand.h" />
+    <ClInclude Include="CommandException.h" />
     <ClInclude Include="HigherGame.h" />
     <ClInclude Include="IOParser.h" />
     <ClInclude Include="IOReader.h" />

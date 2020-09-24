@@ -41,6 +41,9 @@
     <Filter Include="Game\Source">
       <UniqueIdentifier>{89f5a752-d908-4330-ae68-5d4c9cc30899}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Exceptions">
+      <UniqueIdentifier>{c73492cb-43d8-4f22-b183-d63a48f24a54}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Card.cpp">
@@ -167,6 +170,15 @@
     </ClInclude>
     <ClInclude Include="HigherGame.h">
       <Filter>Game\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="DeckException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseException.h">
+      <Filter>Exceptions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

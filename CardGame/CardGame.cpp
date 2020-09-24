@@ -79,16 +79,12 @@ int main() {
 
 	OUT << "Welcome! Type \"play\" to play the HigherGame. Type \"help\" to view the currently active list of commands." << NL;
 
+	const std::string& helperMessage = IOParser::HelperPrinter(parser);
+
 	while (true) {
-		parser.askInput();
+		try {
+			parser.askInput();
 
-		if (!parser.isCommand()) {
-			OUT << "Unknown command or bad syntax." << NL;
-			std::string helperMessage = IOParser::HelperPrinter(parser);
-			OUT << helperMessage;
-		}
-
-		else {
 			Command cmd = parser.getCommand();
 			
 			if (cmd == "play") {
@@ -101,17 +97,22 @@ int main() {
 			}
 
 			if (cmd == "help") {
-				OUT << IOParser::HelperPrinter(parser);
+				OUT << helperMessage;
 				continue;
 			}
 
 			if (cmd == "exit") break;
 
+		} catch (CommandException& e) {
+			OUT << "Unknown command or bad syntax:" << NL << e.what() << NL;
+			continue;
 		}
 	}
 
-	OUT << "byebye" << NL;
+	OUT << "Press enter to exit the program!" << NL;
+	std::cin.get();
 }
+
 #else
 
 int main() {

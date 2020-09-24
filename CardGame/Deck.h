@@ -1,5 +1,6 @@
 #pragma once
 #include "Card.h"
+#include "DeckException.h"
 #include <list>
 
 //TODO: make a deck iterator, watch some videos on how to do that. this will eliminate the need for the function getCards
@@ -57,10 +58,10 @@ public:
 	Deck(Deck&& deck) noexcept;
 
 #pragma region DeckOperations
-	//draws the top card. returns invalid card if no cards are remaining.
+	//draws the top card. throws a DeckException if the deck is empty.
 	Card drawTopCard(); 
 
-	//adds a card to the top of the deck. returns 0 if insert was successfull, and 1 if not.
+	//adds a card to the top of the deck. An invalid card will not be added to the deck.
 	void addCard(Card card);
 
 	//cuts this deck in half and returns the other top half as a new Deck

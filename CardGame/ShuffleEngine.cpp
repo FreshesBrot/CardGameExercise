@@ -8,9 +8,10 @@ ShuffleEngine::ShuffleEngine(int shuffles) : shuffles(shuffles), shuffleCycle(sh
 		shuffleCycle[i] = allShufflers[RAND_INT];
 }
 
-void ShuffleEngine::ShuffleDeck(Deck& deck) {
-	for (Shuffler* ptr : shuffleCycle)
-		ptr->shuffleDeck(deck);
+void ShuffleEngine::ShuffleDeck(Deck& deck, uint32_t times) {
+	for(int i = 0; i < times; i++)
+		for (Shuffler* ptr : shuffleCycle)
+			ptr->shuffleDeck(deck);
 }
 
 //const std::vector<Shuffler*> ShuffleEngine::allShufflers = {new CutShuffle(), new RiffleShuffle()};

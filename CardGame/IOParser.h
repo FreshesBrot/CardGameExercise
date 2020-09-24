@@ -53,7 +53,7 @@ public:
 	IOParser(const IOParser&&) = delete;
 	IOParser(IOParser&& ioparser) noexcept;
 
-	//ask the interpreter to take an input
+	//ask the interpreter to take an input. this function will throw an exception if parsing fails
 	void askInput();
 	
 	//set the list of commands the interperter can recognize
@@ -97,7 +97,8 @@ private:
 	void tokenize(std::string& command); 
 	//trims whitespaces off the end
 	void trim(std::string& command);
-	//checks the current tokens if they are a valid command that can be used. sets several flags that determine state of the interpreter
+	//checks the current tokens if they are a valid command that can be used. sets several flags that determine state of the interpreter.
+	//throws several exceptions during the parsing process
 	void validate();
 	//constructs the command from the tokens
 	void construct();

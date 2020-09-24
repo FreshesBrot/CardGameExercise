@@ -31,7 +31,7 @@ public:
 	void shutdown();
 
 	//returns the identifier for this io stream
-	std::string getIdentifier();
+	const std::string& getIdentifier() const;
 
 private:
 	//the reading loop that waits for input
@@ -40,7 +40,7 @@ private:
 	bool b_running; //ioreader should be running
 	bool b_read; //ioreader should be awaiting input
 	bool b_reading; //ioreader is waiting for input
-	std::string identifier; //identifier for this io thread
+	const std::string identifier; //identifier for this io thread
 	
 	std::string buffer; //buffer containing the read line
 

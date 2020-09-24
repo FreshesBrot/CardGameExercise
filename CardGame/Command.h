@@ -3,6 +3,7 @@
 #include <list>
 #include <string>
 #include <sstream>
+#include "CommandException.h"
 
 //this macro creates a string from a non-string object
 #define STR(name) #name
@@ -75,7 +76,7 @@ struct Command {
 		for (auto& opt : options)
 			if (opt == name) return opt;
 
-		//this is a case where an exception should be thrown! work on that soon 
+		throw CommandException("The option \"" + name + "\" does not exist for this Command!");
 	}
 
 	//this helper function creates a formatted description from a command

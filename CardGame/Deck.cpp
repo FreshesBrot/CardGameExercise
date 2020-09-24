@@ -15,7 +15,8 @@ Deck::Deck(Deck&& deck) noexcept : remainingCards(deck.remainingCards), b_isEmpt
 }
 
 Card Deck::drawTopCard() {
-	if (b_isEmpty) return Card::Invalid();
+	if (b_isEmpty)
+		throw DeckException("You cannot draw a Card from an empty Deck!");
 
 	Card draw = std::move(cards.back());
 	cards.pop_back();

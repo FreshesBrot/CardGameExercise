@@ -55,6 +55,6 @@ void IOReader::readingLoop() {
     }
 }
 
-std::string IOReader::getIdentifier() {
+const std::string& IOReader::getIdentifier() const {
     return identifier;
 }
