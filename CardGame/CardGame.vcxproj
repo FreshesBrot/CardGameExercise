@@ -158,6 +158,7 @@
     <ClCompile Include="CardEncoder.cpp" />
     <ClCompile Include="CardGame.cpp" />
     <ClCompile Include="Command.cpp" />
+    <ClCompile Include="CommandFactory.cpp" />
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="DeckDecoder.cpp" />
     <ClCompile Include="DeckEncoder.cpp" />
@@ -169,6 +170,9 @@
     <ClCompile Include="HigherGame.cpp" />
     <ClCompile Include="IOParser.cpp" />
     <ClCompile Include="IOReader.cpp" />
+    <ClCompile Include="Option.cpp" />
+    <ClCompile Include="OptionFactory.cpp" />
+    <ClCompile Include="ParserFactory.cpp" />
     <ClCompile Include="RandomGenerator.cpp" />
     <ClCompile Include="RiffleShuffle.cpp" />
     <ClCompile Include="ShuffleEngine.cpp" />
@@ -179,7 +183,9 @@
     <ClInclude Include="Card.h" />
     <ClInclude Include="CardDecoder.h" />
     <ClInclude Include="CardEncoder.h" />
+    <ClInclude Include="CardException.h" />
     <ClInclude Include="Command.h" />
+    <ClInclude Include="CommandFactory.h" />
     <ClInclude Include="Deck.h" />
     <ClInclude Include="DeckDecoder.h" />
     <ClInclude Include="DeckEncoder.h" />
@@ -194,6 +200,9 @@
     <ClInclude Include="HigherGame.h" />
     <ClInclude Include="IOParser.h" />
     <ClInclude Include="IOReader.h" />
+    <ClInclude Include="Option.h" />
+    <ClInclude Include="OptionFactory.h" />
+    <ClInclude Include="ParserFactory.h" />
     <ClInclude Include="RandomGenerator.h" />
     <ClInclude Include="RiffleShuffle.h" />
     <ClInclude Include="ShuffleEngine.h" />

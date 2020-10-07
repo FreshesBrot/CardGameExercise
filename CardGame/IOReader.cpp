@@ -1,7 +1,11 @@
 #include "IOReader.h"
 #define getl
 
-IOReader::IOReader(std::string identifier) : b_running(false), b_read(false), b_reading(false), identifier(identifier) { }
+IOReader::IOReader(std::string identifier) : b_running(false), b_read(false), b_reading(false), identifier(identifier), buffer() { }
+
+IOReader::IOReader(IOReader&& reader) noexcept : b_running(false), b_read(false), b_reading(false), identifier(std::move(identifier)), buffer(std::move(reader.buffer)) {
+    reader.shutdown();
+}
 
 IOReader::~IOReader() {
     shutdown();
@@ -55,6 +59,6 @@ void IOReader::readingLoop() {
     }
 }
 
-const std::string& IOReader::getIdentifier() const {
+std::string IOReader::getIdentifier() const {
     return identifier;
 }

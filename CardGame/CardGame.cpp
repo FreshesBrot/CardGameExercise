@@ -1,16 +1,14 @@
-// CardGame.cpp : Diese Datei enthält die Funktion "main". Hier beginnt und endet die Ausführung des Programms.
-// Language Standard: C++17
-
+// CardGame - A test to see if i could make a interactive card game over the command line
+// working period: 09/2020
+#pragma once
 #include <iostream>
-#define OUT std::cout
 //#define TESTING
 
-#include "Hand.h"
-#include "Deck.h"
 #include "DeckLoader.h"
 #include "ShuffleEngine.h"
 #include "IOParser.h"
 #include "HigherGame.h"
+#define OUT std::cout
 #define NL "\n"
 
 
@@ -18,7 +16,6 @@
 
 #define DECKFILE "deck.deckf"
 #define CARDCODE(code) printf("0x%02X\n", code)
-typedef Command::Options Options;
 
 #pragma region Card/Deck Functions
 void showHand(Hand& hand) {
@@ -59,50 +56,50 @@ void peekDeck(Deck& deck) {
 #pragma endregion
 
 int main() {
-	IOParser parser("TopLevelParser");
-	Game* curGame = 0x0;
+	Token playDescr = "Starts the HigherGame.";
 
-	COMMAND(play, 0);
-	play.descr = "Starts the HigherGame.";
-	COMMAND(help, 0);
-	help.descr = "Prints the helper message. This message is also printed if an unknown command is given to the interpreter.";
-	COMMAND(exit, 0);
-	exit.descr = "Exits and terminates the program";
-	
-	Commands commands;
-	commands.push_back(play);
-	commands.push_back(help);
-	commands.push_back(exit);
-	
+	Token helpDescr = "Prints the helper message. This message is also printed if an unknown command is given to the interpreter.";
 
-	parser.setCommands(std::move(commands));
+	Token exitDescr = "Exits and terminates the program";
+	
+	Token herlperMessage;
+
+	bool b_run = true;
+
+	IOParser parser = ParserFactory(3).putName("TopLevelParser").putCommand (
+		//play command
+		CommandFactory().putName("play").putDescription(&playDescr).putFunction( 
+			Executor([](Command&) -> void {
+				Deck deck;
+				Game* curGame = new HigherGame(deck);
+				curGame->start();
+				delete curGame;
+			})
+		)
+	).putCommand(
+		//help command
+		CommandFactory().putName("help").putDescription(&helpDescr).putFunction(
+			Executor([&herlperMessage](Command&) -> void {
+				OUT << herlperMessage << NL;
+			})
+		)
+	).putCommand(
+		//exit command
+		CommandFactory().putName("exit").putDescription(&exitDescr).putFunction(
+			Executor([&b_run](Command&) -> void {
+				OUT << "Goodbye!\n";
+				b_run = false;
+			})
+		)
+	).finish();
+
+	herlperMessage = IOParser::HelperPrinter(parser);
 
 	OUT << "Welcome! Type \"play\" to play the HigherGame. Type \"help\" to view the currently active list of commands." << NL;
 
-	const std::string& helperMessage = IOParser::HelperPrinter(parser);
-
-	while (true) {
+	while (b_run) {
 		try {
 			parser.askInput();
-
-			Command cmd = parser.getCommand();
-			
-			if (cmd == "play") {
-				Deck deck;
-				curGame = new HigherGame(deck);
-				curGame->start();
-				delete curGame;
-				continue;
-
-			}
-
-			if (cmd == "help") {
-				OUT << helperMessage;
-				continue;
-			}
-
-			if (cmd == "exit") break;
-
 		} catch (CommandException& e) {
 			OUT << "Unknown command or bad syntax:" << NL << e.what() << NL;
 			continue;

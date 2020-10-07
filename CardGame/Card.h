@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-
+#include "CardException.h"
 
 //enum that holds all suits for the cards
 enum Suite {
@@ -24,6 +24,9 @@ public:
 
 	//constructs an invalid card
 	inline static Card Invalid() { return Card(Suite(0), 0); };
+
+	//tries to convert a (short!!) string card representation into a card object. throws an exception if conversion fails
+	static Card toCard(std::string arg);
 
 	//getters (cards will not change after intialization)
 	

@@ -31,7 +31,7 @@ private:
 	
 	bool b_greeting; //flag to determine if the player needs to be greeted.
 
-	static const int defaultLives = 3;
+	static constexpr int defaultLives = 3;
 
 };
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "Deck.h"
 #include "IOParser.h"
+#include "ParserFactory.h"
 #include "Hand.h"
 #include "ShuffleEngine.h"
 

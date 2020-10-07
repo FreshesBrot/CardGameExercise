@@ -9,7 +9,7 @@ public:
 	//constructor needs an identifier string, useful to keep several io threads apart
 	IOReader(std::string identifier);
 	IOReader(const IOReader&) = delete;
-	IOReader(IOReader&&) = delete;
+	IOReader(IOReader&& reader) noexcept;
 	~IOReader();
 
 	//starts the IOReader
@@ -31,7 +31,7 @@ public:
 	void shutdown();
 
 	//returns the identifier for this io stream
-	const std::string& getIdentifier() const;
+	std::string getIdentifier() const;
 
 private:
 	//the reading loop that waits for input

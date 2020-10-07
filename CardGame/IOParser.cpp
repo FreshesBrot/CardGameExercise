@@ -1,12 +1,9 @@
 #include "IOParser.h"
+#include "CommandFactory.h"
+
 #define IS_OPTION (*it)[0] == '-'
 
-IOParser::IOParser(std::string identifier) :
-                                                        reader(identifier), b_hasCommand(0), b_isCommand(0),
-                                                        b_hasParamaters(0), paramCount(0), b_hasOptions(0),
-                                                        optCount(0), tokens(0), command(), capturedOptions(0),
-                                                        commands()
-{    
+IOParser::IOParser(std::string identifier, Commands&& allCommands) : reader(identifier), commands(allCommands), tokens() {    
     reader.start();
 }
 
@@ -14,67 +11,19 @@ IOParser::IOParser() : reader("undef") { }
 
 IOParser::~IOParser() { }
 
-IOParser::IOParser(IOParser&& ioparser) noexcept : 
-                                                    reader(std::move(ioparser.reader.getIdentifier())), b_hasCommand(0), b_isCommand(0),
-                                                    b_hasParamaters(0), paramCount(0), b_hasOptions(0),
-                                                    optCount(0), tokens(0), command(), 
-                                                    capturedOptions(0), commands(std::move(ioparser.commands))
-{
-    ioparser.reader.~IOReader(); //wait for previous IOthread to shutdown
-    reader.start(); //then start this instances io reader thread
-}
-
-void IOParser::askInput() {
-    reader.read();
-    while (reader.isReading());
-    Token command = reader.getBuffer();
-    tokenize(command);
-}
-
-void IOParser::setCommands(std::vector<Command>&& commands) {
-    this->commands = commands;
-}
-
-Command&& IOParser::getCommand() {
-    tokens.clear();
-    capturedOptions.clear();
-    b_isCommand = false;
-    b_hasCommand = false;
-    b_hasParamaters = false;
-    b_hasParamaters = false;
-    paramCount = 0;
-    optCount = 0;
+IOParser::IOParser(IOParser&& ioparser) noexcept :  
+        reader(std::move(ioparser.reader)) /*moving ioreader shuts it down*/, tokens(std::move(ioparser.tokens)), commands(std::move(ioparser.commands)) {
     
-    return std::move(command);
+    reader.start(); //start this instances ioreader thread
 }
 
-bool IOParser::hasCommand() const {
-    return b_hasCommand;
-}
-
-bool IOParser::isCommand() const {
-    return b_isCommand;
-}
-
-bool IOParser::hasParameters() const {
-    return b_hasParamaters;
-}
-
-uint16_t IOParser::getParameterCount() const {
-    return paramCount;
-}
-
-bool IOParser::hasOptions() const {
-    return b_hasOptions;
-}
-
-bool IOParser::containsOption(const Command::Options& vect, const Token& opt) {
+bool IOParser::containsOption(const Options& vect, const Token& opt) {
         for (auto& option : vect)
             if (option == opt) return true;
         return false;
 }
 
-bool IOParser::containsOption(const Command::Options& vect, const Option& opt) {
+bool IOParser::containsOption(const Options& vect, const Option& opt) {
     return containsOption(vect, opt.name);
 }
 
@@ -88,120 +37,123 @@ std::string IOParser::HelperPrinter(IOParser& parser) {
     return oss.str();
 }
 
-void IOParser::trim(std::string& command) {
-    int offs = command.size();
-    for (auto it = command.end()-1; *it-- == ' '; offs--);
-    command = command.substr(0, offs);
+void IOParser::askInput() {
+    reader.read();
+    while (reader.isReading());
+    Token buffer = reader.getBuffer();
+    trim(buffer);
+    if (buffer.size() == 0)
+        throw CommandException("No command was provided.");
+    tokenize(buffer);
+    buildAndExecute();
 }
 
-void IOParser::tokenize(std::string& command) {
-    Token buffer;
-    tokens.clear();
-    if (!command.size()) return;
-    trim(command);
+void IOParser::trim(std::string& command) {
+    if(command.size() == 0) return;
+    
+    //trim end
+    int offs = command.size();
+    for (auto it = command.end()-1; it != command.begin() && *it-- == ' '; offs--);
+    command = command.substr(0, offs);
+    
+    //trim front
+    offs = 0;
+    for (auto it = command.begin(); it != command.end() && *it++ == ' '; offs++);
+    command = command.substr(offs, command.size());
 
-    for (auto it = command.begin(); it != command.end(); it++) {
-        char c = *it;
-        if (c != ' ')
-            buffer += c;
-        else
-            tokens.push_back(Token(std::move(buffer)));
+    //trim inbetween
+    for (auto it = command.begin(); it != command.end()-1;) {
+        auto nextChar = it + 1;
+        if (*it == ' ' && *it == *nextChar)
+            it = command.erase(it);
+        else it++;
     }
 
-    tokens.push_back(Token(std::move(buffer)));
-
-    b_hasCommand = true;
-    validate();
-
-    if(b_isCommand)
-        construct();
 }
 
-void IOParser::validate() {
-    //this function needs to throw a lot of exceptions, so a proper exception system will be required soon
+void IOParser::tokenize(Token& buffer) {
+    tokens.clear();
+    Token next;
 
+    for (auto c : buffer) {
+        if (c != ' ')
+            next += c;
+        else {
+            tokens.push_back(next);
+            next.clear();
+            continue;
+        }
+    }
+    tokens.push_back(next);
+}
+
+void IOParser::buildAndExecute() {
     TokenList::iterator it = tokens.begin();
-    
+
+    if (it == tokens.end())
+        throw CommandException("No input was provided!");
+
     //step 1) see if the read command is part of this parser
     Command* ref = 0x0;
     for (auto& c : commands) {
         if (ref) break;
-        if (c == (*tokens.begin())) {
+        if (c == (*tokens.begin())) 
             ref = &c;
-            it++;
-        }
+        
     }
-    
+
     //throw an exception if the command is not part of the command set
     if (!ref) throw CommandException("The command " + *it + " does not exist!");
 
-    //step 2) go through all the provided options and check if they are correctly parsed (options before parameters, correct amt of parameters for a option)
+    CommandFactory newCommand = CommandFactory().putName(*it++);
+    
+    //step 2) go through all the provided options (if any) and check if they are correctly parsed (options before parameters, correct amt of parameters for a option)
     //go through all tokens and check for all options and if they come before paramters. also check if options are valid
     for (; it != tokens.end();) {
         //check if an option has been captured
         if (IS_OPTION) {
-            Token option = *it;
-            it = tokens.erase(it); // to make checking parameters easier, erase the option from the token list
+            Token& optionName = *it++;
+            
+            //see if the option exists, and if its valid
+            const Option& refOption = ref->getOption(optionName); //this will throw an exception which is passed up the call stack
+            
+            OptionFactory newOption;
+            newOption.putName(optionName);
 
-            //if the command allows arbitrary, skip this step and focus on syntax
-            if (!ref->b_allowArbitrary) {
-
-                //see if the option exists, and if its valid
-                    const Option& refOption = ref->getOption(option); //this will throw an exception which is passed up the call stack
-                    Option newOption(refOption.name, refOption.paramCount);
-
-                    //this for loop guarantees that the right amount of parameters are captured. if there are not enough
-                    //or too many options, validation will fail
-                    for (int i = 0; i < newOption.paramCount; i++) {
-                        if (it == tokens.end() || IS_OPTION) 
-                            throw CommandException("The option \"" + refOption.name + "\" takes " + std::to_string(refOption.paramCount) + " parameters!");
-                        newOption.parameters.push_back(*it);
-                        //erase the read option parameter from the vector
-                        it = tokens.erase(it);
-                    }
-
-                    capturedOptions.push_back(newOption);
+            //this for loop guarantees that the right amount of parameters are captured. if there are not enough
+            //or too many options, validation will fail
+            for (auto& type : refOption.types) {
+                if (it == tokens.end() || IS_OPTION)
+                    throw CommandException("The option \"" + refOption.name + "\" takes " + std::to_string(refOption.argCount) + " parameters!");
                 
-            } else capturedOptions.push_back(Option(option, 0)); //if arbitrary is active, options will not take parameters
-        
-        } else break;
-    }
+                newOption.addArgument(type, *it++); //try to parse the argument and add it to the factory. throws an exception if parsing fails
 
-    //if all options have been checked, see if rest of tokens have out of place option identifiers or if too many/not enough arguments for command call have been passed
-    int count = 0;
-    for (; it != tokens.end(); it++) {
-        if (IS_OPTION) { //throw an exception if too many parameters for the option were provided
-            Option& refOption = *(--capturedOptions.end());
-            throw CommandException("The option \"" + refOption.name + "\" takes " + std::to_string(refOption.paramCount) + " parameters!");
+            }
+
+            newCommand.putOption(newOption);
         }
-        count++;
+        else break;
     }
 
-    count *= ref->b_allowArbitrary ^ 0x1;
+    //step 3) if all options have been checked, see if rest of tokens have out of place option identifiers or if too many/
+    //not enough arguments for command call have been passed
+    for (auto& type : ref->argTypes) {
+        if (it == tokens.end())
+            throw CommandException("The Command \"" + *tokens.begin() + "\" takes " + std::to_string(ref->argCount) + " arguments!");
 
-    if (count != ref->paramCount) //an exception is thrown if the number of provided parameters is wrong
-        throw CommandException("The command \"" + ref->name + "\" takes " + std::to_string(ref->paramCount) + " parameters!");
+        if (IS_OPTION)
+            throw CommandException("The option identifier \"" + *it + "\" is out of place!");
 
-    b_isCommand = true;
-    optCount = capturedOptions.size();
-    b_hasOptions = optCount;
-    
-    paramCount = tokens.size() - 1;
-    b_hasParamaters = paramCount;
+        newCommand.addArgument(type, *it++); //throws an exception if parsing for this token fails
+    }
+
+    if (it != tokens.end())
+        throw CommandException("Too many arguments/tokens are provided for Command \"" + *tokens.begin() + "\"!");
+
+    //step 4) if iterator is at the end of the token list, everything should have been parsed correctly and construction and execution of command will begin
+    Command cmd = newCommand.finish();
+
+    ref->executor(cmd);
 }
 
-void IOParser::construct() {
-    auto it = tokens.begin();
 
-    command.name = *it++;
-    command.optCount = optCount;
-    command.paramCount = paramCount;
-
-    if(b_hasOptions)
-        for (auto opt : capturedOptions)
-            command.options.push_back(opt);
-
-    if(b_hasParamaters)
-        for (it; it != tokens.end(); it++)
-            command.parameters.push_back(*it);
-}

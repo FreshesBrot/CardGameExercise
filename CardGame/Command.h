@@ -1,68 +1,37 @@
 #pragma once
-#include <vector>
-#include <list>
-#include <string>
 #include <sstream>
+#include "Option.h"
 #include "CommandException.h"
+#include <functional>
 
-//this macro creates a string from a non-string object
-#define STR(name) #name
-//this macro makes it easier to define new commands
-#define COMMAND(cmd, params) Command cmd(params); \
-cmd.name = STR(cmd)
+class Command;
 
-struct Command;
-typedef std::string Token;
-typedef std::list<Token> TokenList;
-typedef std::vector<Token> TokenVector;
 typedef std::vector<Command> Commands;
+typedef std::function<void(Command&)> Executor;
+//typedef void (*Executor)(Command&);
 
-//this class encapsulates an option and if it needs a parameter and how many
-struct Option {
-
-	Option(std::string option, uint16_t paramters) : name(option), descr(), b_needsParam(paramters), paramCount(paramters), parameters((int)0) { };
-	Option() : name(""), b_needsParam(0), paramCount(0), parameters(0) { };
-	Option(const Option& o) = default;
-	Option(Option&&) = default;
-
-	Option& operator=(const Option&) = default;
-
-	bool operator==(const std::string& name) const {
-		return this->name == name;
-	}
-
-	bool operator!=(const std::string& name) const {
-		return !(*this == name);
-	}
-
-	Token name;
-	Token descr;
-	bool b_needsParam;
-	uint16_t paramCount;
-	TokenVector parameters;
-
-};
-
-//this struct holds information about a single command with options and parameters
-struct Command {
-	typedef std::vector<Option> Options;
+//this struct holds information about a single command with options, parameters and their types as well as the executable function of the command
+class Command {
+public:
 	friend class IOParser;
 
-	Command(uint16_t parameters, bool arbitrary = false) : name(), paramCount(parameters), optCount(0), parameters(paramCount), options(optCount), b_allowArbitrary(arbitrary) { };
-	Command() : name(""), paramCount(0), optCount(0), parameters(paramCount), options(optCount), b_allowArbitrary(0) { };
+	Command();
+	~Command() { } //arguments might need heap allocations
 	Command(const Command&) = default;
-	Command(Command&& cmd) = default;
+	Command(Command&& cmd);
 
 	Command& operator=(const Command& cmd) = default;
-	
+
 	Token name; //name of the command
 	Token descr; //description of this command
-	uint16_t paramCount; //amount of parameters the command takes
+	uint16_t argCount; //amount of parameters the command takes
 	uint16_t optCount; //amount of options the command takes
 
-	TokenVector parameters; //all parameters
+	ArgTypes argTypes; //all expected argument types
+	Arguments arguments; //all parameters
 	Options options; //all options
-
+	
+	Executor executor; //the function that is executed for this command.
 
 	bool operator==(const std::string& str) const {
 		return this->name == str;
@@ -72,33 +41,27 @@ struct Command {
 		return !(*this == str);
 	}
 
-	Option& getOption(const Token& name) {
-		for (auto& opt : options)
-			if (opt == name) return opt;
+	Option& getOption(const Token& name);
 
-		throw CommandException("The option \"" + name + "\" does not exist for this Command!");
+	//retrieves type cast argument from arguments list
+	template<typename Arg>
+	static Arg& getArgument(Command& cmd, int where) {
+		if (where >= cmd.arguments.size())
+			throw CommandException("Tried to access an argument at out of bounds position.");
+		
+		return *static_cast<Arg*>(cmd.arguments[where]);
+	}
+
+	template<typename Arg>
+	static Arg& getArgument(Option& opt, int where) {
+		if (where >= opt.arguments.size())
+			throw CommandException("Tried to access an argument at out of bounds position.");
+
+		return *static_cast<Arg*>(opt.arguments[where]);
+
 	}
 
 	//this helper function creates a formatted description from a command
-	static std::string description(const Command& cmd) {
-		std::ostringstream oss;
-		oss << "\"" << cmd.name << "\":\n";
-		//if the command description is too long, make sure some line breaks are added every 20-30 characters or so
-		oss << cmd.descr << "\n";
+	static std::string description(const Command& cmd);
 
-		if (cmd.options.size()) {
-			oss << "Options for this Command:\n\n";
-			for (auto& opt : cmd.options) {
-				oss << "\"" << opt.name << "\": - ";
-				oss << opt.descr << "\n";
-			}
-		}
-		
-		oss << "---------\n\n";
-
-		return oss.str();
-	}
-
-private:
-	bool b_allowArbitrary; //whether options can be arbitrary and will not invalidate the command
 };
