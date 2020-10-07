@@ -5,19 +5,19 @@ byte CardEncoder::Encode(const Card& card) {
 	byte code = 0x00;
 
 	switch (card.getSuite()) {
-		case HEARTS:
+	case Suite::HEARTS:
 			code = 0x10;
 			break;
-		case DIAMONDS:
+	case Suite::DIAMONDS:
 			code = 0x20;
 			break;
-		case CLUBS:
+	case Suite::CLUBS:
 			code = 0x30;
 			break;
-		case SPADES:
+	case Suite::SPADES:
 			code = 0x40;
 			break;
-		default:
+	default:
 			return 0x00;
 	}
 

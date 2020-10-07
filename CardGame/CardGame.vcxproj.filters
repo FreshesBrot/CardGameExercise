@@ -44,14 +44,14 @@
     <Filter Include="Exceptions">
       <UniqueIdentifier>{c73492cb-43d8-4f22-b183-d63a48f24a54}</UniqueIdentifier>
     </Filter>
-    <Filter Include="IO\Commands">
-      <UniqueIdentifier>{6fc63189-3ca8-4ee5-851c-5716b4ae2880}</UniqueIdentifier>
+    <Filter Include="Commands">
+      <UniqueIdentifier>{010e842c-e58a-41c1-ba82-68725b01ab84}</UniqueIdentifier>
     </Filter>
-    <Filter Include="IO\Commands\Header">
-      <UniqueIdentifier>{adb7de55-9043-41d2-a5d9-6eb9c711991a}</UniqueIdentifier>
+    <Filter Include="Commands\Header">
+      <UniqueIdentifier>{dd9830f1-1f7d-432d-bbde-ed0479310721}</UniqueIdentifier>
     </Filter>
-    <Filter Include="IO\Commands\Source">
-      <UniqueIdentifier>{93d2ccf6-e7cf-48a0-a71c-3acc1bbbc723}</UniqueIdentifier>
+    <Filter Include="Commands\Source">
+      <UniqueIdentifier>{1709b4ef-2ec6-4ca3-bf92-62e41e7c25bd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -94,9 +94,6 @@
     <ClCompile Include="Hand.cpp">
       <Filter>Cards\Source</Filter>
     </ClCompile>
-    <ClCompile Include="IOReader.cpp">
-      <Filter>IO\Source</Filter>
-    </ClCompile>
     <ClCompile Include="DeckLoader.cpp">
       <Filter>IO\Source</Filter>
     </ClCompile>
@@ -112,23 +109,26 @@
     <ClCompile Include="HigherGame.cpp">
       <Filter>Game\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Command.cpp">
-      <Filter>IO\Commands\Source</Filter>
-    </ClCompile>
     <ClCompile Include="IOParser.cpp">
-      <Filter>IO\Commands\Source</Filter>
+      <Filter>IO\Source</Filter>
     </ClCompile>
-    <ClCompile Include="ParserFactory.cpp">
-      <Filter>IO\Commands\Source</Filter>
+    <ClCompile Include="IOReader.cpp">
+      <Filter>IO\Source</Filter>
     </ClCompile>
-    <ClCompile Include="OptionFactory.cpp">
-      <Filter>IO\Commands\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Option.cpp">
-      <Filter>IO\Commands\Source</Filter>
+    <ClCompile Include="Command.cpp">
+      <Filter>Commands\Source</Filter>
     </ClCompile>
     <ClCompile Include="CommandFactory.cpp">
-      <Filter>IO\Commands\Source</Filter>
+      <Filter>Commands\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Option.cpp">
+      <Filter>Commands\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="OptionFactory.cpp">
+      <Filter>Commands\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ParserFactory.cpp">
+      <Filter>Commands\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -168,9 +168,6 @@
     <ClInclude Include="Hand.h">
       <Filter>Cards\Header</Filter>
     </ClInclude>
-    <ClInclude Include="IOReader.h">
-      <Filter>IO\Header</Filter>
-    </ClInclude>
     <ClInclude Include="DeckLoader.h">
       <Filter>IO\Header</Filter>
     </ClInclude>
@@ -195,26 +192,29 @@
     <ClInclude Include="BaseException.h">
       <Filter>Exceptions</Filter>
     </ClInclude>
-    <ClInclude Include="Command.h">
-      <Filter>IO\Commands\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="IOParser.h">
-      <Filter>IO\Commands\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="CommandFactory.h">
-      <Filter>IO\Commands\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Option.h">
-      <Filter>IO\Commands\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="OptionFactory.h">
-      <Filter>IO\Commands\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="ParserFactory.h">
-      <Filter>IO\Commands\Header</Filter>
-    </ClInclude>
     <ClInclude Include="CardException.h">
       <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="IOReader.h">
+      <Filter>IO\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="IOParser.h">
+      <Filter>IO\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Commands\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandFactory.h">
+      <Filter>Commands\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Option.h">
+      <Filter>Commands\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionFactory.h">
+      <Filter>Commands\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ParserFactory.h">
+      <Filter>Commands\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

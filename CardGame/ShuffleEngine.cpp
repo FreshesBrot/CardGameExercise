@@ -9,7 +9,7 @@ ShuffleEngine::ShuffleEngine(int shuffles) : shuffles(shuffles), shuffleCycle(sh
 }
 
 void ShuffleEngine::ShuffleDeck(Deck& deck, uint32_t times) {
-	for(int i = 0; i < times; i++)
+	for(uint32_t i = 0; i < times; i++)
 		for (Shuffler* ptr : shuffleCycle)
 			ptr->shuffleDeck(deck);
 }

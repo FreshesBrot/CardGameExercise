@@ -3,7 +3,7 @@
 #include "CardException.h"
 
 //enum that holds all suits for the cards
-enum Suite {
+enum class Suite {
 	INVALID = 0,
 	HEARTS,
 	DIAMONDS,
@@ -23,7 +23,7 @@ public:
 	Card(Card&&) = default;
 
 	//constructs an invalid card
-	inline static Card Invalid() { return Card(Suite(0), 0); };
+	inline static Card Invalid() { return Card(Suite::INVALID, 0); };
 
 	//tries to convert a (short!!) string card representation into a card object. throws an exception if conversion fails
 	static Card toCard(std::string arg);

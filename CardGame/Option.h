@@ -27,7 +27,7 @@ class Option {
 public:
 	Option(std::string option, uint16_t paramters);
 	Option();
-	~Option() {}
+	~Option() { }
 	Option(const Option&) = default;
 	Option(Option&&) = default;
 

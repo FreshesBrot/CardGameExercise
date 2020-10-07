@@ -3,7 +3,7 @@
 
 IOReader::IOReader(std::string identifier) : b_running(false), b_read(false), b_reading(false), identifier(identifier), buffer() { }
 
-IOReader::IOReader(IOReader&& reader) noexcept : b_running(false), b_read(false), b_reading(false), identifier(std::move(identifier)), buffer(std::move(reader.buffer)) {
+IOReader::IOReader(IOReader&& reader) noexcept : b_running(false), b_read(false), b_reading(false), identifier(reader.identifier), buffer(std::move(reader.buffer)) {
     reader.shutdown();
 }
 

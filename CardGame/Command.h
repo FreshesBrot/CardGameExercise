@@ -16,9 +16,9 @@ public:
 	friend class IOParser;
 
 	Command();
-	~Command() { } //arguments might need heap allocations
+	~Command() { } 
 	Command(const Command&) = default;
-	Command(Command&& cmd);
+	Command(Command&& cmd) noexcept;
 
 	Command& operator=(const Command& cmd) = default;
 

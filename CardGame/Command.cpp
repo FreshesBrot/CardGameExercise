@@ -2,7 +2,7 @@
 
 Command::Command() : name(""), descr(), argCount(0), optCount(0), argTypes(0), arguments(0), options(0), executor(nullptr) { }
 
-Command::Command(Command&& cmd) :
+Command::Command(Command&& cmd) noexcept :
 	name(std::move(cmd.name)), descr(std::move(cmd.descr)), argCount(cmd.argCount), argTypes(std::move(cmd.argTypes)),
 	arguments(std::move(cmd.arguments)), options(std::move(cmd.options)) {
 	

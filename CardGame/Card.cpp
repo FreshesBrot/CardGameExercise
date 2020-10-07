@@ -1,14 +1,15 @@
 #include "Card.h"
+#define CALC_ID (int)order[(int)this->suite] * 13 + this->number
 
-Card::Card(Suite suite, unsigned int number) {
-	bool eval = !(number < 2 || number > 14 || suite < 1 || suite > 4);
-	this->suite = Suite(suite * eval);
-	this->number = number * eval;
-	this->cardID = order[this->suite] * 13 + this->number;
-	this->b_isValid = eval;
+Card::Card(Suite suite, unsigned int number) : suite(Suite::INVALID), number(0), b_isValid(false), cardID(0) {
+	if(number < 2 || number > 14) return;
+	this->suite = suite;
+	this->number = number;
+	this->cardID = CALC_ID;
+	this->b_isValid = true;
 }
 
-Card::Card() : suite(Suite(1)), number(2), b_isValid(1), cardID(order[this->suite] * 13 + this->number) { }
+Card::Card() : suite(Suite(1)), number(2), b_isValid(1), cardID(CALC_ID) { }
 
 Card Card::toCard(std::string arg) {
 	if (arg.size() < 2 || arg.size() > 3)
@@ -55,12 +56,12 @@ bool Card::isValid() const {
 }
 
 std::string Card::toString() const {
-	return numbers[number] + " OF " + suites[suite];
+	return numbers[number] + " OF " + suites[(int)suite];
 
 }
 
 std::string Card::shortString() const {
-	return numbersShort[number] + suitesShort[suite];
+	return numbersShort[number] + suitesShort[(int)suite];
 }
 
 bool Card::operator==(const Card& card) const {
@@ -72,7 +73,7 @@ bool Card::operator!=(const Card& card) const {
 }
 
 bool Card::higherSuite(const Card& c1, const Card& c2) {
-	return order[c1.suite] > order[c2.suite];
+	return order[(int)c1.suite] > order[(int)c2.suite];
 }
 
 bool Card::higherNumber(const Card& c1, const Card& c2) {
