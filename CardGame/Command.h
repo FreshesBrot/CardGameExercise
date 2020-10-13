@@ -56,9 +56,8 @@ public:
 	static Arg& getArgument(Option& opt, int where) {
 		if (where >= opt.arguments.size())
 			throw CommandException("Tried to access an argument at out of bounds position.");
-
+		
 		return *static_cast<Arg*>(opt.arguments[where]);
-
 	}
 
 	//this helper function creates a formatted description from a command

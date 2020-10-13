@@ -34,8 +34,8 @@ Card Card::toCard(std::string arg) {
 	default:
 		break;
 	}
-
-	int number = std::stoi(arg.substr(0,arg.size()-2)); //get rest of string (from [0,0] if size == 2 (single char), or [0,1] if size == 3)
+	std::string substr = arg.substr(0, arg.size() - 1);
+	int number = std::stoi(substr); //get rest of string (from [0,0] if size == 2 (single char), or [0,1] if size == 3)
 	Card card(suite, number);
 	if (!card.isValid())
 		throw CardException("Provided argument \"" + arg + "\" could not be parsed into a card!");

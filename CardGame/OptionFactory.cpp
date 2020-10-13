@@ -18,23 +18,24 @@ OptionFactory& OptionFactory::putArguments(ArgTypes arguments) {
 }
 
 OptionFactory& OptionFactory::addArgument(const ArgType& type, Token arg) {
-	switch (type) {
-	case ArgType::STRING:
-		option.arguments.push_back(new Token(arg));
-		break;
-	case ArgType::INT:
-		try {
+	try {
+		switch (type) {
+		case ArgType::INT:
 			option.arguments.push_back(new int(std::stoi(arg)));
-		} catch (std::exception&) {
-			throw CommandException("Option \""+option.name+"\" expects an integer as argument nr. " + std::to_string(option.arguments.size()+1) + " but got \""+arg+"\"!");
+			break;
+		case ArgType::STRING:
+			option.arguments.push_back(new Token(arg));
+			break;
+		case ArgType::CARD:
+			option.arguments.push_back(new Card(Card::toCard(arg)));
+			break;
 		}
-		break;
-	case ArgType::CARD:
-		option.arguments.push_back(new Card(Card::toCard(arg)));
-		break;
+	} catch (std::exception& e) {
+		Token t = Token(e.what());
+		throw CommandException(t + "\n" +
+			"Option \"" + option.name + "\" expects an " + ArgAsToken(type) + " as argument nr. " + std::to_string(option.arguments.size() + 1) +
+			" but got \"" + arg + "\"!");
 	}
-
-	option.argCount++;
 
 	return *this;
 }

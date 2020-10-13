@@ -26,4 +26,17 @@ public:
 private:
 	Option finish(); //called by CommandFactory once option is done
 	Option option; //internal option
+
+	//helper function
+	inline static Token ArgAsToken(const ArgType& arg) {
+		switch (arg) {
+		case ArgType::STRING:
+			return "string";
+		case ArgType::INT:
+			return "integer";
+		case ArgType::CARD:
+			return "card";
+		}
+	}
+
 };

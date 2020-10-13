@@ -9,7 +9,7 @@
 #include "IOParser.h"
 #include "HigherGame.h"
 #define OUT std::cout
-#define NL "\n"
+#define NL std::endl
 
 
 #ifndef TESTING
@@ -89,6 +89,16 @@ int main() {
 			Executor([&b_run](Command&) -> void {
 				OUT << "Goodbye!\n";
 				b_run = false;
+			})
+		)
+	).putCommand(
+		//test command to take parsing inputs
+		CommandFactory().putName("test").putArguments({ ArgType::STRING, ArgType::INT, ArgType::CARD }).putFunction(
+			Executor([](Command& cmd) -> void {
+				Token& arg0 = Command::getArgument<Token>(cmd, 0);
+				int& arg1 = Command::getArgument<int>(cmd, 1);
+				Card& arg2 = Command::getArgument<Card>(cmd, 2);
+				OUT << arg0 << NL << std::to_string(arg1) << NL << arg2.shortString() << NL;
 			})
 		)
 	).finish();
