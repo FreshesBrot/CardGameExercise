@@ -9,7 +9,7 @@
 class DeckLoader {
 public:
 	//initializes loading the deck specified by the filename. 
-	DeckLoader(FILENAME fileName);
+	DeckLoader(const FILENAME& fileName);
 
 	Deck loadDeck();
 	void saveDeck(Deck& deck);

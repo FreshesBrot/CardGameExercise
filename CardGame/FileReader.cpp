@@ -1,8 +1,6 @@
 #include "FileReader.h"
 
-FileReader::FileReader(FILENAME fileName) : fs() {
-	this->fileName = fileName;
-}
+FileReader::FileReader(const FILENAME& fileName) : fileName(fileName), fs() { }
 
 FileReader::~FileReader() {
 	Close();

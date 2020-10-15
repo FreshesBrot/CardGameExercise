@@ -107,6 +107,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,6 +145,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -180,12 +182,14 @@
     <ClCompile Include="CutShuffle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseFactory.h" />
     <ClInclude Include="Card.h" />
     <ClInclude Include="CardDecoder.h" />
     <ClInclude Include="CardEncoder.h" />
     <ClInclude Include="CardException.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandFactory.h" />
+    <ClInclude Include="CommandTypes.h" />
     <ClInclude Include="Deck.h" />
     <ClInclude Include="DeckDecoder.h" />
     <ClInclude Include="DeckEncoder.h" />

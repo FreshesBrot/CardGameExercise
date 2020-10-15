@@ -3,7 +3,7 @@
 
 #define IS_OPTION (*it)[0] == '-'
 
-IOParser::IOParser(std::string identifier, Commands&& allCommands) : reader(identifier), commands(allCommands), tokens() {    
+IOParser::IOParser(const Token& identifier, Commands&& allCommands) : reader(identifier), commands(allCommands), tokens(), b_suspended(false) {    
     reader.start();
 }
 
@@ -12,7 +12,7 @@ IOParser::IOParser() : reader("undef") { }
 IOParser::~IOParser() { }
 
 IOParser::IOParser(IOParser&& ioparser) noexcept :  
-        reader(std::move(ioparser.reader)) /*moving ioreader shuts it down*/, tokens(std::move(ioparser.tokens)), commands(std::move(ioparser.commands)) {
+        reader(std::move(ioparser.reader)) /*moving ioreader shuts it down*/, tokens(std::move(ioparser.tokens)), commands(std::move(ioparser.commands)), b_suspended(false) {
     
     reader.start(); //start this instances ioreader thread
 }
@@ -48,24 +48,42 @@ void IOParser::askInput() {
     buildAndExecute();
 }
 
-void IOParser::trim(std::string& command) {
-    if(command.size() == 0) return;
+void IOParser::suspend() {
+    if (!b_suspended) {
+        b_suspended = true;
+        reader.shutdown();
+    }
+}
+
+void IOParser::restart() {
+    if (b_suspended) {
+        b_suspended = false;
+        reader.start();
+    }
+}
+
+bool IOParser::isSuspended() const {
+    return b_suspended;
+}
+
+void IOParser::trim(Token& buffer) {
+    if(buffer.size() == 0) return;
     
     //trim end
-    int offs = command.size();
-    for (auto it = command.end()-1; it != command.begin() && *it-- == ' '; offs--);
-    command = command.substr(0, offs);
+    int offs = buffer.size();
+    for (auto it = buffer.end()-1; it != buffer.begin() && *it-- == ' '; offs--);
+    buffer = buffer.substr(0, offs);
     
     //trim front
     offs = 0;
-    for (auto it = command.begin(); it != command.end() && *it++ == ' '; offs++);
-    command = command.substr(offs, command.size());
+    for (auto it = buffer.begin(); it != buffer.end() && *it++ == ' '; offs++);
+    buffer = buffer.substr(offs, buffer.size());
 
     //trim inbetween
-    for (auto it = command.begin(); it != command.end()-1;) {
+    for (auto it = buffer.begin(); it != buffer.end()-1;) {
         auto nextChar = it + 1;
         if (*it == ' ' && *it == *nextChar)
-            it = command.erase(it);
+            it = buffer.erase(it);
         else it++;
     }
 
@@ -122,7 +140,7 @@ void IOParser::buildAndExecute() {
 
             //this for loop guarantees that the right amount of parameters are captured. if there are not enough
             //or too many options, validation will fail
-            for (auto& type : refOption.types) {
+            for (auto& type : refOption.argTypes) {
                 if (it == tokens.end() || IS_OPTION)
                     throw CommandException("The option \"" + refOption.name + "\" takes " + std::to_string(refOption.argCount) + " parameters!");
                 

@@ -1,7 +1,7 @@
 #include "Card.h"
 #define CALC_ID (int)order[(int)this->suite] * 13 + this->number
 
-Card::Card(Suite suite, unsigned int number) : suite(Suite::INVALID), number(0), b_isValid(false), cardID(0) {
+Card::Card(Suite suite, uint32_t number) : suite(Suite::INVALID), number(0), b_isValid(false), cardID(0) {
 	if(number < 2 || number > 14) return;
 	this->suite = suite;
 	this->number = number;
@@ -11,7 +11,7 @@ Card::Card(Suite suite, unsigned int number) : suite(Suite::INVALID), number(0),
 
 Card::Card() : suite(Suite(1)), number(2), b_isValid(1), cardID(CALC_ID) { }
 
-Card Card::toCard(std::string arg) {
+Card Card::toCard(const std::string& arg) {
 	if (arg.size() < 2 || arg.size() > 3)
 		throw CardException("Provided argument \"" + arg + "\" could not be parsed into a card!");
 

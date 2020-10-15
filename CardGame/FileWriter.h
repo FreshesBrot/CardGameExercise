@@ -10,7 +10,7 @@ typedef char byte;
 class FileWriter {
 public:
 
-	FileWriter(FILENAME fileName);
+	FileWriter(const FILENAME& fileName);
 	~FileWriter();
 
 	//opens the file stream and is ready to write

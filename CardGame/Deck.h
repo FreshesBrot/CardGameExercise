@@ -3,16 +3,16 @@
 #include "DeckException.h"
 #include <list>
 
-//TODO: make a deck iterator, watch some videos on how to do that. this will eliminate the need for the function getCards
+typedef std::list<Card> Cards;
 
 #pragma region DeckIterator
 //iterator that iterates through the card elements
 class DeckIterator {
 	typedef std::list<Card>::const_iterator __DeckIterator;
 public:
-	DeckIterator(__DeckIterator iter) : cur(iter) { };
+	DeckIterator(const __DeckIterator& iter) : cur(iter) { };
 
-	__DeckIterator operator++() {
+	__DeckIterator& operator++() {
 		return ++cur;
 	}
 
@@ -49,10 +49,10 @@ public:
 	//initializes a full and unshuffled deck
 	Deck();
 	//initializes a deck from a custom list of cards
-	Deck(std::list<Card> cards);
+	Deck(const Cards& cards);
 
-	//decks shouldnt be copied
 	Deck(const Deck&) = delete;
+	Deck& operator=(const Deck&) = delete;
 
 	//move constructor for quick construction of lists from returned anonymous decks
 	Deck(Deck&& deck) noexcept;
@@ -62,7 +62,7 @@ public:
 	Card drawTopCard(); 
 
 	//adds a card to the top of the deck. An invalid card will not be added to the deck.
-	void addCard(Card card);
+	void addCard(const Card& card);
 
 	//cuts this deck in half and returns the other top half as a new Deck
 	Deck cut();
@@ -91,7 +91,7 @@ public:
 #pragma endregion
 
 	//creates an empty Deck
-	inline static Deck emptyDeck() { return Deck(std::list<Card>()); };
+	inline static Deck emptyDeck() { return Deck(Cards()); };
 
 	//returns false if the deck still remains cards, and true if there are no more cards.
 	bool isEmpty() const;
@@ -109,10 +109,10 @@ public:
 private:
 	bool b_isEmpty; //whether the deck is empty.
 
-	std::list<Card> cards; //all cards in the deck.
+	Cards cards; //all cards in the deck.
 	uint32_t remainingCards; //number of remaining cards in the deck.
 
 	//helper function that returns a list of cards that are cut from this deck. this function alters the deck size. specify wether to take cards from the top or bottom (0 = top, rest = bottom)
-	std::list<Card> cutCardList(int amount, int side = 0);
+	Cards cutCardList(int amount, int side = 0);
 };
 

@@ -5,7 +5,7 @@ ParserFactory::ParserFactory(uint32_t reserve) : commands() {
 }
 ParserFactory::~ParserFactory() { }
 
-ParserFactory& ParserFactory::putName(Token name) {
+ParserFactory& ParserFactory::putName(const Token& name) {
 	this->parserName = name;
 	return *this;
 }

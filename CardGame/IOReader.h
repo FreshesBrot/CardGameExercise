@@ -7,7 +7,7 @@
 class IOReader {
 public:
 	//constructor needs an identifier string, useful to keep several io threads apart
-	IOReader(std::string identifier);
+	IOReader(const std::string& identifier);
 	IOReader(const IOReader&) = delete;
 	IOReader(IOReader&& reader) noexcept;
 	~IOReader();

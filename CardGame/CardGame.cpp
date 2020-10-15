@@ -1,7 +1,8 @@
 // CardGame - A test to see if i could make a interactive card game over the command line
-// working period: 09/2020
+// working period: 09/2020-10/2020
 #pragma once
 #include <iostream>
+#include <new>
 //#define TESTING
 
 #include "DeckLoader.h"
@@ -12,7 +13,12 @@
 #define NL std::endl
 
 
-#ifndef TESTING
+static int counter = 0;
+void* operator new(std::size_t size) {
+	counter++;
+	return malloc(size);
+}
+
 
 #define DECKFILE "deck.deckf"
 #define CARDCODE(code) printf("0x%02X\n", code)
@@ -26,6 +32,7 @@ void showHand(Hand& hand) {
 
 	OUT << NL;
 }
+
 void drawDeck(Deck& deck) {
 	int count = 12;
 	while (!deck.isEmpty()) {
@@ -55,59 +62,68 @@ void peekDeck(Deck& deck) {
 }
 #pragma endregion
 
+void countAllocs() {
+
+
+}
+
+#ifndef TESTING
 int main() {
-	Token playDescr = "Starts the HigherGame.";
-
-	Token helpDescr = "Prints the helper message. This message is also printed if an unknown command is given to the interpreter.";
-
-	Token exitDescr = "Exits and terminates the program";
-	
 	Token herlperMessage;
 
 	bool b_run = true;
+	bool b_greet = true;
+	int count = counter;
+	int countDiff = 0;
 
 	IOParser parser = ParserFactory(3).putName("TopLevelParser").putCommand (
 		//play command
-		CommandFactory().putName("play").putDescription(&playDescr).putFunction( 
-			Executor([](Command&) -> void {
+		CommandFactory().putName("play").putDescription("Starts the HigherGame.").putFunction(
+			Executor([&parser, &b_greet](Command&) -> void {
 				Deck deck;
-				Game* curGame = new HigherGame(deck);
-				curGame->start();
-				delete curGame;
+				parser.suspend();
+				HigherGame(deck).start();
+				parser.restart();
+				b_greet = true;
 			})
 		)
 	).putCommand(
 		//help command
-		CommandFactory().putName("help").putDescription(&helpDescr).putFunction(
+		CommandFactory().putName("help").putDescription("Prints the helper message. This message is also printed if"
+														" an unknown command is given to the interpreter.").putFunction(
 			Executor([&herlperMessage](Command&) -> void {
 				OUT << herlperMessage << NL;
 			})
 		)
 	).putCommand(
 		//exit command
-		CommandFactory().putName("exit").putDescription(&exitDescr).putFunction(
+		CommandFactory().putName("exit").putDescription("Exits and terminates the program").putFunction(
 			Executor([&b_run](Command&) -> void {
 				OUT << "Goodbye!\n";
 				b_run = false;
 			})
 		)
 	).putCommand(
-		//test command to take parsing inputs
-		CommandFactory().putName("test").putArguments({ ArgType::STRING, ArgType::INT, ArgType::CARD }).putFunction(
-			Executor([](Command& cmd) -> void {
-				Token& arg0 = Command::getArgument<Token>(cmd, 0);
-				int& arg1 = Command::getArgument<int>(cmd, 1);
-				Card& arg2 = Command::getArgument<Card>(cmd, 2);
-				OUT << arg0 << NL << std::to_string(arg1) << NL << arg2.shortString() << NL;
-			})
+		CommandFactory().putName("allocs").putDescription("Shows how many allocations total and since last call have been made.").putFunction(
+			Executor([&count,&countDiff](Command&) -> void {
+					OUT << "Total allocations: " << counter << NL;
+					countDiff = counter - count;
+					OUT << "Total new allocations: " << countDiff << NL;
+					count = counter;
+				})
 		)
 	).finish();
 
 	herlperMessage = IOParser::HelperPrinter(parser);
 
-	OUT << "Welcome! Type \"play\" to play the HigherGame. Type \"help\" to view the currently active list of commands." << NL;
-
+	
 	while (b_run) {
+
+		if (b_greet) {
+			OUT << "Welcome! Type \"play\" to play the HigherGame. Type \"help\" to view the currently active list of commands." << NL;
+			b_greet = false;
+		}
+
 		try {
 			parser.askInput();
 		} catch (CommandException& e) {
@@ -123,6 +139,15 @@ int main() {
 #else
 
 int main() {
+	Deck deck;
+	OUT << "Allocations:\n " << counter << NL;
+
+	CutShuffle shuffler;
+	shuffler.shuffleDeck(deck);
+
+	peekDeck(deck);
+
+	OUT << counter << NL;
 
 }
 

@@ -1,8 +1,6 @@
 #include "FileWriter.h"
 
-FileWriter::FileWriter(FILENAME fileName) {
-	this->fileName = fileName;
-}
+FileWriter::FileWriter(const FILENAME& fileName) : fileName(fileName), fs() { }
 
 FileWriter::~FileWriter() {
 	Close();

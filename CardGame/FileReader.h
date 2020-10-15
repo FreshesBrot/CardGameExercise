@@ -11,7 +11,7 @@ typedef char byte;
 class FileReader {
 public:
 
-	FileReader(FILENAME fileName);
+	FileReader(const FILENAME& fileName);
 	~FileReader();
 
 	//opens the file stream for reading

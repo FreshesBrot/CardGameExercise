@@ -33,11 +33,11 @@ public:
 	
 	Executor executor; //the function that is executed for this command.
 
-	bool operator==(const std::string& str) const {
+	bool operator==(const Token& str) const {
 		return this->name == str;
 	}
 
-	bool operator!=(const std::string& str) const {
+	bool operator!=(const Token& str) const {
 		return !(*this == str);
 	}
 

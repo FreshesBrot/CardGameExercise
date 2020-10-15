@@ -1,19 +1,17 @@
 #pragma once
 #include "IOReader.h"
 #include "Command.h"
-#include <vector>
-#include <list>
 #define IO_CONTAINS(elem) IOParser::containsOption(cmd.options, elem)
 
 //an iterator that makes scrolling through all possible commands easier
 class CommandIterator {
 	typedef Commands::const_iterator __CmdIterator;
 public:
-	CommandIterator(__CmdIterator iter) : cur(iter) { };
+	CommandIterator(const __CmdIterator& iter) : cur(iter) { };
 	CommandIterator(const CommandIterator&) = default;
 	CommandIterator(CommandIterator&&) = default;
 	
-	__CmdIterator operator++() {
+	__CmdIterator& operator++() {
 		return ++cur;
 	}
 
@@ -50,14 +48,23 @@ public:
 	friend ParserFactory; //make parserfactory to capsulate access to setCommands
 
 	//construct a new io interpreter with a new ioreader thread
-	IOParser(std::string identifier, Commands&& alLCommands = { });
+	IOParser(const Token& identifier, Commands&& allCommands = { });
 	IOParser();
 	~IOParser();
-	IOParser(const IOParser&&) = delete;
+	IOParser(const IOParser&) = delete;
 	IOParser(IOParser&& ioparser) noexcept;
 
 	//ask the interpreter to take an input and execute it. this function will throw an exception if parsing fails
 	void askInput();
+
+	//suspends this parser from waiting for input
+	void suspend();
+
+	//restarts the parser after it has been suspended
+	void restart();
+
+	//returns whether this IOReader is currently inactive or not
+	bool isSuspended() const;
 
 	//iterator beginning to iterate through commands
 	CommandIterator begin() {
@@ -76,18 +83,18 @@ public:
 	static std::string HelperPrinter(IOParser& parser);
 
 private:
-	void tokenize(Token& buffer);
+	bool b_suspended; //whether this IOReader is currently not active or not
 
+	//tokenizes the input from the IOReader into managable tokens
+	void tokenize(Token& buffer);
 	//builds the command and executes it.
 	void buildAndExecute();
 	//trims whitespaces off the end
-	void trim(std::string& command);
+	void trim(Token& buffer);
 
 
 	IOReader reader; //the ioreader that takes the inputs
-
 	TokenList tokens; //list of all captured tokens
-	
 	Commands commands; //all commands that are recognized	
 };
 

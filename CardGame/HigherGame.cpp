@@ -9,7 +9,7 @@ HigherGame::HigherGame(Deck& deck) :
 	setup();
 }
 
-HigherGame::~HigherGame() { end(); Game::~Game(); }
+HigherGame::~HigherGame() { end(); /*Game::~Game();*/ }
 
 void HigherGame::start() {
 	b_isRunning = true;
@@ -175,8 +175,8 @@ void HigherGame::setup() {
 	auto parserMenu = ParserFactory(3).putName("HigherGameParserMenu").putCommand(
 
 		//start command
-		CommandFactory().putName("start").putDescription(&startDescr).putOption(
-			OptionFactory().putName("-lives").putArguments({ ArgType::INT }).putDescription(&optLivesDescr)
+		CommandFactory().putName("start").putDescription(startDescr).putOption(
+			OptionFactory().putName("-lives").putArguments({ ArgType::INT }).putDescription(optLivesDescr)
 		).putFunction(
 			Executor([this](Command& curCmd) -> void {
 				if (curCmd.optCount)
@@ -191,7 +191,7 @@ void HigherGame::setup() {
 		)
 	).putCommand(
 		//quit command
-		CommandFactory().putName("quit").putDescription(&quitDescr).putFunction(
+		CommandFactory().putName("quit").putDescription(quitDescr).putFunction(
 			Executor([this](Command&) -> void {
 				std::cout << "Goodbye!\n";
 				b_isRunning = false;
@@ -199,7 +199,7 @@ void HigherGame::setup() {
 		)
 	).putCommand(
 		//help command
-		CommandFactory().putName("help").putDescription(&helpDescr).putFunction(
+		CommandFactory().putName("help").putDescription(helpDescr).putFunction(
 			Executor([this](Command&) -> void {
 				std::cout << helperMessages[0]; //this in a lambda capture adds "this->" to members implicitly
 			})
@@ -208,7 +208,7 @@ void HigherGame::setup() {
 
 	auto parserGame = ParserFactory(4).putName("HigherGameParserGame").putCommand(
 		//guess command
-		CommandFactory().putName("guess").putDescription(&guessDescr).putArguments({ ArgType::STRING }).putFunction(
+		CommandFactory().putName("guess").putDescription(guessDescr).putArguments({ ArgType::STRING }).putFunction(
 			Executor([this](Command& cmd) -> void {
 				Token& guess = Command::getArgument<Token>(cmd, 0);
 
@@ -258,7 +258,7 @@ void HigherGame::setup() {
 		)
 	).putCommand(
 		//shuffle command
-		CommandFactory().putName("shuffle").putDescription(&shuffleDescr).putArguments({ ArgType::INT }).putFunction(
+		CommandFactory().putName("shuffle").putDescription(shuffleDescr).putArguments({ ArgType::INT }).putFunction(
 			Executor([this](Command& cmd) {
 				int& shuffles = Command::getArgument<int>(cmd, 0);
 				if (!shuffles)
@@ -273,7 +273,7 @@ void HigherGame::setup() {
 		)
 	).putCommand(
 		//giveup command
-		CommandFactory().putName("giveup").putDescription(&giveupDescr).putFunction([this](Command&) -> void {
+		CommandFactory().putName("giveup").putDescription(giveupDescr).putFunction([this](Command&) -> void {
 				discardPile.addCard(curCard);
 				playingDeck.mergeDecks(discardPile);
 				std::cout << "Lets restart then...\n";
@@ -283,7 +283,7 @@ void HigherGame::setup() {
 			})
 	).putCommand(
 		//help command
-		CommandFactory().putName("help").putDescription(&helpDescr).putFunction(
+		CommandFactory().putName("help").putDescription(helpDescr).putFunction(
 			Executor([this](Command&) -> void {
 				std::cout << helperMessages[1]; 
 				})

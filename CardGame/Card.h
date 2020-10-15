@@ -15,7 +15,7 @@ enum class Suite {
 class Card {
 public:
 	//constructs a new card. number values outside of [2,14] are invalid.
-	Card(Suite suite, unsigned int number);
+	Card(Suite suite, uint32_t number);
 	//will construct a 2 of hearts
 	Card();
 	//cards cannot be copied
@@ -26,7 +26,7 @@ public:
 	inline static Card Invalid() { return Card(Suite::INVALID, 0); };
 
 	//tries to convert a (short!!) string card representation into a card object. throws an exception if conversion fails
-	static Card toCard(std::string arg);
+	static Card toCard(const std::string& arg);
 
 	//getters (cards will not change after intialization)
 	

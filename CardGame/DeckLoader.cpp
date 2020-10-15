@@ -1,6 +1,6 @@
 #include "DeckLoader.h"
 
-DeckLoader::DeckLoader(FILENAME fileName) : fileName(fileName) { }
+DeckLoader::DeckLoader(const FILENAME& fileName) : fileName(fileName) { }
 
 Deck DeckLoader::loadDeck() {
 	

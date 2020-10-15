@@ -109,9 +109,6 @@
     <ClCompile Include="HigherGame.cpp">
       <Filter>Game\Source</Filter>
     </ClCompile>
-    <ClCompile Include="IOParser.cpp">
-      <Filter>IO\Source</Filter>
-    </ClCompile>
     <ClCompile Include="IOReader.cpp">
       <Filter>IO\Source</Filter>
     </ClCompile>
@@ -128,6 +125,9 @@
       <Filter>Commands\Source</Filter>
     </ClCompile>
     <ClCompile Include="ParserFactory.cpp">
+      <Filter>Commands\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="IOParser.cpp">
       <Filter>Commands\Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -198,9 +198,6 @@
     <ClInclude Include="IOReader.h">
       <Filter>IO\Header</Filter>
     </ClInclude>
-    <ClInclude Include="IOParser.h">
-      <Filter>IO\Header</Filter>
-    </ClInclude>
     <ClInclude Include="Command.h">
       <Filter>Commands\Header</Filter>
     </ClInclude>
@@ -214,6 +211,15 @@
       <Filter>Commands\Header</Filter>
     </ClInclude>
     <ClInclude Include="ParserFactory.h">
+      <Filter>Commands\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseFactory.h">
+      <Filter>Commands\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandTypes.h">
+      <Filter>Commands\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="IOParser.h">
       <Filter>Commands\Header</Filter>
     </ClInclude>
   </ItemGroup>

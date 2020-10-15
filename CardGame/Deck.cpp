@@ -8,15 +8,17 @@ Deck::Deck() : b_isEmpty(false), remainingCards(52) {
 			cards.push_back(Card(Suite(i), j));
 }
 
-Deck::Deck(std::list<Card> cards) : b_isEmpty(cards.empty()), cards(cards), remainingCards(cards.size()) { }
+Deck::Deck(const Cards& cards) : b_isEmpty(cards.empty()), cards(cards), remainingCards(cards.size()) { }
 
 Deck::Deck(Deck&& deck) noexcept : remainingCards(deck.remainingCards), b_isEmpty(deck.b_isEmpty), cards() {
+	deck.remainingCards = 0;
+	deck.b_isEmpty = true;
 	cards.splice(cards.begin(), deck.cards);
 }
 
 Card Deck::drawTopCard() {
 	if (b_isEmpty)
-		throw DeckException("You cannot draw a Card from an empty Deck!");
+		throw DeckException("Attempting to draw a Card from an empty Deck!");
 
 	Card draw = std::move(cards.back());
 	cards.pop_back();
@@ -25,7 +27,7 @@ Card Deck::drawTopCard() {
 	return draw;
 }
 
-void Deck::addCard(Card card) {
+void Deck::addCard(const Card& card) {
 	if (!card.isValid()) return;
 	cards.push_back(card);
 	remainingCards++;
@@ -37,14 +39,10 @@ Deck Deck::cut() {
 }
 
 Deck Deck::cut(uint32_t amount) {
-	if (!amount) return Deck(std::list<Card>());
-	if (amount >= remainingCards) {
-		remainingCards = 0;
-		b_isEmpty = true;
-		std::list<Card> newDeck;
-		newDeck.splice(newDeck.begin(), cards);
-		return Deck(newDeck);
-	}
+	if (!amount)
+		return Deck(Cards());
+	if (amount >= remainingCards)
+		return std::move(*this);
 	
 	return Deck(cutCardList(amount));
 }
@@ -54,14 +52,10 @@ Deck Deck::cutBottom() {
 }
 
 Deck Deck::cutBottom(uint32_t amount) {
-	if (!amount) return Deck(std::list<Card>());
-	if (amount >= remainingCards) {
-		remainingCards = 0;
-		b_isEmpty = true;
-		std::list<Card> newDeck;
-		newDeck.splice(newDeck.begin(), cards);
-		return Deck(newDeck);
-	}
+	if (!amount) 
+		return Deck(Cards());
+	if (amount >= remainingCards) 
+		return std::move(*this);
 
 	return Deck(cutCardList(amount, 1));
 }
@@ -93,9 +87,9 @@ DeckIterator Deck::end() {
 
 void Deck::mergeDecks(Deck& deck) {
 	if (deck.isEmpty()) return;
+	b_isEmpty = false;
 	
 	remainingCards += deck.getDeckSize();
-	b_isEmpty = !remainingCards;
 
 	cards.splice(cards.end(), deck.cards);
 
@@ -124,21 +118,18 @@ void Deck::sort(bool(*comp)(const Card&, const Card&)) {
 	cards.sort(comp);
 }
 
-std::list<Card> Deck::cutCardList(int amount, int side) {
+Cards Deck::cutCardList(int amount, int side) {
 
-	std::list<Card> cards2;
+	Cards cards2;
 
 	if (side) { //handle cutting from the bottom
 		auto it = IT_BEGIN;
 		std::advance(it, amount);
-		cards2 = std::list<Card>(IT_BEGIN, it);
-		cards.erase(IT_BEGIN, it);
-	
+		cards2.splice(cards2.begin(), cards, IT_BEGIN, it);
 	} else { //handle cutting from the top
 		auto it = IT_END;
 		std::advance(it, -amount);
-		cards2 = std::list<Card>(it, IT_END);
-		cards.erase(it, IT_END);
+		cards2.splice(cards2.begin(), cards, it, IT_END);
 	}
 
 	remainingCards -= amount;
