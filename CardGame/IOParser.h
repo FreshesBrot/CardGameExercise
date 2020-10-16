@@ -48,7 +48,7 @@ public:
 	friend ParserFactory; //make parserfactory to capsulate access to setCommands
 
 	//construct a new io interpreter with a new ioreader thread
-	IOParser(const Token& identifier, Commands&& allCommands = { });
+	IOParser(Token&& identifier, Commands&& allCommands = { });
 	IOParser();
 	~IOParser();
 	IOParser(const IOParser&) = delete;

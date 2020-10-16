@@ -17,7 +17,7 @@ public:
 	CommandFactory& putOption(OptionFactory& option);
 
 	//sets the execution function for the command
-	CommandFactory& putFunction(Executor function);
+	CommandFactory& putFunction(Executor&& function);
 	
 	Command finish();
 

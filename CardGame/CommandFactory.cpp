@@ -10,8 +10,8 @@ CommandFactory& CommandFactory::putOption(OptionFactory& option) {
 	return *this;
 }
 
-CommandFactory& CommandFactory::putFunction(Executor function) {
-	internal.executor = std::move(function);
+CommandFactory& CommandFactory::putFunction(Executor&& function) {
+	internal.executor = function;
 	return *this;
 }
 

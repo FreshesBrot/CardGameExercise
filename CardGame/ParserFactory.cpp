@@ -5,8 +5,8 @@ ParserFactory::ParserFactory(uint32_t reserve) : commands() {
 }
 ParserFactory::~ParserFactory() { }
 
-ParserFactory& ParserFactory::putName(const Token& name) {
-	this->parserName = name;
+ParserFactory& ParserFactory::putName(Token&& name) {
+	parserName = name;
 	return *this;
 }
 
@@ -17,7 +17,7 @@ ParserFactory& ParserFactory::putCommand(CommandFactory& command) {
 }
 
 IOParser ParserFactory::finish() {
-	IOParser newParser(parserName,std::move(commands));
+	IOParser newParser(std::move(parserName),std::move(commands));
 
 	return newParser; //this thing causes a move error, investigate later
 }

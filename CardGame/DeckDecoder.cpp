@@ -7,5 +7,5 @@ Deck DeckDecoder::Decode() {
 	for (auto i = 0u; i < blockSize; i++)
 		cards.push_back(CardDecoder::Decode(dataBlock[i]));
 
-	return Deck(cards);
+	return Deck(std::move(cards));
 }

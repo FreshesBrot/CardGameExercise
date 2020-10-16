@@ -62,11 +62,6 @@ void peekDeck(Deck& deck) {
 }
 #pragma endregion
 
-void countAllocs() {
-
-
-}
-
 #ifndef TESTING
 int main() {
 	Token herlperMessage;
@@ -142,14 +137,20 @@ int main() {
 	Deck deck;
 	OUT << "Allocations:\n " << counter << NL;
 
-	CutShuffle shuffler;
-	shuffler.shuffleDeck(deck);
-
-	peekDeck(deck);
+	Shuffler* shuffler = &CutShuffle();
+	shuffler->shuffleDeck(deck);
 
 	OUT << counter << NL;
+	int cur = counter;
 
+	shuffler = &RiffleShuffle();
+
+	shuffler->shuffleDeck(deck);
+
+	OUT << counter << NL;
+	OUT << "New since last: " << (counter-cur) << NL;
+
+	peekDeck(deck);
 }
-
 
 #endif

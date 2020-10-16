@@ -10,7 +10,7 @@ public:
 	~ParserFactory();
 
 	//declare the name of the IOParser
-	ParserFactory& putName(const Token& name);
+	ParserFactory& putName(Token&& name);
 
 	//add a command to the IOParser
 	ParserFactory& putCommand(CommandFactory& command);

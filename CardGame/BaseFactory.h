@@ -9,13 +9,18 @@ public:
 	~BaseFactory() { };
 
 	//sets the name for the Storage type
-	FacType& putName(const Token&name) {
+	FacType& putName(Token&& name) {
 		internal.name = name;
 		return *factory;
 	}
 
+	//retrieves the given name of the object
+	Token& getName() {
+		return internal.name;
+	}
+
 	//sets the description for the Storage type
-	FacType& putDescription(const Token& descr) {
+	FacType& putDescription(Token&& descr) {
 		internal.descr = descr;
 		return *factory;
 	}

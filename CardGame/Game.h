@@ -4,6 +4,7 @@
 #include "ParserFactory.h"
 #include "Hand.h"
 #include "ShuffleEngine.h"
+#include <memory>
 
 //TODOS: the games should have a unordered map with game states mapping to the apropriate commands
 
@@ -32,7 +33,7 @@ public:
 
 protected:
 	//Internal shuffle engine all games can use
-	static ShuffleEngine shuffleEngine;
+	inline static std::unique_ptr<ShuffleEngine> shuffleEngine = std::make_unique<ShuffleEngine>();
 
 	//constructor is private, so that each game instance can initiate everything that is needed by itself
 	Game(Deck& deck, Players players);

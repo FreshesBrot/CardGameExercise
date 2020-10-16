@@ -35,29 +35,29 @@ void Deck::addCard(const Card& card) {
 }
 
 Deck Deck::cut() {
-	return Deck(cutCardList(remainingCards / 2));
+	return std::move(Deck(cutCardList(remainingCards / 2)));
 }
 
 Deck Deck::cut(uint32_t amount) {
 	if (!amount)
-		return Deck(Cards());
+		return std::move(Deck(Cards()));
 	if (amount >= remainingCards)
 		return std::move(*this);
 	
-	return Deck(cutCardList(amount));
+	return std::move(Deck(cutCardList(amount)));
 }
 
 Deck Deck::cutBottom() {
-	return Deck(cutCardList(remainingCards / 2, 1));
+	return std::move(Deck(cutCardList(remainingCards / 2, 1)));
 }
 
 Deck Deck::cutBottom(uint32_t amount) {
 	if (!amount) 
-		return Deck(Cards());
+		return std::move(Deck(Cards()));
 	if (amount >= remainingCards) 
 		return std::move(*this);
 
-	return Deck(cutCardList(amount, 1));
+	return std::move(Deck(std::move(cutCardList(amount, 1))));
 }
 
 bool Deck::isEmpty() const {

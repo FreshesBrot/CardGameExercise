@@ -3,7 +3,7 @@
 
 #define IS_OPTION (*it)[0] == '-'
 
-IOParser::IOParser(const Token& identifier, Commands&& allCommands) : reader(identifier), commands(allCommands), tokens(), b_suspended(false) {    
+IOParser::IOParser(Token&& identifier, Commands&& allCommands) : reader(std::move(identifier)), commands(allCommands), tokens(), b_suspended(false) {    
     reader.start();
 }
 
@@ -123,7 +123,7 @@ void IOParser::buildAndExecute() {
     //throw an exception if the command is not part of the command set
     if (!ref) throw CommandException("The command " + *it + " does not exist!");
 
-    CommandFactory newCommand = CommandFactory().putName(*it++);
+    CommandFactory newCommand = CommandFactory().putName(std::move(*it++));
     
     //step 2) go through all the provided options (if any) and check if they are correctly parsed (options before parameters, correct amt of parameters for a option)
     //go through all tokens and check for all options and if they come before paramters. also check if options are valid
@@ -136,7 +136,7 @@ void IOParser::buildAndExecute() {
             const Option& refOption = ref->getOption(optionName); //this will throw an exception which is passed up the call stack
             
             OptionFactory newOption;
-            newOption.putName(optionName);
+            newOption.putName(std::move(optionName));
 
             //this for loop guarantees that the right amount of parameters are captured. if there are not enough
             //or too many options, validation will fail
@@ -157,7 +157,7 @@ void IOParser::buildAndExecute() {
     //not enough arguments for command call have been passed
     for (auto& type : ref->argTypes) {
         if (it == tokens.end())
-            throw CommandException("The Command \"" + *tokens.begin() + "\" takes " + std::to_string(ref->argCount) + " arguments!");
+            throw CommandException("The Command \"" + newCommand.getName() + "\" takes " + std::to_string(ref->argCount) + " arguments!");
 
         if (IS_OPTION)
             throw CommandException("The option identifier \"" + *it + "\" is out of place!");

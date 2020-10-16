@@ -20,5 +20,3 @@ uint32_t Game::numberOfPlayers() const {
 bool Game::isRunning() const {
 	return b_isRunning;
 }
-
-ShuffleEngine Game::shuffleEngine = ShuffleEngine();
