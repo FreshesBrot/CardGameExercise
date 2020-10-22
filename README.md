@@ -5,6 +5,7 @@ A C++ card game exercise that features a framework to implement Card Games that 
 
 This exercise includes:
  - Creating an easy framework to manipulate (e.g. shuffle) a deck of cards
+ - Saving Cards and Decks in binary format to a file to be read in from the program again
  - Playing around with rvalue references and move semantics
  - Trying out multi-threading
  - Trying out the factory design pattern to help manage creation of commands for the command line
