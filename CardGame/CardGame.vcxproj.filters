@@ -55,172 +55,172 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Card.cpp">
-      <Filter>Cards\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Deck.cpp">
-      <Filter>Cards\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="CutShuffle.cpp">
-      <Filter>Shuffling\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="RandomGenerator.cpp">
-      <Filter>Shuffling\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Shuffler.cpp">
-      <Filter>Shuffling\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="CardDecoder.cpp">
-      <Filter>Cards\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="CardEncoder.cpp">
-      <Filter>Cards\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="DeckEncoder.cpp">
-      <Filter>Cards\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="DeckDecoder.cpp">
-      <Filter>Cards\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="RiffleShuffle.cpp">
-      <Filter>Shuffling\Source</Filter>
-    </ClCompile>
     <ClCompile Include="CardGame.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="ShuffleEngine.cpp">
-      <Filter>Shuffling\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Hand.cpp">
+    <ClCompile Include="src\Cards\Card.cpp">
       <Filter>Cards\Source</Filter>
     </ClCompile>
-    <ClCompile Include="DeckLoader.cpp">
-      <Filter>IO\Source</Filter>
+    <ClCompile Include="src\Cards\CardDecoder.cpp">
+      <Filter>Cards\Source</Filter>
     </ClCompile>
-    <ClCompile Include="FileReader.cpp">
-      <Filter>IO\Source</Filter>
+    <ClCompile Include="src\Cards\CardEncoder.cpp">
+      <Filter>Cards\Source</Filter>
     </ClCompile>
-    <ClCompile Include="FileWriter.cpp">
-      <Filter>IO\Source</Filter>
+    <ClCompile Include="src\Cards\Deck.cpp">
+      <Filter>Cards\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
+    <ClCompile Include="src\Cards\DeckDecoder.cpp">
+      <Filter>Cards\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cards\DeckEncoder.cpp">
+      <Filter>Cards\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Cards\Hand.cpp">
+      <Filter>Cards\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Commands\Command.cpp">
+      <Filter>Commands\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Commands\CommandFactory.cpp">
+      <Filter>Commands\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Commands\IOParser.cpp">
+      <Filter>Commands\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Commands\Option.cpp">
+      <Filter>Commands\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Commands\OptionFactory.cpp">
+      <Filter>Commands\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Commands\ParserFactory.cpp">
+      <Filter>Commands\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Game.cpp">
       <Filter>Game\Source</Filter>
     </ClCompile>
-    <ClCompile Include="HigherGame.cpp">
+    <ClCompile Include="src\Game\HigherGame.cpp">
       <Filter>Game\Source</Filter>
     </ClCompile>
-    <ClCompile Include="IOReader.cpp">
+    <ClCompile Include="src\IO\DeckLoader.cpp">
       <Filter>IO\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Command.cpp">
-      <Filter>Commands\Source</Filter>
+    <ClCompile Include="src\IO\FileReader.cpp">
+      <Filter>IO\Source</Filter>
     </ClCompile>
-    <ClCompile Include="CommandFactory.cpp">
-      <Filter>Commands\Source</Filter>
+    <ClCompile Include="src\IO\FileWriter.cpp">
+      <Filter>IO\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Option.cpp">
-      <Filter>Commands\Source</Filter>
+    <ClCompile Include="src\IO\IOReader.cpp">
+      <Filter>IO\Source</Filter>
     </ClCompile>
-    <ClCompile Include="OptionFactory.cpp">
-      <Filter>Commands\Source</Filter>
+    <ClCompile Include="src\Shuffling\CutShuffle.cpp">
+      <Filter>Shuffling\Source</Filter>
     </ClCompile>
-    <ClCompile Include="ParserFactory.cpp">
-      <Filter>Commands\Source</Filter>
+    <ClCompile Include="src\Shuffling\RandomGenerator.cpp">
+      <Filter>Shuffling\Source</Filter>
     </ClCompile>
-    <ClCompile Include="IOParser.cpp">
-      <Filter>Commands\Source</Filter>
+    <ClCompile Include="src\Shuffling\RiffleShuffle.cpp">
+      <Filter>Shuffling\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shuffling\ShuffleEngine.cpp">
+      <Filter>Shuffling\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shuffling\Shuffler.cpp">
+      <Filter>Shuffling\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Card.h">
+    <ClInclude Include="src\Cards\Card.h">
       <Filter>Cards\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Deck.h">
+    <ClInclude Include="src\Cards\CardDecoder.h">
       <Filter>Cards\Header</Filter>
     </ClInclude>
-    <ClInclude Include="CutShuffle.h">
-      <Filter>Shuffling\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="RandomGenerator.h">
-      <Filter>Shuffling\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Shuffler.h">
-      <Filter>Shuffling\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="CardDecoder.h">
+    <ClInclude Include="src\Cards\CardEncoder.h">
       <Filter>Cards\Header</Filter>
     </ClInclude>
-    <ClInclude Include="CardEncoder.h">
+    <ClInclude Include="src\Cards\Deck.h">
       <Filter>Cards\Header</Filter>
     </ClInclude>
-    <ClInclude Include="DeckEncoder.h">
+    <ClInclude Include="src\Cards\DeckDecoder.h">
       <Filter>Cards\Header</Filter>
     </ClInclude>
-    <ClInclude Include="DeckDecoder.h">
+    <ClInclude Include="src\Cards\DeckEncoder.h">
       <Filter>Cards\Header</Filter>
     </ClInclude>
-    <ClInclude Include="RiffleShuffle.h">
-      <Filter>Shuffling\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="ShuffleEngine.h">
-      <Filter>Shuffling\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Hand.h">
+    <ClInclude Include="src\Cards\Hand.h">
       <Filter>Cards\Header</Filter>
     </ClInclude>
-    <ClInclude Include="DeckLoader.h">
-      <Filter>IO\Header</Filter>
+    <ClInclude Include="src\Commands\BaseFactory.h">
+      <Filter>Commands\Header</Filter>
     </ClInclude>
-    <ClInclude Include="FileReader.h">
-      <Filter>IO\Header</Filter>
+    <ClInclude Include="src\Commands\Command.h">
+      <Filter>Commands\Header</Filter>
     </ClInclude>
-    <ClInclude Include="FileWriter.h">
-      <Filter>IO\Header</Filter>
+    <ClInclude Include="src\Commands\CommandFactory.h">
+      <Filter>Commands\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
+    <ClInclude Include="src\Commands\CommandTypes.h">
+      <Filter>Commands\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Commands\IOParser.h">
+      <Filter>Commands\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Commands\Option.h">
+      <Filter>Commands\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Commands\OptionFactory.h">
+      <Filter>Commands\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Commands\ParserFactory.h">
+      <Filter>Commands\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Exceptions\BaseException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Exceptions\CardException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Exceptions\CommandException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Exceptions\DeckException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game\Game.h">
       <Filter>Game\Header</Filter>
     </ClInclude>
-    <ClInclude Include="HigherGame.h">
+    <ClInclude Include="src\Game\HigherGame.h">
       <Filter>Game\Header</Filter>
     </ClInclude>
-    <ClInclude Include="DeckException.h">
-      <Filter>Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="CommandException.h">
-      <Filter>Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseException.h">
-      <Filter>Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="CardException.h">
-      <Filter>Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="IOReader.h">
+    <ClInclude Include="src\IO\DeckLoader.h">
       <Filter>IO\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Command.h">
-      <Filter>Commands\Header</Filter>
+    <ClInclude Include="src\IO\FileReader.h">
+      <Filter>IO\Header</Filter>
     </ClInclude>
-    <ClInclude Include="CommandFactory.h">
-      <Filter>Commands\Header</Filter>
+    <ClInclude Include="src\IO\FileWriter.h">
+      <Filter>IO\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Option.h">
-      <Filter>Commands\Header</Filter>
+    <ClInclude Include="src\IO\IOReader.h">
+      <Filter>IO\Header</Filter>
     </ClInclude>
-    <ClInclude Include="OptionFactory.h">
-      <Filter>Commands\Header</Filter>
+    <ClInclude Include="src\Shuffling\CutShuffle.h">
+      <Filter>Shuffling\Header</Filter>
     </ClInclude>
-    <ClInclude Include="ParserFactory.h">
-      <Filter>Commands\Header</Filter>
+    <ClInclude Include="src\Shuffling\RandomGenerator.h">
+      <Filter>Shuffling\Header</Filter>
     </ClInclude>
-    <ClInclude Include="BaseFactory.h">
-      <Filter>Commands\Header</Filter>
+    <ClInclude Include="src\Shuffling\RiffleShuffle.h">
+      <Filter>Shuffling\Header</Filter>
     </ClInclude>
-    <ClInclude Include="CommandTypes.h">
-      <Filter>Commands\Header</Filter>
+    <ClInclude Include="src\Shuffling\ShuffleEngine.h">
+      <Filter>Shuffling\Header</Filter>
     </ClInclude>
-    <ClInclude Include="IOParser.h">
-      <Filter>Commands\Header</Filter>
+    <ClInclude Include="src\Shuffling\Shuffler.h">
+      <Filter>Shuffling\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

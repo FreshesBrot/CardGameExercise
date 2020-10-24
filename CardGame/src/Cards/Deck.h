@@ -1,6 +1,6 @@
 #pragma once
 #include "Card.h"
-#include "DeckException.h"
+#include "../Exceptions/DeckException.h"
 #include <list>
 
 typedef std::list<Card> Cards;

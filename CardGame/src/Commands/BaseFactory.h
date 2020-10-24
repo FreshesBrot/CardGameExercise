@@ -1,6 +1,6 @@
 #pragma once
 #include "Command.h"
-#include "Card.h"
+#include "../Cards/Card.h"
 
 template<typename FacType, typename Storage>
 class BaseFactory {

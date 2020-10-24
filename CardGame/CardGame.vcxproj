@@ -72,12 +72,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(VC_Libs)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(VC_Libs)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -155,63 +157,63 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Card.cpp" />
-    <ClCompile Include="CardDecoder.cpp" />
-    <ClCompile Include="CardEncoder.cpp" />
     <ClCompile Include="CardGame.cpp" />
-    <ClCompile Include="Command.cpp" />
-    <ClCompile Include="CommandFactory.cpp" />
-    <ClCompile Include="Deck.cpp" />
-    <ClCompile Include="DeckDecoder.cpp" />
-    <ClCompile Include="DeckEncoder.cpp" />
-    <ClCompile Include="DeckLoader.cpp" />
-    <ClCompile Include="FileReader.cpp" />
-    <ClCompile Include="FileWriter.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Hand.cpp" />
-    <ClCompile Include="HigherGame.cpp" />
-    <ClCompile Include="IOParser.cpp" />
-    <ClCompile Include="IOReader.cpp" />
-    <ClCompile Include="Option.cpp" />
-    <ClCompile Include="OptionFactory.cpp" />
-    <ClCompile Include="ParserFactory.cpp" />
-    <ClCompile Include="RandomGenerator.cpp" />
-    <ClCompile Include="RiffleShuffle.cpp" />
-    <ClCompile Include="ShuffleEngine.cpp" />
-    <ClCompile Include="Shuffler.cpp" />
-    <ClCompile Include="CutShuffle.cpp" />
+    <ClCompile Include="src\Cards\Card.cpp" />
+    <ClCompile Include="src\Cards\CardDecoder.cpp" />
+    <ClCompile Include="src\Cards\CardEncoder.cpp" />
+    <ClCompile Include="src\Cards\Deck.cpp" />
+    <ClCompile Include="src\Cards\DeckDecoder.cpp" />
+    <ClCompile Include="src\Cards\DeckEncoder.cpp" />
+    <ClCompile Include="src\Cards\Hand.cpp" />
+    <ClCompile Include="src\Commands\Command.cpp" />
+    <ClCompile Include="src\Commands\CommandFactory.cpp" />
+    <ClCompile Include="src\Commands\IOParser.cpp" />
+    <ClCompile Include="src\Commands\Option.cpp" />
+    <ClCompile Include="src\Commands\OptionFactory.cpp" />
+    <ClCompile Include="src\Commands\ParserFactory.cpp" />
+    <ClCompile Include="src\Game\Game.cpp" />
+    <ClCompile Include="src\Game\HigherGame.cpp" />
+    <ClCompile Include="src\IO\DeckLoader.cpp" />
+    <ClCompile Include="src\IO\FileReader.cpp" />
+    <ClCompile Include="src\IO\FileWriter.cpp" />
+    <ClCompile Include="src\IO\IOReader.cpp" />
+    <ClCompile Include="src\Shuffling\CutShuffle.cpp" />
+    <ClCompile Include="src\Shuffling\RandomGenerator.cpp" />
+    <ClCompile Include="src\Shuffling\RiffleShuffle.cpp" />
+    <ClCompile Include="src\Shuffling\ShuffleEngine.cpp" />
+    <ClCompile Include="src\Shuffling\Shuffler.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BaseFactory.h" />
-    <ClInclude Include="Card.h" />
-    <ClInclude Include="CardDecoder.h" />
-    <ClInclude Include="CardEncoder.h" />
-    <ClInclude Include="CardException.h" />
-    <ClInclude Include="Command.h" />
-    <ClInclude Include="CommandFactory.h" />
-    <ClInclude Include="CommandTypes.h" />
-    <ClInclude Include="Deck.h" />
-    <ClInclude Include="DeckDecoder.h" />
-    <ClInclude Include="DeckEncoder.h" />
-    <ClInclude Include="DeckLoader.h" />
-    <ClInclude Include="DeckException.h" />
-    <ClInclude Include="BaseException.h" />
-    <ClInclude Include="FileReader.h" />
-    <ClInclude Include="FileWriter.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="Hand.h" />
-    <ClInclude Include="CommandException.h" />
-    <ClInclude Include="HigherGame.h" />
-    <ClInclude Include="IOParser.h" />
-    <ClInclude Include="IOReader.h" />
-    <ClInclude Include="Option.h" />
-    <ClInclude Include="OptionFactory.h" />
-    <ClInclude Include="ParserFactory.h" />
-    <ClInclude Include="RandomGenerator.h" />
-    <ClInclude Include="RiffleShuffle.h" />
-    <ClInclude Include="ShuffleEngine.h" />
-    <ClInclude Include="Shuffler.h" />
-    <ClInclude Include="CutShuffle.h" />
+    <ClInclude Include="src\Cards\Card.h" />
+    <ClInclude Include="src\Cards\CardDecoder.h" />
+    <ClInclude Include="src\Cards\CardEncoder.h" />
+    <ClInclude Include="src\Cards\Deck.h" />
+    <ClInclude Include="src\Cards\DeckDecoder.h" />
+    <ClInclude Include="src\Cards\DeckEncoder.h" />
+    <ClInclude Include="src\Cards\Hand.h" />
+    <ClInclude Include="src\Commands\BaseFactory.h" />
+    <ClInclude Include="src\Commands\Command.h" />
+    <ClInclude Include="src\Commands\CommandFactory.h" />
+    <ClInclude Include="src\Commands\CommandTypes.h" />
+    <ClInclude Include="src\Commands\IOParser.h" />
+    <ClInclude Include="src\Commands\Option.h" />
+    <ClInclude Include="src\Commands\OptionFactory.h" />
+    <ClInclude Include="src\Commands\ParserFactory.h" />
+    <ClInclude Include="src\Exceptions\BaseException.h" />
+    <ClInclude Include="src\Exceptions\CardException.h" />
+    <ClInclude Include="src\Exceptions\CommandException.h" />
+    <ClInclude Include="src\Exceptions\DeckException.h" />
+    <ClInclude Include="src\Game\Game.h" />
+    <ClInclude Include="src\Game\HigherGame.h" />
+    <ClInclude Include="src\IO\DeckLoader.h" />
+    <ClInclude Include="src\IO\FileReader.h" />
+    <ClInclude Include="src\IO\FileWriter.h" />
+    <ClInclude Include="src\IO\IOReader.h" />
+    <ClInclude Include="src\Shuffling\CutShuffle.h" />
+    <ClInclude Include="src\Shuffling\RandomGenerator.h" />
+    <ClInclude Include="src\Shuffling\RiffleShuffle.h" />
+    <ClInclude Include="src\Shuffling\ShuffleEngine.h" />
+    <ClInclude Include="src\Shuffling\Shuffler.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="deck.deckf" />

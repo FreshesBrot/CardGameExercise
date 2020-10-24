@@ -1,5 +1,5 @@
 #pragma once
-#include "IOReader.h"
+#include "../IO/IOReader.h"
 #include "Command.h"
 #define IO_CONTAINS(elem) IOParser::containsOption(cmd.options, elem)
 

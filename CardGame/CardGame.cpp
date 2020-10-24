@@ -3,12 +3,13 @@
 #pragma once
 #include <iostream>
 #include <new>
+#include <asio-1.18.0/include/asio.hpp>
 //#define TESTING
 
-#include "DeckLoader.h"
-#include "ShuffleEngine.h"
-#include "IOParser.h"
-#include "HigherGame.h"
+#include "src/IO/DeckLoader.h"
+#include "src/Shuffling/ShuffleEngine.h"
+#include "src/Commands/IOParser.h"
+#include "src/Game/HigherGame.h"
 #define OUT std::cout
 #define NL std::endl
 

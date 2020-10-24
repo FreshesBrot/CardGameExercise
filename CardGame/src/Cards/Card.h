@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "CardException.h"
+#include "../Exceptions/CardException.h"
 
 //enum that holds all suits for the cards
 enum class Suite {

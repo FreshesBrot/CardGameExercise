@@ -1,5 +1,5 @@
 #include "CommandFactory.h"
-#include "Card.h"
+#include "../Cards/Card.h"
 
 CommandFactory::CommandFactory() : BaseFactory(this), options() { }
 CommandFactory::~CommandFactory() { };

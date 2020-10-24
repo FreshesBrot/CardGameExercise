@@ -1,5 +1,5 @@
 #pragma once
-#include "Deck.h"
+#include "../Cards/Deck.h"
 #include "RandomGenerator.h"
 
 //this class provides an interface for classes to shuffle a deck, as well as a random number generator.

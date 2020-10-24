@@ -1,9 +1,8 @@
 #pragma once
-#include "Deck.h"
-#include "IOParser.h"
-#include "ParserFactory.h"
-#include "Hand.h"
-#include "ShuffleEngine.h"
+#include "../Cards/Deck.h"
+#include "../Commands/ParserFactory.h"
+#include "../Cards/Hand.h"
+#include "../Shuffling/ShuffleEngine.h"
 #include <memory>
 
 //TODOS: the games should have a unordered map with game states mapping to the apropriate commands

@@ -1,6 +1,6 @@
 #pragma once
-#include "DeckEncoder.h"
-#include "DeckDecoder.h"
+#include "../Cards/DeckEncoder.h"
+#include "../Cards/DeckDecoder.h"
 #include "FileReader.h"
 #include "FileWriter.h"
 #include <iostream>
