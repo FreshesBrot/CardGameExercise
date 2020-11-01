@@ -16,8 +16,8 @@ ParserFactory& ParserFactory::putCommand(CommandFactory& command) {
 	return *this;
 }
 
-IOParser ParserFactory::finish() {
-	IOParser newParser(std::move(parserName),std::move(commands));
+CommandParser ParserFactory::finish() {
+	CommandParser newParser(std::move(parserName), std::move(commands));
 
 	return newParser; //this thing causes a move error, investigate later
 }

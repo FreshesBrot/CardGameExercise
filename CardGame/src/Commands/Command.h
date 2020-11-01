@@ -13,8 +13,7 @@ typedef std::function<void(Command&)> Executor;
 //this struct holds information about a single command with options, parameters and their types as well as the executable function of the command
 class Command {
 public:
-	friend class IOParser;
-
+	
 	Command();
 	~Command() { } 
 	Command(const Command&) = default;

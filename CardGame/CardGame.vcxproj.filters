@@ -130,6 +130,9 @@
     <ClCompile Include="src\Shuffling\Shuffler.cpp">
       <Filter>Shuffling\Source</Filter>
     </ClCompile>
+    <ClCompile Include="src\Commands\CommandParser.cpp">
+      <Filter>Commands\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Cards\Card.h">
@@ -221,6 +224,9 @@
     </ClInclude>
     <ClInclude Include="src\Shuffling\Shuffler.h">
       <Filter>Shuffling\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Commands\CommandParser.h">
+      <Filter>Commands\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

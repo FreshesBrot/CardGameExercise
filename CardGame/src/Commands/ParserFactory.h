@@ -1,6 +1,6 @@
 #pragma once
 #include "CommandFactory.h"
-#include "IOParser.h"
+#include "CommandParser.h"
 
 //this class makes building IOParser more easy
 class ParserFactory {
@@ -15,7 +15,7 @@ public:
 	//add a command to the IOParser
 	ParserFactory& putCommand(CommandFactory& command);
 
-	IOParser finish();
+	CommandParser finish();
 
 private:
 	Token parserName; //the name of the parser that will be returned

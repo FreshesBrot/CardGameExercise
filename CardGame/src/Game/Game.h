@@ -12,7 +12,7 @@ class Game {
 protected:
 public:
 	typedef std::vector<Hand> Players;
-	typedef std::vector<IOParser> GameStates;
+	typedef std::vector<CommandParser> GameStates;
 	
 	~Game();
 

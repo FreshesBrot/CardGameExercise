@@ -34,7 +34,7 @@ void HigherGame::gameLoop() {
 						b_greeting = false;
 					}
 					
-					IOParser& menuParser = commandParser[0];
+					CommandParser& menuParser = commandParser[0];
 					menuParser.askInput();
 					break;
 					
@@ -56,7 +56,7 @@ void HigherGame::gameLoop() {
 				//guessing procedure
 				case GameState::GUESSING: {
 					
-					IOParser& gameParser = commandParser[1];
+					CommandParser& gameParser = commandParser[1];
 					gameParser.askInput();
 
 					break;
@@ -195,8 +195,8 @@ void HigherGame::setup() {
 	);
 
 	commandParser.push_back(parserMenu.finish());
-	helperMessages.push_back(IOParser::HelperPrinter(commandParser[0]));
+	helperMessages.push_back(CommandParser::HelperPrinter(commandParser[0]));
 	commandParser.push_back(parserGame.finish());
-	helperMessages.push_back(IOParser::HelperPrinter(commandParser[1]));
+	helperMessages.push_back(CommandParser::HelperPrinter(commandParser[1]));
 
 }

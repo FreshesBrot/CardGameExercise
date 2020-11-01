@@ -8,7 +8,7 @@
 
 #include "src/IO/DeckLoader.h"
 #include "src/Shuffling/ShuffleEngine.h"
-#include "src/Commands/IOParser.h"
+#include "src/Commands/CommandParser.h"
 #include "src/Game/HigherGame.h"
 #define OUT std::cout
 #define NL std::endl
@@ -72,7 +72,7 @@ int main() {
 	int count = counter;
 	int countDiff = 0;
 
-	IOParser parser = ParserFactory(3).putName("TopLevelParser").putCommand (
+	CommandParser parser = ParserFactory(3).putName("TopLevelParser").putCommand (
 		//play command
 		CommandFactory().putName("play").putDescription("Starts the HigherGame.").putFunction(
 			Executor([&parser, &b_greet](Command&) -> void {
@@ -110,7 +110,7 @@ int main() {
 		)
 	).finish();
 
-	herlperMessage = IOParser::HelperPrinter(parser);
+	herlperMessage = CommandParser::HelperPrinter(parser);
 
 	
 	while (b_run) {

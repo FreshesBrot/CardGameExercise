@@ -167,6 +167,7 @@
     <ClCompile Include="src\Cards\Hand.cpp" />
     <ClCompile Include="src\Commands\Command.cpp" />
     <ClCompile Include="src\Commands\CommandFactory.cpp" />
+    <ClCompile Include="src\Commands\CommandParser.cpp" />
     <ClCompile Include="src\Commands\IOParser.cpp" />
     <ClCompile Include="src\Commands\Option.cpp" />
     <ClCompile Include="src\Commands\OptionFactory.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="src\Commands\BaseFactory.h" />
     <ClInclude Include="src\Commands\Command.h" />
     <ClInclude Include="src\Commands\CommandFactory.h" />
+    <ClInclude Include="src\Commands\CommandParser.h" />
     <ClInclude Include="src\Commands\CommandTypes.h" />
     <ClInclude Include="src\Commands\IOParser.h" />
     <ClInclude Include="src\Commands\Option.h" />
