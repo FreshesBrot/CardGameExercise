@@ -53,6 +53,9 @@
     <Filter Include="Commands\Source">
       <UniqueIdentifier>{1709b4ef-2ec6-4ca3-bf92-62e41e7c25bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Commands\Parsing">
+      <UniqueIdentifier>{4e0114cc-edf6-4fc1-b16b-5195f8512026}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CardGame.cpp">
@@ -83,9 +86,6 @@
       <Filter>Commands\Source</Filter>
     </ClCompile>
     <ClCompile Include="src\Commands\CommandFactory.cpp">
-      <Filter>Commands\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Commands\IOParser.cpp">
       <Filter>Commands\Source</Filter>
     </ClCompile>
     <ClCompile Include="src\Commands\Option.cpp">
@@ -130,9 +130,6 @@
     <ClCompile Include="src\Shuffling\Shuffler.cpp">
       <Filter>Shuffling\Source</Filter>
     </ClCompile>
-    <ClCompile Include="src\Commands\CommandParser.cpp">
-      <Filter>Commands\Source</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Cards\Card.h">
@@ -166,9 +163,6 @@
       <Filter>Commands\Header</Filter>
     </ClInclude>
     <ClInclude Include="src\Commands\CommandTypes.h">
-      <Filter>Commands\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Commands\IOParser.h">
       <Filter>Commands\Header</Filter>
     </ClInclude>
     <ClInclude Include="src\Commands\Option.h">
@@ -225,8 +219,17 @@
     <ClInclude Include="src\Shuffling\Shuffler.h">
       <Filter>Shuffling\Header</Filter>
     </ClInclude>
-    <ClInclude Include="src\Commands\CommandParser.h">
-      <Filter>Commands\Header</Filter>
+    <ClInclude Include="src\Commands\Parsing\IOParser.h">
+      <Filter>Commands\Parsing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Commands\Parsing\StateCommandParser.h">
+      <Filter>Commands\Parsing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Commands\Parsing\StateIOParser.h">
+      <Filter>Commands\Parsing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Commands\Parsing\CommandParser.h">
+      <Filter>Commands\Parsing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

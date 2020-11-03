@@ -1,5 +1,6 @@
 #pragma once
 #include "Game.h"
+#include "../Commands/Parsing/StateCommandParser.h"
 
 //this game is a simple guessing game, where the player has to guess if the next card that is drawn is higher or lower
 class HigherGame : public Game {
@@ -11,10 +12,6 @@ public:
 	void end() override;
 
 private:
-	void gameLoop() override;
-
-	void setup() override;
-
 	//MEMBERS FOR GAME STATE MANAGEMENT
 	enum class GameState {
 		MENU = 0,
@@ -22,8 +19,16 @@ private:
 		DRAWING,
 	};
 
+	typedef StateCommandParser<GameState> StateParser;
+	void gameLoop() override;
+
+	void setup() override;
+
+
 	GameState curState; //current state of the game
-	
+	std::vector<StateParser> gameStateParser;
+
+
 	uint32_t numLives; //number of lives left 
 	uint32_t numOfCards; //number of cards that have been guessed correct
 	Card curCard; //the current card that has been drawn

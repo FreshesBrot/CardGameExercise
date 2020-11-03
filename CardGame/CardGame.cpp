@@ -8,8 +8,9 @@
 
 #include "src/IO/DeckLoader.h"
 #include "src/Shuffling/ShuffleEngine.h"
-#include "src/Commands/CommandParser.h"
+#include "src/Commands/Parsing/CommandParser.h"
 #include "src/Game/HigherGame.h"
+#include "src/Commands/ParserFactory.h"
 #define OUT std::cout
 #define NL std::endl
 
@@ -75,7 +76,7 @@ int main() {
 	CommandParser parser = ParserFactory(3).putName("TopLevelParser").putCommand (
 		//play command
 		CommandFactory().putName("play").putDescription("Starts the HigherGame.").putFunction(
-			Executor([&parser, &b_greet](Command&) -> void {
+			Executor([&](Command&) -> void {
 				Deck deck;
 				parser.suspend();
 				HigherGame(deck).start();
@@ -87,21 +88,21 @@ int main() {
 		//help command
 		CommandFactory().putName("help").putDescription("Prints the helper message. This message is also printed if"
 														" an unknown command is given to the interpreter.").putFunction(
-			Executor([&herlperMessage](Command&) -> void {
-				OUT << herlperMessage << NL;
+			Executor([&](Command&) -> void {
+				OUT << parser.getHelperMessage() << NL;
 			})
 		)
 	).putCommand(
 		//exit command
 		CommandFactory().putName("exit").putDescription("Exits and terminates the program").putFunction(
-			Executor([&b_run](Command&) -> void {
+			Executor([&](Command&) -> void {
 				OUT << "Goodbye!\n";
 				b_run = false;
 			})
 		)
 	).putCommand(
 		CommandFactory().putName("allocs").putDescription("Shows how many allocations total and since last call have been made.").putFunction(
-			Executor([&count,&countDiff](Command&) -> void {
+			Executor([&](Command&) -> void {
 					OUT << "Total allocations: " << counter << NL;
 					countDiff = counter - count;
 					OUT << "Total new allocations: " << countDiff << NL;
@@ -109,8 +110,6 @@ int main() {
 				})
 		)
 	).finish();
-
-	herlperMessage = CommandParser::HelperPrinter(parser);
 
 	
 	while (b_run) {
@@ -135,23 +134,19 @@ int main() {
 #else
 
 int main() {
-	Deck deck;
-	OUT << "Allocations:\n " << counter << NL;
+	
+	IOReader reader("test");
+	reader.start();
+	OUT << "reader started" << NL;
+	reader.read();
 
-	Shuffler* shuffler = &CutShuffle();
-	shuffler->shuffleDeck(deck);
+	OUT << "Now waiting for input" << NL;
+	while (reader.isReading());
 
-	OUT << counter << NL;
-	int cur = counter;
+	OUT << "Input received:" << NL;
+	OUT << reader.getBuffer() << NL;
 
-	shuffler = &RiffleShuffle();
-
-	shuffler->shuffleDeck(deck);
-
-	OUT << counter << NL;
-	OUT << "New since last: " << (counter-cur) << NL;
-
-	peekDeck(deck);
+	std::cin.get();
 }
 
 #endif

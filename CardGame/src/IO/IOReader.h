@@ -22,10 +22,10 @@ public:
 	std::string&& getBuffer();
 
 	//returns if IOReader is still listening to IO-input
-	bool isReading() const;
+	bool isReading() volatile const; //marking this function volatile tells the compiler that the value might change over time, making it safe to use in a while loop
 
 	//Returns if IOReader is currently running
-	bool isRunning() const;
+	bool isRunning() volatile const;
 	
 	//shuts down IO reading
 	void shutdown();

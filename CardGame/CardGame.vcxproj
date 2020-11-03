@@ -167,8 +167,6 @@
     <ClCompile Include="src\Cards\Hand.cpp" />
     <ClCompile Include="src\Commands\Command.cpp" />
     <ClCompile Include="src\Commands\CommandFactory.cpp" />
-    <ClCompile Include="src\Commands\CommandParser.cpp" />
-    <ClCompile Include="src\Commands\IOParser.cpp" />
     <ClCompile Include="src\Commands\Option.cpp" />
     <ClCompile Include="src\Commands\OptionFactory.cpp" />
     <ClCompile Include="src\Commands\ParserFactory.cpp" />
@@ -195,12 +193,14 @@
     <ClInclude Include="src\Commands\BaseFactory.h" />
     <ClInclude Include="src\Commands\Command.h" />
     <ClInclude Include="src\Commands\CommandFactory.h" />
-    <ClInclude Include="src\Commands\CommandParser.h" />
     <ClInclude Include="src\Commands\CommandTypes.h" />
-    <ClInclude Include="src\Commands\IOParser.h" />
     <ClInclude Include="src\Commands\Option.h" />
     <ClInclude Include="src\Commands\OptionFactory.h" />
     <ClInclude Include="src\Commands\ParserFactory.h" />
+    <ClInclude Include="src\Commands\Parsing\CommandParser.h" />
+    <ClInclude Include="src\Commands\Parsing\IOParser.h" />
+    <ClInclude Include="src\Commands\Parsing\StateCommandParser.h" />
+    <ClInclude Include="src\Commands\Parsing\StateIOParser.h" />
     <ClInclude Include="src\Exceptions\BaseException.h" />
     <ClInclude Include="src\Exceptions\CardException.h" />
     <ClInclude Include="src\Exceptions\CommandException.h" />

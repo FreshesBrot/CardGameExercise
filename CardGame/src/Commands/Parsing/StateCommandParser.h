@@ -1,0 +1,18 @@
+#pragma once
+#include "StateIOParser.h"
+#include "../../IO/IOReader.h"
+
+//the StateCommandParser manages several different states according to an enumerator templated as States
+template<typename States>
+class StateCommandParser : public StateIOParser<States, IOReader> {
+public:
+	typedef std::unordered_map<States, Commands> StateMap;
+
+	StateCommandParser(Token&& identifier, StateMap&& allStates = { }) : StateIOParser<States, IOReader>(std::move(identifier), std::move(allStates)) { }
+	StateCommandParser() : StateIOParser<States, IOReader, StateCommandParser<States>>() { }
+
+	StateCommandParser(StateCommandParser&) = delete;
+	StateCommandParser(StateCommandParser&& parser) noexcept : StateIOParser<States, IOReader>(std::move(parser)) { }
+
+
+};

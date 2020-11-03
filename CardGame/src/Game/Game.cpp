@@ -1,7 +1,7 @@
 #include "Game.h"
 
 Game::Game(Deck& deck, Players players) : 
-										playingDeck(std::move(deck)), b_isRunning(false), helperMessages(),
+										playingDeck(std::move(deck)), b_isRunning(false),
 										allPlayers(std::move(players)), numOfPlayers(allPlayers.size())
 {
 

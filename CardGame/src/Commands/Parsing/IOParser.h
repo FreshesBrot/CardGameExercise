@@ -1,68 +1,43 @@
 #pragma once
-#include "CommandFactory.h"
+#include "../CommandFactory.h"
+#include <iostream>
+
 #define IO_CONTAINS(elem) IOParser::containsOption(cmd.options, elem)
 #define IS_OPTION (*it)[0] == '-'
 
-//an iterator that makes scrolling through all possible commands easier
-class CommandIterator {
-	typedef Commands::const_iterator __CmdIterator;
-public:
-	CommandIterator(const __CmdIterator& iter) : cur(iter) { };
-	CommandIterator(const CommandIterator&) = default;
-	CommandIterator(CommandIterator&&) = default;
-	
-	__CmdIterator& operator++() {
-		return ++cur;
-	}
-
-	__CmdIterator operator++(int) {
-		__CmdIterator tmp = cur;
-		cur++;
-		return tmp;
-	}
-
-	bool operator==(const CommandIterator& it) const {
-		return cur == it.cur;
-	}
-
-	bool operator!=(const CommandIterator& it) const {
-		return !(*this == it);
-	}
-
-	const Command& operator*() {
-		return *cur;
-	}
-
-	const Command* operator->() {
-		return &(*cur);
-	}
-private:
-	__CmdIterator cur;
-};
 
 //this class is the base class for parsers that read from an IOStream input stream and convert it into a tokenized command form
-template<typename IOStream, typename Parser>
+template<typename IOStream>
 class IOParser {
 public:
 
 	//construct a new io interpreter with a new ioreader thread
-	IOParser(Parser* ptr, Token&& identifier, Commands&& allCommands = { }) : reader(std::move(identifier)), commands(allCommands), tokens(), b_suspended(false) {
+	IOParser(Token&& identifier, Commands&& allCommands = { }) : reader(std::move(identifier)), commands(allCommands), tokens(), b_suspended(false) {
 		reader.start();
 	};
 
 	IOParser() : reader("undef") { };
 	~IOParser() { };
 	IOParser(const IOParser&) = delete;
-	IOParser(IOParser&& ioparser) noexcept :
-		reader(std::move(ioparser.reader)) /*moving ioreader shuts it down*/, tokens(std::move(ioparser.tokens)), commands(std::move(ioparser.commands)), b_suspended(false) {
+	IOParser(IOParser&& ioparser) noexcept : 
+		reader(std::move(ioparser.reader)), /*moving ioreader shuts it down*/ 
+		tokens(std::move(ioparser.tokens)), commands(std::move(ioparser.commands)), b_suspended(false) {
 
 		reader.start(); //start this instances ioreader thread
 	}
 
-	//ask the interpreter to take an input and execute it. this function will throw an exception if parsing fails
-	void askInput() {
-		p_instance->askInput();
-	};
+	virtual void askInput() {
+		reader.read();
+		while (reader.isReading());
+
+		Token buffer = reader.getBuffer();
+		trim(buffer);
+		if (buffer.size() == 0)
+			throw CommandException("No command was provided.");
+
+		tokenize(buffer);
+		buildAndExecute();
+	}
 
 	//suspends this parser from waiting for input
 	void suspend() {
@@ -85,15 +60,6 @@ public:
 		return b_suspended;
 	}
 
-	//iterator beginning to iterate through commands
-	CommandIterator begin() {
-		return CommandIterator(commands.begin());
-	}
-	
-	CommandIterator end() {
-		return CommandIterator(commands.end());
-	}
-
 	//helper function to determine if a vector contains a certain element
 	static bool containsOption(const Options& vect, const Token& opt) {
 		for (auto& option : vect)
@@ -106,17 +72,23 @@ public:
 	}
 
 	//helper function that takes care of printing the helper message
-	static std::string HelperPrinter(IOParser& parser) {
+	virtual Token getHelperMessage() {
+		return constructHelperMessage(commands);
+	}
+
+
+protected:
+	//internal implementation of getHelperMessage 
+	Token constructHelperMessage(Commands& cmds) {
 		std::ostringstream oss;
 		oss << "Known Commands are:\n\n";
-		for (auto& c : parser) {
+		for (auto& c : cmds) {
 			oss << Command::description(c);
 		}
 
 		return oss.str();
 	}
 
-protected:
 	bool b_suspended; //whether this IOReader is currently not active or not
 
 	//tokenizes the input from the IOReader into managable tokens
@@ -137,7 +109,7 @@ protected:
 	}
 
 	//builds the command and executes it.
-	void buildAndExecute() {
+	virtual void buildAndExecute() {
 		TokenList::iterator it = tokens.begin();
 
 		if (it == tokens.end())
@@ -194,7 +166,7 @@ protected:
 	TokenList tokens; //list of all captured tokens
 	Commands commands; //all commands that are recognized	
 	
-private:
+#pragma region HelperFunctions
 	//step 1 for the tokenizer
 	inline Command* commandExists(TokenList::iterator& it) {
 		Command* ref = 0x0;
@@ -256,6 +228,6 @@ private:
 			throw CommandException("Too many arguments/tokens are provided for Command \"" + *tokens.begin() + "\"!");
 	}
 
-	Parser* p_instance; //instance that inherits from this parser base
+#pragma endregion
 };
 

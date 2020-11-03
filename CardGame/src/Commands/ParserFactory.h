@@ -1,6 +1,6 @@
 #pragma once
 #include "CommandFactory.h"
-#include "CommandParser.h"
+#include "Parsing/CommandParser.h"
 
 //this class makes building IOParser more easy
 class ParserFactory {

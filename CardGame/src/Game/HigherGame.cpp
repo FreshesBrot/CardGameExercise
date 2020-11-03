@@ -1,9 +1,10 @@
 #include "HigherGame.h"
 //helper macro that wraps a executor function call into a single macro for readability
 #define EXECUTOR(body) Executor([this](Command& cmd) -> void {body})
+#define CHANGESTATE gameStateParser[0].changeState(curState)
 
 HigherGame::HigherGame(Deck& deck) : 
-										Game(deck, Players()), numLives(defaultLives), numOfCards(0), b_greeting(true),
+										Game(deck, Players()), numLives(defaultLives), numOfCards(0), b_greeting(true), gameStateParser(),
 										discardPile(Deck::emptyDeck()), curCard(Card::Invalid()), curState(GameState::MENU)
 { 
 	setup();
@@ -34,8 +35,8 @@ void HigherGame::gameLoop() {
 						b_greeting = false;
 					}
 					
-					CommandParser& menuParser = commandParser[0];
-					menuParser.askInput();
+					StateParser& parser = gameStateParser[0];
+					parser.askInput();
 					break;
 					
 				}
@@ -49,6 +50,7 @@ void HigherGame::gameLoop() {
 						std::cout << "Card Nr. " << numOfCards << " is: " << curCard.shortString() << "\n";
 					
 					curState = GameState::GUESSING;
+					CHANGESTATE;
 					
 					std::cout << "Will the next card be higher or lower?\n";
 					break;
@@ -56,9 +58,8 @@ void HigherGame::gameLoop() {
 				//guessing procedure
 				case GameState::GUESSING: {
 					
-					CommandParser& gameParser = commandParser[1];
-					gameParser.askInput();
-
+					StateParser& parser = gameStateParser[0];
+					parser.askInput();
 					break;
 				}
 			}
@@ -75,8 +76,11 @@ void HigherGame::gameLoop() {
 
 void HigherGame::setup() {
 
-	auto parserMenu = ParserFactory(3).putName("HigherGameParserMenu").putCommand(
+	auto parserFactory = StateParserFactory<GameState>({GameState::MENU, GameState::GUESSING}).putName("HigherGameParser"
+	//GAMESTATE MENU
+	).putCommand(
 		//start command
+		GameState::MENU,
 		CommandFactory().putName("start").putDescription("Starts the HigherGame! Default amount of lives is 3.").putOption(
 			//lives options
 			OptionFactory().putName("-lives").putArguments({ ArgType::INT }).putDescription("Sets a different number of lives for the next game."																		" Expects one argument containing the new number of lives.")
@@ -90,27 +94,31 @@ void HigherGame::setup() {
 				numOfCards = 0;
 				//Game::shuffleEngine->ShuffleDeck(playingDeck, 2); shuffling is highly inefficient, this alone allocates 13k times!
 				curState = GameState::DRAWING;
-			})
+				CHANGESTATE;
+				})
 		)
 	).putCommand(
 		//quit command
+		GameState::MENU,
 		CommandFactory().putName("quit").putDescription("Quits the HigherGame and returns back to the Main Program Loop.").putFunction(
 			Executor([this](Command&) -> void {
 				std::cout << "Goodbye!\n";
 				b_isRunning = false;
-			})
+				})
 		)
 	).putCommand(
 		//help command
+		GameState::MENU,
 		CommandFactory().putName("help").putDescription("Prints the helper message.").putFunction(
 			Executor([this](Command&) -> void {
-				std::cout << helperMessages[0];
-			})
+				std::cout << gameStateParser[0].getHelperMessage();
+				})
 		)
-	);
-
-	auto parserGame = ParserFactory(4).putName("HigherGameParserGame").putCommand(
+	
+	//GAMESTATE GUESSING
+	).putCommand(
 		//guess command
+		GameState::GUESSING,
 		CommandFactory().putName("guess").putDescription("Takes a guess, and expects either \"higher\" or \"lower\" as an argument.").putArguments({ ArgType::STRING }).putFunction(
 			//starting a game allocates 13000 times for some reason... def check back on that
 			Executor([this](Command& cmd) -> void {
@@ -142,6 +150,7 @@ void HigherGame::setup() {
 							discardPile.addCard(nextCard);
 							playingDeck.mergeDecks(discardPile);
 							curState = GameState::MENU;
+							CHANGESTATE;
 
 							b_greeting = true;
 							std::cout << "Press Enter to go back to the main menu.";
@@ -149,6 +158,7 @@ void HigherGame::setup() {
 							return;
 						}
 					}
+
 					discardPile.addCard(curCard);
 					curCard = nextCard;
 					curState = GameState::DRAWING;
@@ -162,6 +172,7 @@ void HigherGame::setup() {
 		)
 	).putCommand(
 		//shuffle command
+		GameState::GUESSING,
 		CommandFactory().putName("shuffle").putDescription("Shuffle the deck before guessing. Takes the number of shuffles as an argument.").putArguments({ ArgType::INT }).putFunction(
 			Executor([this](Command& cmd) {
 				int& shuffles = Command::getArgument<int>(cmd, 0);
@@ -177,26 +188,26 @@ void HigherGame::setup() {
 		)
 	).putCommand(
 		//giveup command
+		GameState::GUESSING,
 		CommandFactory().putName("giveup").putDescription("Give up this session of the HigherGame and go back to the menu.").putFunction([this](Command&) -> void {
 				discardPile.addCard(curCard);
 				playingDeck.mergeDecks(discardPile);
 				std::cout << "Lets restart then...\n";
 				curState = GameState::MENU;
+				CHANGESTATE;
 				b_greeting = true;
 	
 			})
 	).putCommand(
 		//help command
+		GameState::GUESSING,
 		CommandFactory().putName("help").putDescription("Prints the helper message.").putFunction(
 			Executor([this](Command&) -> void {
-				std::cout << helperMessages[1]; 
+				std::cout << gameStateParser[0].getHelperMessage();
 				})
 		)
 	);
 
-	commandParser.push_back(parserMenu.finish());
-	helperMessages.push_back(CommandParser::HelperPrinter(commandParser[0]));
-	commandParser.push_back(parserGame.finish());
-	helperMessages.push_back(CommandParser::HelperPrinter(commandParser[1]));
+	gameStateParser.push_back(parserFactory.finish());
 
 }

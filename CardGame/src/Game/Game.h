@@ -1,6 +1,6 @@
 #pragma once
 #include "../Cards/Deck.h"
-#include "../Commands/ParserFactory.h"
+#include "../Commands/StateParserFactory.h"
 #include "../Cards/Hand.h"
 #include "../Shuffling/ShuffleEngine.h"
 #include <memory>
@@ -12,7 +12,6 @@ class Game {
 protected:
 public:
 	typedef std::vector<Hand> Players;
-	typedef std::vector<CommandParser> GameStates;
 	
 	~Game();
 
@@ -45,13 +44,9 @@ protected:
 	//function that all game instances need to define - defines the main game loop
 	virtual void gameLoop() = 0;
 
-	GameStates commandParser; //internal vector of command parsers used by this game instance
-	TokenVector helperMessages; //helper messages containing each parser's helper message
-
 	Deck playingDeck; //the deck that is used to play the game
 	Players allPlayers; //all players in this game
 	uint32_t numOfPlayers; //number of participating players in this game instance
-
 	
 };
 
