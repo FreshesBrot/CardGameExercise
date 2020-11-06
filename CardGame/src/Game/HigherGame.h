@@ -26,8 +26,7 @@ private:
 
 
 	GameState curState; //current state of the game
-	std::vector<StateParser> gameStateParser;
-
+	StateParser parser; //this games parser
 
 	uint32_t numLives; //number of lives left 
 	uint32_t numOfCards; //number of cards that have been guessed correct

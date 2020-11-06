@@ -3,12 +3,32 @@
 
 IOReader::IOReader(std::string&& identifier) : b_running(false), b_read(false), b_reading(false), identifier(std::move(identifier)), buffer() { }
 
-IOReader::IOReader(IOReader&& reader) noexcept : b_running(false), b_read(false), b_reading(false), identifier(reader.identifier), buffer(std::move(reader.buffer)) {
-    reader.shutdown();
+IOReader::IOReader(IOReader&& reader) noexcept : b_running(false), b_read(false), b_reading(false), identifier(), buffer() {
+    *this = std::move(reader);
 }
 
 IOReader::~IOReader() {
     shutdown();
+}
+
+IOReader& IOReader::operator=(IOReader&& reader) noexcept {
+    if (&reader == this) return *this;
+
+    buffer.clear();
+    b_running = false;
+    b_read = false;
+    b_reading = false;
+    shutdown();
+
+    buffer = std::move(reader.buffer);
+    identifier = std::move(reader.identifier);
+
+    if (reader.b_running) {
+        reader.shutdown();
+        start();
+    }
+
+    return *this;
 }
 
 void IOReader::start() {

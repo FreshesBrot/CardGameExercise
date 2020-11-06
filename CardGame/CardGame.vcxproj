@@ -72,14 +72,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(VC_Libs)</IncludePath>
+    <IncludePath>$(VC_Libs);$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(VC_Libs)</IncludePath>
+    <IncludePath>$(VC_Libs);$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -91,7 +91,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);MACHINE_LOCAL</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -158,6 +158,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CardGame.cpp" />
+    <ClCompile Include="Client.cpp" />
+    <ClCompile Include="ConnectionHandler.cpp" />
+    <ClCompile Include="RequestHandler.cpp" />
     <ClCompile Include="src\Cards\Card.cpp" />
     <ClCompile Include="src\Cards\CardDecoder.cpp" />
     <ClCompile Include="src\Cards\CardEncoder.cpp" />
@@ -183,6 +186,9 @@
     <ClCompile Include="src\Shuffling\Shuffler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Client.h" />
+    <ClInclude Include="ConnectionHandler.h" />
+    <ClInclude Include="RequestHandler.h" />
     <ClInclude Include="src\Cards\Card.h" />
     <ClInclude Include="src\Cards\CardDecoder.h" />
     <ClInclude Include="src\Cards\CardEncoder.h" />

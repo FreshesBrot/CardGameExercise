@@ -3,21 +3,33 @@
 #pragma once
 #include <iostream>
 #include <new>
-#include <asio-1.18.0/include/asio.hpp>
-//#define TESTING
+
 
 #include "src/IO/DeckLoader.h"
 #include "src/Shuffling/ShuffleEngine.h"
 #include "src/Commands/Parsing/CommandParser.h"
 #include "src/Game/HigherGame.h"
 #include "src/Commands/ParserFactory.h"
-#define OUT std::cout
+
+#define TESTING
+#define COUT std::cout
 #define NL std::endl
 
 
-static int counter = 0;
+namespace globals {
+
+	static int counter = 0;
+	static int count = counter;
+	
+	static int countDiff = 0;
+	
+	
+	static bool b_run = true;
+	static bool b_greet = true;
+}
+
 void* operator new(std::size_t size) {
-	counter++;
+	globals::counter++;
 	return malloc(size);
 }
 
@@ -25,53 +37,52 @@ void* operator new(std::size_t size) {
 #define DECKFILE "deck.deckf"
 #define CARDCODE(code) printf("0x%02X\n", code)
 
+
+#ifndef TESTING
 #pragma region Card/Deck Functions
 void showHand(Hand& hand) {
-	OUT << "Current Hand: " << NL;
+	COUT << "Current Hand: " << NL;
 	auto cards = hand.getCards();
 	for (uint32_t i = 0; i < hand.getRemainingCards(); i++)
-		OUT << cards[i].shortString() << " ";
+		COUT << cards[i].shortString() << " ";
 
-	OUT << NL;
+	COUT << NL;
 }
 
 void drawDeck(Deck& deck) {
 	int count = 12;
 	while (!deck.isEmpty()) {
-		OUT << deck.drawTopCard().shortString() << " " ;
+		COUT << deck.drawTopCard().shortString() << " " ;
 
 		if (--count < 0) {
-			OUT << NL;
+			COUT << NL;
 			count = 12;
 		}
 	}
 
-	OUT << NL;
+	COUT << NL;
 }
 
 void peekDeck(Deck& deck) {
 	int count = 12;
 	for (auto& c : deck) {
-		OUT << c.shortString() << " ";
+		COUT << c.shortString() << " ";
 
 		if (--count < 0) {
-			OUT << NL;
+			COUT << NL;
 			count = 12;
 		}
 	}
 
-	OUT << NL;
+	COUT << NL;
 }
 #pragma endregion
 
-#ifndef TESTING
+
 int main() {
 	Token herlperMessage;
 
-	bool b_run = true;
-	bool b_greet = true;
-	int count = counter;
-	int countDiff = 0;
+	using namespace globals;
 
 	CommandParser parser = ParserFactory(3).putName("TopLevelParser").putCommand (
 		//play command
@@ -89,23 +100,23 @@ int main() {
 		CommandFactory().putName("help").putDescription("Prints the helper message. This message is also printed if"
 														" an unknown command is given to the interpreter.").putFunction(
 			Executor([&](Command&) -> void {
-				OUT << parser.getHelperMessage() << NL;
+				COUT << parser.getHelperMessage() << NL;
 			})
 		)
 	).putCommand(
 		//exit command
 		CommandFactory().putName("exit").putDescription("Exits and terminates the program").putFunction(
 			Executor([&](Command&) -> void {
-				OUT << "Goodbye!\n";
+				COUT << "Goodbye!\n";
 				b_run = false;
 			})
 		)
 	).putCommand(
 		CommandFactory().putName("allocs").putDescription("Shows how many allocations total and since last call have been made.").putFunction(
 			Executor([&](Command&) -> void {
-					OUT << "Total allocations: " << counter << NL;
+					COUT << "Total allocations: " << counter << NL;
 					countDiff = counter - count;
-					OUT << "Total new allocations: " << countDiff << NL;
+					COUT << "Total new allocations: " << countDiff << NL;
 					count = counter;
 				})
 		)
@@ -115,38 +126,51 @@ int main() {
 	while (b_run) {
 
 		if (b_greet) {
-			OUT << "Welcome! Type \"play\" to play the HigherGame. Type \"help\" to view the currently active list of commands." << NL;
+			COUT << "Welcome! Type \"play\" to play the HigherGame. Type \"help\" to view the currently active list of commands." << NL;
 			b_greet = false;
 		}
 
 		try {
 			parser.askInput();
 		} catch (CommandException& e) {
-			OUT << "Unknown command or bad syntax:" << NL << e.what() << NL;
+			COUT << "Unknown command or bad syntax:" << NL << e.what() << NL;
 			continue;
 		}
 	}
 
-	OUT << "Press enter to exit the program!" << NL;
+	COUT << "Press enter to exit the program!" << NL;
 	std::cin.get();
 }
 
 #else
 
+#include "../Protocol/Protocol.h"
+#include "Client.h"
+
+enum TEST {
+	ONE = 1,
+	TWO
+};
+
 int main() {
-	
-	IOReader reader("test");
-	reader.start();
-	OUT << "reader started" << NL;
-	reader.read();
+	asio::io_context context;
+	asio::io_context::work idleWork(context);
 
-	OUT << "Now waiting for input" << NL;
-	while (reader.isReading());
+	std::thread worker = std::thread([&]() { context.run(); });
 
-	OUT << "Input received:" << NL;
-	OUT << reader.getBuffer() << NL;
+	//create a client instance with this context
+	Client client(context);
+	try {
+		client.connect();
+	} catch (std::exception& e) {
+		COUT << e.what() << NL;
+	}
 
-	std::cin.get();
+	context.stop();
+	if (worker.joinable()) worker.join();
+
+	COUT << "Done!" << NL;
+
 }
 
 #endif

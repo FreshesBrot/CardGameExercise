@@ -56,6 +56,15 @@
     <Filter Include="Commands\Parsing">
       <UniqueIdentifier>{4e0114cc-edf6-4fc1-b16b-5195f8512026}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{64db7c6a-ee12-44a2-b284-546b619a0496}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Header">
+      <UniqueIdentifier>{f235e441-e92e-4bd9-a8a1-16addfe4bada}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Source">
+      <UniqueIdentifier>{a72fd2a4-ca91-4130-8a4d-26678abef853}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CardGame.cpp">
@@ -129,6 +138,15 @@
     </ClCompile>
     <ClCompile Include="src\Shuffling\Shuffler.cpp">
       <Filter>Shuffling\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>Network\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ConnectionHandler.cpp">
+      <Filter>Network\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="RequestHandler.cpp">
+      <Filter>Network\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -230,6 +248,15 @@
     </ClInclude>
     <ClInclude Include="src\Commands\Parsing\CommandParser.h">
       <Filter>Commands\Parsing</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>Network\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectionHandler.h">
+      <Filter>Network\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="RequestHandler.h">
+      <Filter>Network\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -9,10 +9,17 @@ public:
 	typedef std::unordered_map<States, Commands> StateMap;
 
 	StateCommandParser(Token&& identifier, StateMap&& allStates = { }) : StateIOParser<States, IOReader>(std::move(identifier), std::move(allStates)) { }
-	StateCommandParser() : StateIOParser<States, IOReader, StateCommandParser<States>>() { }
+	StateCommandParser() : StateIOParser<States, IOReader>() { }
 
 	StateCommandParser(StateCommandParser&) = delete;
-	StateCommandParser(StateCommandParser&& parser) noexcept : StateIOParser<States, IOReader>(std::move(parser)) { }
+	StateCommandParser(StateCommandParser&& parser) noexcept : StateIOParser<States, IOReader>() {
+		*this = std::move(parser);
+	}
 
+	StateCommandParser& operator=(StateCommandParser&& parser) noexcept {
+		if (this == &parser) return *this;
+		StateIOParser<States, IOReader>::operator=(std::move(parser));
+		return *this;
+	}
 
 };

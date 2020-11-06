@@ -1,10 +1,10 @@
 #include "HigherGame.h"
 //helper macro that wraps a executor function call into a single macro for readability
 #define EXECUTOR(body) Executor([this](Command& cmd) -> void {body})
-#define CHANGESTATE gameStateParser[0].changeState(curState)
+#define CHANGESTATE parser.changeState(curState)
 
 HigherGame::HigherGame(Deck& deck) : 
-										Game(deck, Players()), numLives(defaultLives), numOfCards(0), b_greeting(true), gameStateParser(),
+										Game(deck, Players()), numLives(defaultLives), numOfCards(0), b_greeting(true),
 										discardPile(Deck::emptyDeck()), curCard(Card::Invalid()), curState(GameState::MENU)
 { 
 	setup();
@@ -35,7 +35,6 @@ void HigherGame::gameLoop() {
 						b_greeting = false;
 					}
 					
-					StateParser& parser = gameStateParser[0];
 					parser.askInput();
 					break;
 					
@@ -58,7 +57,6 @@ void HigherGame::gameLoop() {
 				//guessing procedure
 				case GameState::GUESSING: {
 					
-					StateParser& parser = gameStateParser[0];
 					parser.askInput();
 					break;
 				}
@@ -111,7 +109,7 @@ void HigherGame::setup() {
 		GameState::MENU,
 		CommandFactory().putName("help").putDescription("Prints the helper message.").putFunction(
 			Executor([this](Command&) -> void {
-				std::cout << gameStateParser[0].getHelperMessage();
+				std::cout << parser.getHelperMessage();
 				})
 		)
 	
@@ -203,11 +201,12 @@ void HigherGame::setup() {
 		GameState::GUESSING,
 		CommandFactory().putName("help").putDescription("Prints the helper message.").putFunction(
 			Executor([this](Command&) -> void {
-				std::cout << gameStateParser[0].getHelperMessage();
+				std::cout << parser.getHelperMessage();
 				})
 		)
 	);
 
-	gameStateParser.push_back(parserFactory.finish());
+
+	parser = std::move(parserFactory.finish());
 
 }

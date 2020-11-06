@@ -13,7 +13,19 @@ public:
 	StateIOParser() : IOParser<IOStream>() { }
 
 	StateIOParser(StateIOParser&) = delete;
-	StateIOParser(StateIOParser&& parser) noexcept : IOParser<IOStream>(std::move(parser)), allCommands(std::move(parser.allCommands)) { curState = parser.curState; }
+	StateIOParser(StateIOParser&& parser) noexcept : IOParser<IOStream>() {
+		*this = std::move(parser);
+	}
+
+	StateIOParser& operator=(StateIOParser&& parser) noexcept {
+		if (this == &parser) return *this;
+		IOParser<IOStream>::operator=(std::move(parser));
+		allCommands.clear();
+		allCommands = std::move(parser.allCommands);
+		std::swap(curState, parser.curState);
+
+		return *this;
+	}
 
 	//changes the set of commands that will be executed according to the state
 	void changeState(States state) {

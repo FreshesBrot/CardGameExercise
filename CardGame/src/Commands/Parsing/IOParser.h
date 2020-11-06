@@ -16,14 +16,34 @@ public:
 		reader.start();
 	};
 
-	IOParser() : reader("undef") { };
-	~IOParser() { };
-	IOParser(const IOParser&) = delete;
-	IOParser(IOParser&& ioparser) noexcept : 
-		reader(std::move(ioparser.reader)), /*moving ioreader shuts it down*/ 
-		tokens(std::move(ioparser.tokens)), commands(std::move(ioparser.commands)), b_suspended(false) {
+	//stand-in standard constructor - might not be needed eventually
+	IOParser() { };
 
-		reader.start(); //start this instances ioreader thread
+	~IOParser() { };
+	
+	//class is not copyable
+	IOParser(const IOParser&) = delete;
+	
+	//class is however moveable. uses move assignment to move resources, looks cleaner and better
+	IOParser(IOParser&& parser) noexcept : 
+		reader(), tokens(), commands(), b_suspended(false) {
+
+		*this = std::move(parser);
+	}
+
+	//move assignment operator. handles everything to move resources from the rhs parser to the assigned parser
+	IOParser& operator=(IOParser&& parser) noexcept {
+		if (this == &parser) return *this;
+		reader.shutdown();
+		commands.clear();
+		tokens.clear();
+		
+		reader = std::move(parser.reader);
+		commands = std::move(parser.commands);
+		tokens = std::move(parser.tokens);
+		b_suspended = parser.b_suspended;
+
+		return *this;
 	}
 
 	virtual void askInput() {
@@ -78,6 +98,11 @@ public:
 
 
 protected:
+	IOStream reader; //the ioreader that takes the inputs
+	TokenList tokens; //list of all captured tokens
+	Commands commands; //all commands that are recognized	
+	bool b_suspended; //whether this IOReader is currently not active or not
+
 	//internal implementation of getHelperMessage 
 	Token constructHelperMessage(Commands& cmds) {
 		std::ostringstream oss;
@@ -88,8 +113,6 @@ protected:
 
 		return oss.str();
 	}
-
-	bool b_suspended; //whether this IOReader is currently not active or not
 
 	//tokenizes the input from the IOReader into managable tokens
 	void tokenize(Token& buffer) {
@@ -161,10 +184,6 @@ protected:
 
 	}
 
-
-	IOStream reader; //the ioreader that takes the inputs
-	TokenList tokens; //list of all captured tokens
-	Commands commands; //all commands that are recognized	
 	
 #pragma region HelperFunctions
 	//step 1 for the tokenizer

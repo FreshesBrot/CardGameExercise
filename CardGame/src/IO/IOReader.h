@@ -8,9 +8,12 @@ class IOReader {
 public:
 	//constructor needs an identifier string, useful to keep several io threads apart
 	IOReader(std::string&& identifier);
+	IOReader() { }; //this standard constructor literally initializes no values and should not be used
 	IOReader(const IOReader&) = delete;
 	IOReader(IOReader&& reader) noexcept;
 	~IOReader();
+
+	IOReader& operator=(IOReader&& reader) noexcept;
 
 	//starts the IOReader
 	void start();
@@ -40,7 +43,7 @@ private:
 	bool b_running; //ioreader should be running
 	bool b_read; //ioreader should be awaiting input
 	bool b_reading; //ioreader is waiting for input
-	const std::string identifier; //identifier for this io thread
+	std::string identifier; //identifier for this io thread
 	
 	std::string buffer; //buffer containing the read line
 
