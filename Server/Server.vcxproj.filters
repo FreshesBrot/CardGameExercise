@@ -16,12 +16,18 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Exceptions">
+      <UniqueIdentifier>{564d423b-9036-465e-aaff-6f479fc774d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\Queues">
+      <UniqueIdentifier>{badd304a-b6c7-46db-bfcc-7a8028455332}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Server.cpp">
+    <ClCompile Include="src\Server\ConnectionListener.cpp">
       <Filter>Server\Source</Filter>
     </ClCompile>
-    <ClCompile Include="ConnectionListener.cpp">
+    <ClCompile Include="src\Server\Server.cpp">
       <Filter>Server\Source</Filter>
     </ClCompile>
     <ClCompile Include="start.cpp">
@@ -29,11 +35,23 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Server.h">
+    <ClInclude Include="src\Server\ConnectionListener.h">
       <Filter>Server\Header</Filter>
     </ClInclude>
-    <ClInclude Include="ConnectionListener.h">
+    <ClInclude Include="src\Server\Server.h">
       <Filter>Server\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Exceptions\EmptyQueueException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Server\Queues\ProtocolProvider.h">
+      <Filter>Server\Queues</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Server\Queues\ProtocolQueue.h">
+      <Filter>Server\Queues</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Server\Queues\Subscriber.h">
+      <Filter>Server\Queues</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

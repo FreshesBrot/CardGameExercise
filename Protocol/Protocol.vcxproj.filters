@@ -21,5 +21,8 @@
     <ClInclude Include="ProtocolHeader.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="ControlInformation.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
