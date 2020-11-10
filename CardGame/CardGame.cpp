@@ -10,6 +10,7 @@
 #include "src/Commands/Parsing/CommandParser.h"
 #include "src/Game/HigherGame.h"
 #include "src/Commands/ParserFactory.h"
+#include "src/Network/Client.h"
 
 #define TESTING
 #define COUT std::cout
@@ -145,7 +146,6 @@ int main() {
 #else
 
 #include "../Protocol/Protocol.h"
-#include "Client.h"
 
 enum TEST {
 	ONE = 1,
@@ -153,21 +153,14 @@ enum TEST {
 };
 
 int main() {
-	asio::io_context context;
-	asio::io_context::work idleWork(context);
 
-	std::thread worker = std::thread([&]() { context.run(); });
-
-	//create a client instance with this context
-	Client client(context);
 	try {
+		//create a client instance with its own context
+		Client client;
 		client.connect();
 	} catch (std::exception& e) {
 		COUT << e.what() << NL;
 	}
-
-	context.stop();
-	if (worker.joinable()) worker.join();
 
 	COUT << "Done!" << NL;
 

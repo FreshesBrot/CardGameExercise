@@ -139,13 +139,16 @@
     <ClCompile Include="src\Shuffling\Shuffler.cpp">
       <Filter>Shuffling\Source</Filter>
     </ClCompile>
-    <ClCompile Include="Client.cpp">
+    <ClCompile Include="src\Network\ResponseHandler.cpp">
       <Filter>Network\Source</Filter>
     </ClCompile>
-    <ClCompile Include="ConnectionHandler.cpp">
+    <ClCompile Include="src\Network\RequestHandler.cpp">
       <Filter>Network\Source</Filter>
     </ClCompile>
-    <ClCompile Include="RequestHandler.cpp">
+    <ClCompile Include="src\Network\ConnectionHandler.cpp">
+      <Filter>Network\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Network\Client.cpp">
       <Filter>Network\Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -249,14 +252,23 @@
     <ClInclude Include="src\Commands\Parsing\CommandParser.h">
       <Filter>Commands\Parsing</Filter>
     </ClInclude>
-    <ClInclude Include="Client.h">
+    <ClInclude Include="src\Exceptions\NoConnectionException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Network\Client.h">
       <Filter>Network\Header</Filter>
     </ClInclude>
-    <ClInclude Include="ConnectionHandler.h">
+    <ClInclude Include="src\Network\ConnectionHandler.h">
       <Filter>Network\Header</Filter>
     </ClInclude>
-    <ClInclude Include="RequestHandler.h">
+    <ClInclude Include="src\Network\RequestHandler.h">
       <Filter>Network\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Network\ResponseHandler.h">
+      <Filter>Network\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Exceptions\InvalidHandlerAccessException.h">
+      <Filter>Exceptions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

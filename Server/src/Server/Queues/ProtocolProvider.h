@@ -72,8 +72,6 @@ public:
 
 private:
 	uint32_t futureAccesses; //int that keeps track of how many threads will access the queue in the future
-	
-	ProtocolType reserved; //the reserved instance of the protocol
 
 	std::shared_mutex mutex; //mutex to control access to the queue
 
