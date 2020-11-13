@@ -3,8 +3,8 @@
 #define EXECUTOR(body) Executor([this](Command& cmd) -> void {body})
 #define CHANGESTATE parser.changeState(curState)
 
-HigherGame::HigherGame(Deck& deck) : 
-										Game(deck, Players()), numLives(defaultLives), numOfCards(0), b_greeting(true),
+HigherGame::HigherGame(Deck&& deck) : 
+										Game(std::move(deck), Players()), numLives(defaultLives), numOfCards(0), b_greeting(true),
 										discardPile(Deck::emptyDeck()), curCard(Card::Invalid()), curState(GameState::MENU)
 { 
 	setup();
@@ -90,10 +90,10 @@ void HigherGame::setup() {
 
 				std::cout << "Lets play! Number of lives: " << numLives << ".\n";
 				numOfCards = 0;
-				//Game::shuffleEngine->ShuffleDeck(playingDeck, 2); shuffling is highly inefficient, this alone allocates 13k times!
+				Game::shuffleEngine->ShuffleDeck(playingDeck, 5); //shuffling is now free, with 0 allocations once the shuffle engine has been initialized
 				curState = GameState::DRAWING;
 				CHANGESTATE;
-				})
+			})
 		)
 	).putCommand(
 		//quit command
@@ -102,7 +102,7 @@ void HigherGame::setup() {
 			Executor([this](Command&) -> void {
 				std::cout << "Goodbye!\n";
 				b_isRunning = false;
-				})
+			})
 		)
 	).putCommand(
 		//help command
@@ -110,7 +110,7 @@ void HigherGame::setup() {
 		CommandFactory().putName("help").putDescription("Prints the helper message.").putFunction(
 			Executor([this](Command&) -> void {
 				std::cout << parser.getHelperMessage();
-				})
+			})
 		)
 	
 	//GAMESTATE GUESSING
@@ -202,7 +202,7 @@ void HigherGame::setup() {
 		CommandFactory().putName("help").putDescription("Prints the helper message.").putFunction(
 			Executor([this](Command&) -> void {
 				std::cout << parser.getHelperMessage();
-				})
+			})
 		)
 	);
 

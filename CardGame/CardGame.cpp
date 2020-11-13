@@ -29,10 +29,10 @@ namespace globals {
 	static bool b_greet = true;
 }
 
-void* operator new(std::size_t size) {
-	globals::counter++;
-	return malloc(size);
-}
+//void* operator new(std::size_t size) {
+//	globals::counter++;
+//	return malloc(size);
+//}
 
 
 #define DECKFILE "deck.deckf"
@@ -89,9 +89,9 @@ int main() {
 		//play command
 		CommandFactory().putName("play").putDescription("Starts the HigherGame.").putFunction(
 			Executor([&](Command&) -> void {
-				Deck deck;
+				Deck deck = Deck::defaultDeck();
 				parser.suspend();
-				HigherGame(deck).start();
+				HigherGame(std::move(deck)).start();
 				parser.restart();
 				b_greet = true;
 			})
@@ -113,6 +113,7 @@ int main() {
 			})
 		)
 	).putCommand(
+		//allocs command
 		CommandFactory().putName("allocs").putDescription("Shows how many allocations total and since last call have been made.").putFunction(
 			Executor([&](Command&) -> void {
 					COUT << "Total allocations: " << counter << NL;
@@ -144,26 +145,68 @@ int main() {
 }
 
 #else
+#include <chrono>
 
 #include "../Protocol/Protocol.h"
 
-enum TEST {
-	ONE = 1,
-	TWO
+class Timer {
+public:
+	Timer(double&& ratio = 1.0f, std::string&& measure = "micros") : ratio(std::move(ratio)), measure(std::move(measure)) {
+		//get current time as a timepoint
+		start = std::chrono::high_resolution_clock::now();
+	};
+
+	~Timer() {
+		//on destruction, get current time as a timepoint
+		auto end = std::chrono::high_resolution_clock::now();
+
+		auto startTime = std::chrono::time_point_cast<std::chrono::microseconds>(start).time_since_epoch().count();
+		auto endTime = std::chrono::time_point_cast<std::chrono::microseconds>(end).time_since_epoch().count();
+
+		std::cout << "Total time: " << (endTime - startTime) * ratio << measure << NL;
+	};
+private:
+	double ratio;
+	std::string measure;
+	std::chrono::time_point<std::chrono::steady_clock> start;
+
 };
 
 int main() {
 
-	try {
-		//create a client instance with its own context
-		Client client;
-		client.connect();
-	} catch (std::exception& e) {
-		COUT << e.what() << NL;
+	Deck deck = Deck::defaultDeck();
+
+	COUT << "Measuring CutShuffle.." << NL;
+	{
+		Timer t;
+		CutShuffle().shuffleDeck(deck);
+
 	}
-
-	COUT << "Done!" << NL;
-
+	COUT << "Measuring RiffleShuffle.." << NL;
+	{
+		Timer t;
+		RiffleShuffle().shuffleDeck(deck);
+	}
+	COUT << "Measuring ShuffleEngine with 2 total cycles.." << NL;
+	{
+		Timer t;
+		ShuffleEngine().ShuffleDeck(deck, 2);
+	}
+	COUT << "Measuring ShuffleEngine with 100 total cycles in milliseconds.." << NL;
+	{
+		Timer t(1e-3,"ms");
+		ShuffleEngine().ShuffleDeck(deck, 100);
+	}
+	COUT << "Measuring ShuffleEngine with 1000 total cycles in milliseconds .." << NL;
+	{
+		Timer t(1e-3,"ms");
+		ShuffleEngine().ShuffleDeck(deck, 1000);
+	}
+	COUT << "Measuring ShuffleEngine with 10000 total cycles in seconds .." << NL;
+	{
+		Timer t(1e-6, "s");
+		ShuffleEngine().ShuffleDeck(deck, 10000);
+	}
 }
 
 #endif

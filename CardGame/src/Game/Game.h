@@ -34,7 +34,7 @@ protected:
 	inline static std::unique_ptr<ShuffleEngine> shuffleEngine = std::make_unique<ShuffleEngine>();
 
 	//constructor is private, so that each game instance can initiate everything that is needed by itself
-	Game(Deck& deck, Players players);
+	Game(Deck&& deck, Players players);
 	
 	bool b_isRunning; //flag that determines if the game should be running or not
 

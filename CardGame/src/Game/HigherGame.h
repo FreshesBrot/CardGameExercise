@@ -5,7 +5,7 @@
 //this game is a simple guessing game, where the player has to guess if the next card that is drawn is higher or lower
 class HigherGame : public Game {
 public:
-	HigherGame(Deck& deck);
+	HigherGame(Deck&& deck);
 	~HigherGame();
 
 	void start() override;

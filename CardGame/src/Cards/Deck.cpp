@@ -2,18 +2,32 @@
 #define IT_BEGIN cards.begin()
 #define IT_END cards.end()
 
-Deck::Deck() : b_isEmpty(false), remainingCards(52) {
-	for (int i = 1; i < 5; i++)
-		for (int j = 2; j < 15; j++)
-			cards.push_back(Card(Suite(i), j));
+
+Deck::Deck(Cards&& cards) : b_isEmpty(), cards(std::move(cards)), remainingCards() { 
+	b_isEmpty = this->cards.size();
+	remainingCards = this->cards.size();
 }
 
-Deck::Deck(const Cards& cards) : b_isEmpty(cards.empty()), cards(cards), remainingCards(cards.size()) { }
+Deck::Deck(const Cards& cards) : cards(cards) {
+	remainingCards = this->cards.size();
+	b_isEmpty = cards.empty();
+}
 
-Deck::Deck(Deck&& deck) noexcept : remainingCards(deck.remainingCards), b_isEmpty(deck.b_isEmpty), cards() {
+Deck::Deck(Deck&& deck) noexcept : remainingCards(), b_isEmpty(), cards() {
+	*this = std::move(deck);
+}
+
+Deck& Deck::operator=(Deck&& deck) noexcept {
+	if (this == &deck) return *this;
+	cards.clear();
+	
+	cards = std::move(deck.cards);
+	remainingCards = cards.size();
+	b_isEmpty = cards.empty();
+	
 	deck.remainingCards = 0;
 	deck.b_isEmpty = true;
-	cards.splice(cards.begin(), deck.cards);
+	
 }
 
 Card Deck::drawTopCard() {
@@ -35,29 +49,30 @@ void Deck::addCard(const Card& card) {
 }
 
 Deck Deck::cut() {
-	return std::move(Deck(cutCardList(remainingCards / 2)));
+	return cut(remainingCards/2);
 }
 
 Deck Deck::cut(uint32_t amount) {
 	if (!amount)
-		return std::move(Deck(Cards()));
+		return Deck(Cards());
 	if (amount >= remainingCards)
 		return std::move(*this);
-	
-	return std::move(Deck(cutCardList(amount)));
+
+
+	return Deck(std::move(cutCardList(amount)));
 }
 
 Deck Deck::cutBottom() {
-	return std::move(Deck(cutCardList(remainingCards / 2, 1)));
+	return cutBottom(remainingCards/2);
 }
 
 Deck Deck::cutBottom(uint32_t amount) {
 	if (!amount) 
-		return std::move(Deck(Cards()));
+		return Deck(Cards());
 	if (amount >= remainingCards) 
 		return std::move(*this);
 
-	return std::move(Deck(std::move(cutCardList(amount, 1))));
+	return Deck(std::move(cutCardList(amount, 1)));
 }
 
 bool Deck::isEmpty() const {
@@ -118,6 +133,68 @@ void Deck::sort(bool(*comp)(const Card&, const Card&)) {
 	cards.sort(comp);
 }
 
+void Deck::cutIntoDeck(Deck& src, Deck& dst) {
+	Deck::cutIntoDeck(src, dst, src.remainingCards / 2);
+}
+
+void Deck::cutIntoDeck(Deck& src, Deck& dst, uint32_t amt) {
+	//make sure its not splicing into itself
+	if (&src == &dst) return;
+	//then make sure amt is >0
+	if (!amt) return;
+	//then if amt > src.remainingCards move src deck into dst deck
+	if (amt > src.remainingCards) {
+		dst = std::move(src);
+		return;
+	}
+
+
+
+	//this should be 0 allocations
+	dst.cards.clear();
+	Cards::iterator it = src.cards.end();
+	std::advance(it, -(int)amt);
+	dst.cards.splice(dst.cards.begin(), src.cards, it, src.cards.end());
+
+	src.remainingCards -= amt;
+	src.b_isEmpty = src.cards.empty();
+	dst.remainingCards += amt;
+	dst.b_isEmpty = false;
+}
+
+void Deck::cutBottomIntoDeck(Deck& src, Deck& dst) {
+	cutBottomIntoDeck(src, dst, src.remainingCards / 2);
+}
+
+void Deck::cutBottomIntoDeck(Deck& src, Deck& dst, uint32_t amt) {
+	//make sure its not splicing into itself
+	if (&src == &dst) return;
+	//then make sure amt is >0
+	if (!amt) return;
+	//then if amt > src.remainingCards move src deck into dst deck
+	if (amt > src.remainingCards) {
+		dst = std::move(src);
+		return;
+	}
+
+	//this should be 0 allocations
+	dst.cards.clear();
+	Cards::iterator it = src.cards.begin();
+	std::advance(it, amt);
+	dst.cards.splice(dst.cards.begin(), src.cards, src.cards.begin(), it);
+
+	src.remainingCards -= amt;
+	src.b_isEmpty = src.cards.empty();
+	dst.remainingCards += amt;
+	dst.b_isEmpty = false;
+}
+
+void Deck::clearDeck() {
+	cards.clear();
+	remainingCards = 0;
+	b_isEmpty = true;
+}
+
 Cards Deck::cutCardList(int amount, int side) {
 
 	Cards cards2;
@@ -135,3 +212,16 @@ Cards Deck::cutCardList(int amount, int side) {
 	remainingCards -= amount;
 	return cards2;
 }
+
+Cards Deck::initDefault() {
+	Cards cards;
+
+	for (int i = 1; i < 5; i++)
+		for (int j = 2; j < 15; j++)
+			cards.push_back(Card(Suite(i), j));
+	
+	return cards;
+}
+
+//this will call initDefault when static runtime variables are constructed
+Cards Deck::defaultCards = Deck::initDefault();
