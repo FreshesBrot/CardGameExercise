@@ -1,7 +1,7 @@
 #pragma once
 #include <sstream>
 #include "Option.h"
-#include "../Exceptions/CommandException.h"
+#include "../../../Exceptions/src/Exceptions/CommandException.h"
 #include <functional>
 
 class Command;

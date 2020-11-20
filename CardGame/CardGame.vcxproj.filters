@@ -41,9 +41,6 @@
     <Filter Include="Game\Source">
       <UniqueIdentifier>{89f5a752-d908-4330-ae68-5d4c9cc30899}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Exceptions">
-      <UniqueIdentifier>{c73492cb-43d8-4f22-b183-d63a48f24a54}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Commands">
       <UniqueIdentifier>{010e842c-e58a-41c1-ba82-68725b01ab84}</UniqueIdentifier>
     </Filter>
@@ -57,13 +54,13 @@
       <UniqueIdentifier>{4e0114cc-edf6-4fc1-b16b-5195f8512026}</UniqueIdentifier>
     </Filter>
     <Filter Include="Network">
-      <UniqueIdentifier>{64db7c6a-ee12-44a2-b284-546b619a0496}</UniqueIdentifier>
+      <UniqueIdentifier>{abe8b3ac-4052-447e-bed7-8e47b75858d5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Network\Header">
-      <UniqueIdentifier>{f235e441-e92e-4bd9-a8a1-16addfe4bada}</UniqueIdentifier>
+      <UniqueIdentifier>{8345874a-90ee-4a66-92aa-e8f456e3cbf2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Network\Source">
-      <UniqueIdentifier>{a72fd2a4-ca91-4130-8a4d-26678abef853}</UniqueIdentifier>
+      <UniqueIdentifier>{56a3acec-7465-444b-b761-5d075b72f1da}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -139,16 +136,10 @@
     <ClCompile Include="src\Shuffling\Shuffler.cpp">
       <Filter>Shuffling\Source</Filter>
     </ClCompile>
-    <ClCompile Include="src\Network\ResponseHandler.cpp">
-      <Filter>Network\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Network\RequestHandler.cpp">
+    <ClCompile Include="src\Network\Client.cpp">
       <Filter>Network\Source</Filter>
     </ClCompile>
     <ClCompile Include="src\Network\ConnectionHandler.cpp">
-      <Filter>Network\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Network\Client.cpp">
       <Filter>Network\Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -195,18 +186,6 @@
     <ClInclude Include="src\Commands\ParserFactory.h">
       <Filter>Commands\Header</Filter>
     </ClInclude>
-    <ClInclude Include="src\Exceptions\BaseException.h">
-      <Filter>Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Exceptions\CardException.h">
-      <Filter>Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Exceptions\CommandException.h">
-      <Filter>Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Exceptions\DeckException.h">
-      <Filter>Exceptions</Filter>
-    </ClInclude>
     <ClInclude Include="src\Game\Game.h">
       <Filter>Game\Header</Filter>
     </ClInclude>
@@ -252,23 +231,11 @@
     <ClInclude Include="src\Commands\Parsing\CommandParser.h">
       <Filter>Commands\Parsing</Filter>
     </ClInclude>
-    <ClInclude Include="src\Exceptions\NoConnectionException.h">
-      <Filter>Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Network\Client.h">
-      <Filter>Network\Header</Filter>
-    </ClInclude>
     <ClInclude Include="src\Network\ConnectionHandler.h">
       <Filter>Network\Header</Filter>
     </ClInclude>
-    <ClInclude Include="src\Network\RequestHandler.h">
+    <ClInclude Include="src\Network\Client.h">
       <Filter>Network\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Network\ResponseHandler.h">
-      <Filter>Network\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Exceptions\InvalidHandlerAccessException.h">
-      <Filter>Exceptions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

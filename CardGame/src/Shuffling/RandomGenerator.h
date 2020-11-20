@@ -14,8 +14,9 @@ public:
 private:
 	//intializes the random engine
 	RandomGenerator();
-	RandomGenerator(RandomGenerator&) = delete;
 	~RandomGenerator() {};
+	RandomGenerator(const RandomGenerator&) = delete;
+	RandomGenerator(RandomGenerator&&) = delete;
 
 
 	static RandomGenerator* instance;

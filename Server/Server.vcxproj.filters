@@ -16,11 +16,14 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Exceptions">
-      <UniqueIdentifier>{564d423b-9036-465e-aaff-6f479fc774d7}</UniqueIdentifier>
+    <Filter Include="Game">
+      <UniqueIdentifier>{fb6027ca-fc2a-4ff7-b722-000250c4122e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Server\Queues">
-      <UniqueIdentifier>{badd304a-b6c7-46db-bfcc-7a8028455332}</UniqueIdentifier>
+    <Filter Include="Game\Header">
+      <UniqueIdentifier>{b9ca04a2-d764-497a-834b-03b3926b5e14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Source">
+      <UniqueIdentifier>{ff0a324c-c6a6-48c1-93b4-ba210d2a89d3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -33,6 +36,12 @@
     <ClCompile Include="start.cpp">
       <Filter>Server</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game\DefaultLobby.cpp">
+      <Filter>Game\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PlayerInstance.cpp">
+      <Filter>Game\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Server\ConnectionListener.h">
@@ -41,17 +50,11 @@
     <ClInclude Include="src\Server\Server.h">
       <Filter>Server\Header</Filter>
     </ClInclude>
-    <ClInclude Include="src\Exceptions\EmptyQueueException.h">
-      <Filter>Exceptions</Filter>
+    <ClInclude Include="src\Game\DefaultLobby.h">
+      <Filter>Game\Header</Filter>
     </ClInclude>
-    <ClInclude Include="src\Server\Queues\ProtocolProvider.h">
-      <Filter>Server\Queues</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Server\Queues\ProtocolQueue.h">
-      <Filter>Server\Queues</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Server\Queues\Subscriber.h">
-      <Filter>Server\Queues</Filter>
+    <ClInclude Include="src\Game\PlayerInstance.h">
+      <Filter>Game\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

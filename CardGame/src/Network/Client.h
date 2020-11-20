@@ -2,9 +2,8 @@
 #include <string>
 #include "../Commands/ParserFactory.h"
 #include "ConnectionHandler.h"
-#include "RequestHandler.h"
-#include "ResponseHandler.h"
-#include "../Exceptions/InvalidHandlerAccessException.h"
+#include "../../../NetworkLibrary/src/Network/NetworkDefs.h"
+#include "../../../Exceptions/src/Exceptions/InvalidHandlerAccessException.h"
 
 //this class handles everything from starting a local game to connecting to a server
 class Client {
@@ -14,7 +13,7 @@ public:
 	Client();
 
 	//make sure the client cleanly disconnects from the server
-	~Client() { };
+	~Client() { disconnect(); };
 
 	//checks if this client instance is currently connected to a remote game
 	bool isConnected() volatile const;
@@ -25,10 +24,10 @@ public:
 	//closes the server connection
 	void disconnect();
 	//sends a string (i.e. command) to the server
-	void sendRequest(std::string&& request);
+	void sendRequest(ProtocolType request);
 
 	//returns the response handler managed by this client instance. throws an exception if the handler is in an invalid state
-	ResponseHandler& getHandler();
+	RequestListener& getHandler();
 
 private:
 	//sets the command parser for this client instance
@@ -40,12 +39,12 @@ private:
 
 	CommandParser parser; //this clients parser
 
-	std::shared_ptr<TCP::socket> sharedSocket; //this clients connection socket that is shared between the request and response handler
+	SharedSocket sharedSocket; //this clients connection socket that is shared between the request and response handler
 	uint32_t clientID; //information that is used to identify this client on the server side
-	asio::io_context context; //the client needs an io_context to operate on
+	SharedContext context; //the client needs an io_context to operate on
 
-	ResponseHandler responseHandler; //some classes need to access this handler!
-	//RequestHandler requestHandler; //handler that manages sending requests to the server
+	RequestListener responseHandler; //some classes need to access this handler!
+	RequestHandler requestHandler; //handler that manages sending requests to the server
 
 	std::thread commsThread; //the thread where the io_context will run on, managed by this class
 

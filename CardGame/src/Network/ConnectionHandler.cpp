@@ -1,11 +1,11 @@
 #include "ConnectionHandler.h"
 
-ConnectionHandler::ConnectionHandler(asio::io_context& context) : context(context) { 
-	connectSocket = std::make_shared<TCP::socket>(context);
+ConnectionHandler::ConnectionHandler(SharedContext& context) : context(context) { 
+	connectSocket = std::make_shared<TCP::socket>((*context));
 }
 
 void ConnectionHandler::connect(std::string& IP, std::string& port) {
-	TCP::resolver resolver(context);
+	TCP::resolver resolver((*context));
 	
 	asio::error_code err;
 

@@ -72,10 +72,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(VC_Libs);$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)Libs</IncludePath>
+    <OutDir>$(SolutionDir)$(Configuration)\$(ProjectName)</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(VC_Libs);$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)Libs</IncludePath>
+    <OutDir>$(SolutionDir)$(Configuration)\$(ProjectName)</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -98,6 +100,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)Libs\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -111,6 +114,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)Libs\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -142,17 +146,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\DefaultLobby.cpp" />
+    <ClCompile Include="src\Game\PlayerInstance.cpp" />
     <ClCompile Include="src\Server\ConnectionListener.cpp" />
     <ClCompile Include="src\Server\Server.cpp" />
     <ClCompile Include="start.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Exceptions\EmptyQueueException.h" />
+    <ClInclude Include="src\Game\DefaultLobby.h" />
+    <ClInclude Include="src\Game\PlayerInstance.h" />
     <ClInclude Include="src\Server\ConnectionListener.h" />
-    <ClInclude Include="src\Server\Queues\ProtocolProvider.h" />
-    <ClInclude Include="src\Server\Queues\ProtocolQueue.h" />
-    <ClInclude Include="src\Server\Queues\Subscriber.h" />
     <ClInclude Include="src\Server\Server.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NetworkLibrary\NetworkLibrary.vcxproj">
+      <Project>{dbd74bc2-f67c-4b47-a7cc-437607420155}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
