@@ -66,7 +66,8 @@ int main() {
 
 
 int main() {
-	Server::Instance()->start();
-
+	COUT << "Starting Server...";
+	Server::getInstance().run();
+	COUT << "Done." << NL;
 }
 #endif

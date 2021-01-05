@@ -43,7 +43,7 @@ private:
 	uint32_t clientID; //information that is used to identify this client on the server side
 	SharedContext context; //the client needs an io_context to operate on
 
-	RequestListener responseHandler; //some classes need to access this handler!
+	RequestListener requestListener; //some classes need to access this handler!
 	RequestHandler requestHandler; //handler that manages sending requests to the server
 
 	std::thread commsThread; //the thread where the io_context will run on, managed by this class

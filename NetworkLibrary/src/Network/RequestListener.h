@@ -12,7 +12,7 @@ public:
 	typedef std::vector<char> Buffer;
 
 	//default constructor that doesnt initialize any values. puts the response handler in an invalid state
-	RequestListener() : b_listen(false), socket(), buffer(), tmpBuffer(), curSize(0), b_valid(false) { };
+	RequestListener() : b_listen(false), b_receiving(false), socket(), buffer(), tmpBuffer(), curSize(0), expectedSize(0), b_valid(false) { };
 
 	//constructor to initialize the response handler with the shared socket
 	RequestListener(SharedSocket& socket);
@@ -44,6 +44,7 @@ public:
 private:
 
 	bool b_listen; //flag that tells the response handler to keep listening for responses
+	bool b_receiving; //flag that is true when a protocol is being sent and not fully transmitted yet
 
 	SharedSocket socket; //shared socket to handle incomming connections
 	ProtocolQueue queue; //the queue that this class will post to
@@ -51,12 +52,16 @@ private:
 	Buffer buffer; //buffer that will hold the entire servers response
 	Buffer tmpBuffer; //buffer that will hold incoming responses
 	size_t curSize; //current (written) size of the buffer
+	size_t expectedSize; //expected size of incomming protocol
 
 	inline static uint32_t bufferSize = 1 * KB; //the total size of the buffer holding the response information
 	inline static uint32_t tmpBufSize = 0.5 * KB; //the total size of the temporary buffer holding parts of the response information
 
 	//this function is responsible for buffering incomming requests
-	void readHandler();
+	void listenHandler();
+
+	//this function is responsible for running until all of the protocol has been received. its a sub-routine to "listenHandler()"
+	void handleProtocol();
 
 	bool b_valid; //flag that checks if the response handler is currently in a valid state. is only unvalid if disconnected or default constructed
 

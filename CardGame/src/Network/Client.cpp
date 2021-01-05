@@ -23,8 +23,8 @@ void Client::connect() {
 		(*sharedSocket).set_option(asio::socket_base::keep_alive(true));
 		
 		requestHandler = RequestHandler(sharedSocket);
-		responseHandler = RequestListener(sharedSocket);
-		responseHandler.listen();
+		requestListener = RequestListener(sharedSocket);
+		requestListener.listen();
 
 		//if no exception was thrown, the client should be connected
 		b_isConnected = true;
@@ -35,7 +35,7 @@ void Client::disconnect() {
 	
 	b_isConnected = false;
 
-	responseHandler.mute();
+	requestListener.mute();
 	(*sharedSocket).close();
 	b_isConnected = false;
 
@@ -48,10 +48,10 @@ void Client::sendRequest(ProtocolType request) {
 }
 
 RequestListener& Client::getHandler() {
-	if (!responseHandler.isValid())
+	if (!requestListener.isValid())
 		throw InvalidHandlerAccessException("An object tried to retrieve reference to an invalid ResponseHandler!");
 
-	return responseHandler;
+	return requestListener;
 }
 
 void Client::parserSetup() {

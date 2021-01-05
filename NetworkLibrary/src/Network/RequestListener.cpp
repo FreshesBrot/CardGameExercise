@@ -43,7 +43,7 @@ void RequestListener::listen() {
 
 	if (!b_listen) {
 		b_listen = true;
-		readHandler();
+		listenHandler();
 	}	
 }
 
@@ -65,30 +65,58 @@ bool RequestListener::isValid() const {
 }
 
 
-void RequestListener::readHandler() {
+void RequestListener::listenHandler() {
 	//if the client is not supposed to listen, break the loop
 	if (!b_listen) return;
 		
-	/*this function needs some additional logic:
-	* 1) needs to know if its the first bytes of a request coming in
-	* 2) needs to be able to determine the size of the protocol and keep track how many bytes are left
-	* 3) needs to be able to reset parameters once the protocol has fully arrived
-	*/
+	(*socket).async_read_some(asio::buffer(tmpBuffer.data(), tmpBuffer.size()), [this](asio::error_code err, size_t length) {
+		//if the client is not supposed to listen, break the loop
+		if (!b_listen) return;
+
+		if (err) {
+			b_listen = false;
+			throw asio::system_error(err);
+		}
+
+		//if a protocol arriving procs this function, its guaranteed that its the first bytes coming in
+		curSize = 0;
+		buffer.clear();
+		//expectedSize = somethingsomething protocol;
+
+		memcpy(buffer.data() + curSize, tmpBuffer.data(), length);
+		curSize += length;
+
+		//call subroutine function that will handle reading protocol until its done
+		b_receiving = true;
+		handleProtocol();
+		//block until handleProtocol is actually done
+		while (!b_receiving);
+
+		//once handleProtocol is done, this means that the entire protocol has arrived and can now be sent to the translation unit and posted to the queue
+		(*queue).post(0);
+
+		//then, get back to waiting for new requests
+		listenHandler();
+	});
+
+}
+
+void RequestListener::handleProtocol() {
+
 	(*socket).async_read_some(asio::buffer(tmpBuffer.data(), tmpBuffer.size()), [this](asio::error_code err, size_t length) {
 		if (err) {
 			b_listen = false;
 			throw asio::system_error(err);
 		}
-			
+
 		//copy contents of tmp buffer to position at the last written buffer adress
-		memcpy(buffer.data() + length, tmpBuffer.data(), length);
+		memcpy(buffer.data() + curSize, tmpBuffer.data(), length);
 		curSize += length;
 
-		readHandler();
-
-		//after the above logic, once the protocol has arrived, it can be sent to the protocol translation unit which takes a sequence of bytes
-		//and turns it into a protocol, and then we send it to the lobby queue
-		(*queue).post(0);
+		//read as long as there are bytes expected
+		if (curSize != expectedSize)
+			handleProtocol();
+		else b_receiving = false;
 	});
 
 }
