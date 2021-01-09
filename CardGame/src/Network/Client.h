@@ -1,8 +1,7 @@
 #pragma once
 #include <string>
-#include "../Commands/ParserFactory.h"
+#include "../../../Commands/CommandCommon.h"
 #include "ConnectionHandler.h"
-#include "../../../NetworkLibrary/src/Network/NetworkDefs.h"
 #include "../../../Exceptions/src/Exceptions/InvalidHandlerAccessException.h"
 
 //this class handles everything from starting a local game to connecting to a server

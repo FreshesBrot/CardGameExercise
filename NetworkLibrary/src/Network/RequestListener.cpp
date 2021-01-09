@@ -93,7 +93,7 @@ void RequestListener::listenHandler() {
 		while (!b_receiving);
 
 		//once handleProtocol is done, this means that the entire protocol has arrived and can now be sent to the translation unit and posted to the queue
-		(*queue).post(0);
+		(*queue) += 0;
 
 		//then, get back to waiting for new requests
 		listenHandler();

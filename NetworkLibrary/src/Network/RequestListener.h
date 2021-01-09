@@ -1,5 +1,5 @@
 #pragma once
-#include "NetworkShorts.h"
+#include "../../NetworkDefinitions.h"
 #include "../../../Exceptions/src/Exceptions/NoConnectionException.h"
 
 #define KB 1024

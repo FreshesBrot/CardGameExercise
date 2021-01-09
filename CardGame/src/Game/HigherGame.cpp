@@ -74,7 +74,7 @@ void HigherGame::gameLoop() {
 
 void HigherGame::setup() {
 
-	auto parserFactory = StateParserFactory<GameState>({GameState::MENU, GameState::GUESSING}).putName("HigherGameParser"
+	auto parserFactory = StateCommandParserFactory<GameState>({GameState::MENU, GameState::GUESSING}).putName("HigherGameParser"
 	//GAMESTATE MENU
 	).putCommand(
 		//start command

@@ -1,6 +1,6 @@
 #pragma once
 #include "IOParser.h"
-#include "../../IO/IOReader.h"
+#include "../../CommandCommon.h"
 
 //this class is the specific implementation for an IOParser that reads from std::in
 class CommandParser : public IOParser<IOReader> {

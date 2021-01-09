@@ -7,10 +7,9 @@
 
 #include "src/IO/DeckLoader.h"
 #include "src/Shuffling/ShuffleEngine.h"
-#include "src/Commands/Parsing/CommandParser.h"
 #include "src/Game/HigherGame.h"
-#include "src/Commands/ParserFactory.h"
 #include "src/Network/Client.h"
+#include "../Commands/CommandCommon.h"
 
 #define TESTING
 #define COUT std::cout
@@ -174,39 +173,9 @@ private:
 
 int main() {
 
-	Deck deck = Deck::defaultDeck();
+	Client client;
+	client.connect();
 
-	COUT << "Measuring CutShuffle.." << NL;
-	{
-		Timer t;
-		CutShuffle().shuffleDeck(deck);
-
-	}
-	COUT << "Measuring RiffleShuffle.." << NL;
-	{
-		Timer t;
-		RiffleShuffle().shuffleDeck(deck);
-	}
-	COUT << "Measuring ShuffleEngine with 2 total cycles.." << NL;
-	{
-		Timer t;
-		ShuffleEngine().ShuffleDeck(deck, 2);
-	}
-	COUT << "Measuring ShuffleEngine with 100 total cycles in milliseconds.." << NL;
-	{
-		Timer t(1e-3,"ms");
-		ShuffleEngine().ShuffleDeck(deck, 100);
-	}
-	COUT << "Measuring ShuffleEngine with 1000 total cycles in milliseconds .." << NL;
-	{
-		Timer t(1e-3,"ms");
-		ShuffleEngine().ShuffleDeck(deck, 1000);
-	}
-	COUT << "Measuring ShuffleEngine with 10000 total cycles in seconds .." << NL;
-	{
-		Timer t(1e-6, "s");
-		ShuffleEngine().ShuffleDeck(deck, 10000);
-	}
 }
 
 #endif

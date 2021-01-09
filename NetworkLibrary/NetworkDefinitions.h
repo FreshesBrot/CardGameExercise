@@ -1,12 +1,14 @@
 #pragma once
+//this header includes important definitions shared across the network library
+
 
 #include <vector>
 #include <memory>
+
 #include <asio-1.18.0/include/asio.hpp>
 
-#include "../../../Protocol/Protocol.h"
-#include "../Queues/ObjectProvider.h"
-#include "../Queues/Subscriber.h"
+#include "src/Queues/ObjectProvider.h"
+#include "src/Queues/Subscriber.h"
 
 #ifdef PROTOCOL_READY
 typedef Protocol<Command> ProtocolType;

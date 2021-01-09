@@ -47,11 +47,23 @@ public:
 		return queue.getSize();
 	}
 
+	//clears the entire queue
+	void clear() {
+		LOCK;
+
+		queue.clear();
+	}
+
 	//some operators that might shortcut some stuff
 #pragma region Operator Overloads
 	//shortcut for fetch()
 	Object operator--(int) {
 		return fetch();
+	}
+
+	//shortcut for post()
+	void operator+(Object& object) {
+		post(object);
 	}
 
 	//shortcut for post(protocol)

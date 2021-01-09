@@ -1,7 +1,8 @@
 #pragma once
-#include "Command.h"
-#include "../Cards/Card.h"
+#include "../Commands/Command.h"
+#include "../../../CardGame/src/Cards/Card.h"
 
+//this class is the base factory type for factories that build commands and parsers
 template<typename FacType, typename Storage>
 class BaseFactory {
 public:

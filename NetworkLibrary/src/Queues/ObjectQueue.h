@@ -43,6 +43,15 @@ public:
 		return size;
 	}
 
+	//clears the entire queue
+	void clear() {
+		b_available = false;
+		size = 0;
+		while (!queue.empty())
+			queue.pop();
+			
+	}
+
 	//some shortcut operators
 	bool operator!() {
 		return b_available;

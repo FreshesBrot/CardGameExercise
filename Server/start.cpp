@@ -66,8 +66,9 @@ int main() {
 
 
 int main() {
-	COUT << "Starting Server...";
-	Server::getInstance().run();
-	COUT << "Done." << NL;
+	
+	SharedContext context(std::make_shared<asio::io_context>());
+	TCP::acceptor((*context), TCP::v4());
+
 }
 #endif

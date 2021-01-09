@@ -18,23 +18,10 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="NetworkCommon.h" />
-    <ClInclude Include="NetworkDefinitions.h" />
-    <ClInclude Include="src\Network\RequestHandler.h" />
-    <ClInclude Include="src\Network\RequestListener.h" />
-    <ClInclude Include="src\Queues\ObjectProvider.h" />
-    <ClInclude Include="src\Queues\ObjectQueue.h" />
-    <ClInclude Include="src\Queues\Subscriber.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\Network\RequestHandler.cpp" />
-    <ClCompile Include="src\Network\RequestListener.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{DBD74BC2-F67C-4B47-A7CC-437607420155}</ProjectGuid>
-    <RootNamespace>NetworkLibrary</RootNamespace>
+    <ProjectGuid>{B78D0F09-4D75-4291-9924-92E886400A63}</ProjectGuid>
+    <RootNamespace>Commands</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -84,16 +71,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(VC_Libs);$(IncludePath);$(SolutionDir)Libs</IncludePath>
-    <OutDir>$(SolutionDir)Libs\$(Configuration)</OutDir>
+    <OutDir>$(SolutionDir)Libs\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(VC_Libs);$(IncludePath);$(SolutionDir)Libs</IncludePath>
-    <OutDir>$(SolutionDir)Libs\$(Configuration)</OutDir>
+    <OutDir>$(SolutionDir)Libs\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -105,8 +90,6 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,8 +117,6 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -160,6 +141,30 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Commands\Command.cpp" />
+    <ClCompile Include="src\Commands\Option.cpp" />
+    <ClCompile Include="src\Factories\CommandFactory.cpp" />
+    <ClCompile Include="src\Factories\CommandParserFactory.cpp" />
+    <ClCompile Include="src\Factories\OptionFactory.cpp" />
+    <ClCompile Include="src\IO\IOReader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CommandCommon.h" />
+    <ClInclude Include="src\Commands\Command.h" />
+    <ClInclude Include="src\Commands\CommandTypes.h" />
+    <ClInclude Include="src\Commands\Option.h" />
+    <ClInclude Include="src\Factories\BaseFactory.h" />
+    <ClInclude Include="src\Factories\CommandFactory.h" />
+    <ClInclude Include="src\Factories\CommandParserFactory.h" />
+    <ClInclude Include="src\Factories\OptionFactory.h" />
+    <ClInclude Include="src\Factories\StateCommandParserFactory.h" />
+    <ClInclude Include="src\IO\IOReader.h" />
+    <ClInclude Include="src\Parsing\CommandParser.h" />
+    <ClInclude Include="src\Parsing\IOParser.h" />
+    <ClInclude Include="src\Parsing\StateCommandParser.h" />
+    <ClInclude Include="src\Parsing\StateIOParser.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

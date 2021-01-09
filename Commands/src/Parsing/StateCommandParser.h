@@ -1,6 +1,6 @@
 #pragma once
 #include "StateIOParser.h"
-#include "../../IO/IOReader.h"
+#include "../../CommandCommon.h"
 
 //the StateCommandParser manages several different states according to an enumerator templated as States
 template<typename States>

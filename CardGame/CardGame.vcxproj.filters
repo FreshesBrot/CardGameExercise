@@ -41,18 +41,6 @@
     <Filter Include="Game\Source">
       <UniqueIdentifier>{89f5a752-d908-4330-ae68-5d4c9cc30899}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Commands">
-      <UniqueIdentifier>{010e842c-e58a-41c1-ba82-68725b01ab84}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Commands\Header">
-      <UniqueIdentifier>{dd9830f1-1f7d-432d-bbde-ed0479310721}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Commands\Source">
-      <UniqueIdentifier>{1709b4ef-2ec6-4ca3-bf92-62e41e7c25bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Commands\Parsing">
-      <UniqueIdentifier>{4e0114cc-edf6-4fc1-b16b-5195f8512026}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Network">
       <UniqueIdentifier>{abe8b3ac-4052-447e-bed7-8e47b75858d5}</UniqueIdentifier>
     </Filter>
@@ -88,21 +76,6 @@
     <ClCompile Include="src\Cards\Hand.cpp">
       <Filter>Cards\Source</Filter>
     </ClCompile>
-    <ClCompile Include="src\Commands\Command.cpp">
-      <Filter>Commands\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Commands\CommandFactory.cpp">
-      <Filter>Commands\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Commands\Option.cpp">
-      <Filter>Commands\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Commands\OptionFactory.cpp">
-      <Filter>Commands\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Commands\ParserFactory.cpp">
-      <Filter>Commands\Source</Filter>
-    </ClCompile>
     <ClCompile Include="src\Game\Game.cpp">
       <Filter>Game\Source</Filter>
     </ClCompile>
@@ -116,9 +89,6 @@
       <Filter>IO\Source</Filter>
     </ClCompile>
     <ClCompile Include="src\IO\FileWriter.cpp">
-      <Filter>IO\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="src\IO\IOReader.cpp">
       <Filter>IO\Source</Filter>
     </ClCompile>
     <ClCompile Include="src\Shuffling\CutShuffle.cpp">
@@ -165,27 +135,6 @@
     <ClInclude Include="src\Cards\Hand.h">
       <Filter>Cards\Header</Filter>
     </ClInclude>
-    <ClInclude Include="src\Commands\BaseFactory.h">
-      <Filter>Commands\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Commands\Command.h">
-      <Filter>Commands\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Commands\CommandFactory.h">
-      <Filter>Commands\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Commands\CommandTypes.h">
-      <Filter>Commands\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Commands\Option.h">
-      <Filter>Commands\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Commands\OptionFactory.h">
-      <Filter>Commands\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Commands\ParserFactory.h">
-      <Filter>Commands\Header</Filter>
-    </ClInclude>
     <ClInclude Include="src\Game\Game.h">
       <Filter>Game\Header</Filter>
     </ClInclude>
@@ -199,9 +148,6 @@
       <Filter>IO\Header</Filter>
     </ClInclude>
     <ClInclude Include="src\IO\FileWriter.h">
-      <Filter>IO\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="src\IO\IOReader.h">
       <Filter>IO\Header</Filter>
     </ClInclude>
     <ClInclude Include="src\Shuffling\CutShuffle.h">
@@ -218,18 +164,6 @@
     </ClInclude>
     <ClInclude Include="src\Shuffling\Shuffler.h">
       <Filter>Shuffling\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Commands\Parsing\IOParser.h">
-      <Filter>Commands\Parsing</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Commands\Parsing\StateCommandParser.h">
-      <Filter>Commands\Parsing</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Commands\Parsing\StateIOParser.h">
-      <Filter>Commands\Parsing</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Commands\Parsing\CommandParser.h">
-      <Filter>Commands\Parsing</Filter>
     </ClInclude>
     <ClInclude Include="src\Network\ConnectionHandler.h">
       <Filter>Network\Header</Filter>

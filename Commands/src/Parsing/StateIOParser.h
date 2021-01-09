@@ -3,7 +3,7 @@
 #include <unordered_map>
 
 
-//the state parser support multiple command vectors templated on a state enum
+//the state parser supports multiple command vectors templated on a state enum
 template <typename States,  typename IOStream>
 class StateIOParser : public IOParser<IOStream> {
 public:

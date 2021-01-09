@@ -1,6 +1,5 @@
 #pragma once
 #include "Game.h"
-#include "../Commands/Parsing/StateCommandParser.h"
 
 //this game is a simple guessing game, where the player has to guess if the next card that is drawn is higher or lower
 class HigherGame : public Game {

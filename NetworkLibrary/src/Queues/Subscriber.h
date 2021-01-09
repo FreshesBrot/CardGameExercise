@@ -25,19 +25,21 @@ public:
 
 	//this will start a new thread that will listen in on the queue
 	void listen() {
-		if (!b_keepListening) {
-			b_keepListening = true;
-			listenerThread = std::thread([this]() { listenHandlerHead(); });
-		}
+		if (b_keepListening) return;
+
+		b_keepListening = true;
+		listenerThread = std::thread([this]() { listenHandlerHead(); });
+		
 	}
 
 	//this will shutdown the listener, destructing the thread, but keeping a ref to the queue
 	void mute() {
-		if (b_keepListening) {
-			b_keepListening = false;
-			if (listenerThread.joinable())
-				listenerThread.join();
-		}
+		if (!b_keepListening) return;
+		
+		b_keepListening = false;
+		if (listenerThread.joinable())
+			listenerThread.join();
+		
 	}
 
 private:

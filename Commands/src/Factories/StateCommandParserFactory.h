@@ -1,22 +1,21 @@
 #pragma once
-#include "CommandFactory.h"
-#include "Parsing/StateCommandParser.h"
+#include "../Parsing/StateCommandParser.h"
 
 //this class makes creating state parsers easier
 template<typename States>
-class StateParserFactory {
+class StateCommandParserFactory {
 public:
 	typedef StateCommandParser<States> SCP;
-	typedef StateParserFactory<States> SPF;
+	typedef StateCommandParserFactory<States> SPF;
 	typedef std::unordered_map<States, Commands> StateMap;
 
-	StateParserFactory(std::vector<States>&& allStates) : allCommands(), parserName() {
+	StateCommandParserFactory(std::vector<States>&& allStates) : allCommands(), parserName() {
 		for (auto& c : allStates) {
 			allCommands[c] = Commands();
 		}
 	}
 
-	~StateParserFactory() { }
+	~StateCommandParserFactory() { }
 
 	SPF putName(Token&& name) {
 		parserName = std::move(name);

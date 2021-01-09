@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "../../../NetworkLibrary/src/Network/NetworkDefs.h"
+#include "../../../NetworkLibrary/NetworkCommon.h"
 #include "../../../Exceptions/src/Exceptions/NoConnectionException.h"
 
 

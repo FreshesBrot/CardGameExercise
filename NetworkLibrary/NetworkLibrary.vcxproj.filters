@@ -34,12 +34,8 @@
     <ClInclude Include="src\Network\RequestListener.h">
       <Filter>Network\Header</Filter>
     </ClInclude>
-    <ClInclude Include="src\Network\NetworkDefs.h">
-      <Filter>Network\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Network\NetworkShorts.h">
-      <Filter>Network\Header</Filter>
-    </ClInclude>
+    <ClInclude Include="NetworkCommon.h" />
+    <ClInclude Include="NetworkDefinitions.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Network\RequestHandler.cpp">

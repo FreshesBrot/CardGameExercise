@@ -1,6 +1,6 @@
 #pragma once
 #include "../Cards/Deck.h"
-#include "../Commands/StateParserFactory.h"
+#include "../../../Commands/CommandCommon.h"
 #include "../Cards/Hand.h"
 #include "../Shuffling/ShuffleEngine.h"
 #include <memory>

@@ -169,17 +169,11 @@
     <ClCompile Include="src\Cards\DeckDecoder.cpp" />
     <ClCompile Include="src\Cards\DeckEncoder.cpp" />
     <ClCompile Include="src\Cards\Hand.cpp" />
-    <ClCompile Include="src\Commands\Command.cpp" />
-    <ClCompile Include="src\Commands\CommandFactory.cpp" />
-    <ClCompile Include="src\Commands\Option.cpp" />
-    <ClCompile Include="src\Commands\OptionFactory.cpp" />
-    <ClCompile Include="src\Commands\ParserFactory.cpp" />
     <ClCompile Include="src\Game\Game.cpp" />
     <ClCompile Include="src\Game\HigherGame.cpp" />
     <ClCompile Include="src\IO\DeckLoader.cpp" />
     <ClCompile Include="src\IO\FileReader.cpp" />
     <ClCompile Include="src\IO\FileWriter.cpp" />
-    <ClCompile Include="src\IO\IOReader.cpp" />
     <ClCompile Include="src\Network\Client.cpp" />
     <ClCompile Include="src\Network\ConnectionHandler.cpp" />
     <ClCompile Include="src\Shuffling\CutShuffle.cpp" />
@@ -196,23 +190,11 @@
     <ClInclude Include="src\Cards\DeckDecoder.h" />
     <ClInclude Include="src\Cards\DeckEncoder.h" />
     <ClInclude Include="src\Cards\Hand.h" />
-    <ClInclude Include="src\Commands\BaseFactory.h" />
-    <ClInclude Include="src\Commands\Command.h" />
-    <ClInclude Include="src\Commands\CommandFactory.h" />
-    <ClInclude Include="src\Commands\CommandTypes.h" />
-    <ClInclude Include="src\Commands\Option.h" />
-    <ClInclude Include="src\Commands\OptionFactory.h" />
-    <ClInclude Include="src\Commands\ParserFactory.h" />
-    <ClInclude Include="src\Commands\Parsing\CommandParser.h" />
-    <ClInclude Include="src\Commands\Parsing\IOParser.h" />
-    <ClInclude Include="src\Commands\Parsing\StateCommandParser.h" />
-    <ClInclude Include="src\Commands\Parsing\StateIOParser.h" />
     <ClInclude Include="src\Game\Game.h" />
     <ClInclude Include="src\Game\HigherGame.h" />
     <ClInclude Include="src\IO\DeckLoader.h" />
     <ClInclude Include="src\IO\FileReader.h" />
     <ClInclude Include="src\IO\FileWriter.h" />
-    <ClInclude Include="src\IO\IOReader.h" />
     <ClInclude Include="src\Network\Client.h" />
     <ClInclude Include="src\Network\ConnectionHandler.h" />
     <ClInclude Include="src\Shuffling\CutShuffle.h" />
@@ -225,6 +207,9 @@
     <None Include="deck.deckf" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Commands\Commands.vcxproj">
+      <Project>{b78d0f09-4d75-4291-9924-92e886400a63}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\NetworkLibrary\NetworkLibrary.vcxproj">
       <Project>{dbd74bc2-f67c-4b47-a7cc-437607420155}</Project>
     </ProjectReference>

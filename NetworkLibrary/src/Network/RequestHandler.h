@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-#include "NetworkShorts.h"
+#include "../../NetworkDefinitions.h"
 #include "../../../Exceptions/src/Exceptions/NoConnectionException.h"
 
 

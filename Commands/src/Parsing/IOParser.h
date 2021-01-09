@@ -1,6 +1,6 @@
 #pragma once
-#include "../CommandFactory.h"
 #include <iostream>
+#include "../Factories/CommandFactory.h"
 
 #define IO_CONTAINS(elem) IOParser::containsOption(cmd.options, elem)
 #define IS_OPTION (*it)[0] == '-'

@@ -146,15 +146,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\DefaultLobby.cpp" />
+    <ClCompile Include="src\Game\PlayerInstance.cpp" />
+    <ClCompile Include="src\Server\ConnectionListener.cpp" />
+    <ClCompile Include="src\Server\IDQueue.cpp" />
     <ClCompile Include="src\Server\Server.cpp" />
     <ClCompile Include="start.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Commands\Commands.vcxproj">
+      <Project>{b78d0f09-4d75-4291-9924-92e886400a63}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\NetworkLibrary\NetworkLibrary.vcxproj">
       <Project>{dbd74bc2-f67c-4b47-a7cc-437607420155}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Game\DefaultLobby.h" />
+    <ClInclude Include="src\Game\PlayerInstance.h" />
+    <ClInclude Include="src\Server\ConnectionListener.h" />
+    <ClInclude Include="src\Server\IDQueue.h" />
     <ClInclude Include="src\Server\Server.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Ressourcendateien">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Parsing">
+      <UniqueIdentifier>{08e7479d-9665-4ec4-9927-9926bc45effb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands">
+      <UniqueIdentifier>{be0efb04-90e0-4fd6-82e7-a594eb52934c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factories">
+      <UniqueIdentifier>{924c8e01-e074-4fd6-8960-84a665e37ef4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands\Header">
+      <UniqueIdentifier>{4df482ca-02f4-4628-b455-8478a5b51b64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands\Source">
+      <UniqueIdentifier>{2dd00a59-e577-4d31-af6a-6b988e9d00b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factories\Header">
+      <UniqueIdentifier>{0c02bc23-9adf-4568-b118-1643f0ace337}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factories\Source">
+      <UniqueIdentifier>{f297b653-d7d1-47d7-9b66-da08d327582f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO">
+      <UniqueIdentifier>{7a02c990-c946-46dc-87f1-5bc218c5366a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO\Header">
+      <UniqueIdentifier>{47e235b8-60db-46ef-97a5-47e5d60b2f79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO\Source">
+      <UniqueIdentifier>{812e321b-f034-4dd0-b550-a9712b36775b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Commands\Command.cpp">
+      <Filter>Commands\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Commands\Option.cpp">
+      <Filter>Commands\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Factories\CommandFactory.cpp">
+      <Filter>Factories\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Factories\OptionFactory.cpp">
+      <Filter>Factories\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Factories\CommandParserFactory.cpp">
+      <Filter>Factories\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IO\IOReader.cpp">
+      <Filter>IO\Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Commands\Command.h">
+      <Filter>Commands\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Commands\CommandTypes.h">
+      <Filter>Commands\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Commands\Option.h">
+      <Filter>Commands\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandCommon.h" />
+    <ClInclude Include="src\Factories\OptionFactory.h">
+      <Filter>Factories\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Factories\CommandFactory.h">
+      <Filter>Factories\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Factories\BaseFactory.h">
+      <Filter>Factories\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Parsing\IOParser.h">
+      <Filter>Parsing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Parsing\StateIOParser.h">
+      <Filter>Parsing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Factories\CommandParserFactory.h">
+      <Filter>Factories\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Parsing\CommandParser.h">
+      <Filter>Parsing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Parsing\StateCommandParser.h">
+      <Filter>Parsing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IO\IOReader.h">
+      <Filter>IO\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Factories\StateCommandParserFactory.h">
+      <Filter>Factories\Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
